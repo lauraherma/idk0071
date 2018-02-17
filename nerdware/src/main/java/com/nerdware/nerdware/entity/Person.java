@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -19,4 +20,10 @@ public class Person {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "person_seq")
     @SequenceGenerator(name = "person_seq", sequenceName = "person_seq", allocationSize = 1)
     private Long personId;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private LocalDate dateOfBirth;
+    private String phone;
+
 }
