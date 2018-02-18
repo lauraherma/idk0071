@@ -5,7 +5,11 @@ import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.time.LocalDateTime;
 
 @Entity
@@ -14,12 +18,22 @@ import java.time.LocalDateTime;
 public class Appointment {
     @Id
     @Column
-    private Long appointmentId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private String description;
-    private Long hairdresserId;
-    private Long clientId;
-    private Long workId;
+
+    @JoinColumn(name = "hairdresser_id")
+    @ManyToOne(optional=false)
+    private Role hairdresserId;
+
+    @JoinColumn(name = "client_id")
+    @ManyToOne(optional=false)
+    private Role clientId;
+
+    @JoinColumn(name = "work_id")
+    @ManyToOne(optional=false)
+    private Work workId;
 
 }
