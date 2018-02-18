@@ -10,7 +10,7 @@ import javax.persistence.Id;
 @Entity
 @Getter
 @Setter
-public class hydrogen {
+public class Hydrogen {
     @Id
     @Column
     private Long id;
