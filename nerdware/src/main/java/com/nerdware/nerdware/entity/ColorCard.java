@@ -10,10 +10,10 @@ import javax.persistence.Id;
 @Entity
 @Getter
 @Setter
-public class WorkType {
+public class ColorCard {
     @Id
     @Column
-    private Long workTypeId;
-    private String name;
+    private Long colorCardId;
     private String description;
+    private Long colorRecipeId;
 }
