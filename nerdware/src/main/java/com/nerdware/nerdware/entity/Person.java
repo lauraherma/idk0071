@@ -19,7 +19,7 @@ public class Person {
     @Column
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "person_seq")
     @SequenceGenerator(name = "person_seq", sequenceName = "person_seq", allocationSize = 1)
-    private Long personId;
+    private Long id;
     private String firstName;
     private String lastName;
     private String email;

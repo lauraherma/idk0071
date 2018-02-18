@@ -5,7 +5,11 @@ import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 @Getter
@@ -13,7 +17,13 @@ import javax.persistence.Id;
 public class ColorCard {
     @Id
     @Column
-    private Long colorCardId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    @Column
     private String description;
-    private Long colorRecipeId;
+
+    @JoinColumn(name = "color_recipe_id")
+    @ManyToOne(optional=false)
+    private ColorRecipe colorRecipe;
 }

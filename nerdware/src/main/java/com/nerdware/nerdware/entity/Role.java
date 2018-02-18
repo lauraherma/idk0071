@@ -15,6 +15,6 @@ public class Role {
     @Column
     private Long roleId;
     private Long personId;
-    private String type;
+    private Integer roleTypeId;
 
 }

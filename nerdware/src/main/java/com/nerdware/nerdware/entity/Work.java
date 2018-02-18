@@ -5,7 +5,11 @@ import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 @Getter
@@ -13,9 +17,17 @@ import javax.persistence.Id;
 public class Work {
     @Id
     @Column
-    private Long workId;
-    private Long workTypeId;
-    private Long colorCardId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    @JoinColumn(name = "work_type_id")
+    @ManyToOne(optional=false)
+    private WorkType workType;
+
+    @JoinColumn(name = "color_card_id")
+    @ManyToOne(optional=false)
+    private ColorCard colorCard;
+
     private String description;
 
 }
