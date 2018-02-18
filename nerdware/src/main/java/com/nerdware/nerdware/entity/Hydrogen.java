@@ -15,5 +15,6 @@ public class Hydrogen {
     @Column
     private Long id;
     private Integer type;
-    private Double amount;
+    private Double am;
+
 }
