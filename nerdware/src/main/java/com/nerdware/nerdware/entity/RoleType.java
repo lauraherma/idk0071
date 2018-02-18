@@ -14,7 +14,6 @@ import javax.persistence.Id;
 @Setter
 public class RoleType {
     @Id
-    @Column
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
