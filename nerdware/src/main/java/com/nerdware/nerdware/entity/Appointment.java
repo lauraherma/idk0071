@@ -11,11 +11,11 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
-public class Appointment {
-    @Id
+public class Appointment { 
     @Column
     private Long appointmentId;
     private LocalDateTime startTime;
+    private LocalDateTime endTime;
     private String description;
     private Long hairdresserId;
     private Long clientId;
