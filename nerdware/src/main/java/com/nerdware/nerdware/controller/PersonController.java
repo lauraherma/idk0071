@@ -16,6 +16,6 @@ public class PersonController {
     }
 
     public Person createNewPerson() {
-
+        return null;
     }
 }
