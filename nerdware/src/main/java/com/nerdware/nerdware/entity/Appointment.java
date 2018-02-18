@@ -11,7 +11,8 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
-public class Appointment { 
+public class Appointment {
+    @Id
     @Column
     private Long appointmentId;
     private LocalDateTime startTime;
