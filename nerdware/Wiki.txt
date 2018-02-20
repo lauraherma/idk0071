@@ -1,0 +1,44 @@
+﻿Vahearuanne sisaldab
+● Esimene iteratsioon on välja kirjutatud user
+storydena
+User story
+● Meie soov ei ole kasutajalugu: kasutaja tuleb
+lehele ja saab toote ostukorvi lisada, et hiljem
+kõige eest korraga maksta
+● Kasutuslugu: Sisselogimata kasutajana saan
+vajalikud tooted enne maksmist kõik välja
+valida ning näha kogumaksumust
+User story
+● Liiga üldine user story: Uue kasutajana saan
+veebilehel registreeruda, et lehte kasutada
+● Uue kasutajana saan veebilehel
+identiftseerida, et saaksin lisada uusi
+kuulutusi
+User story
+● Kes ma olen?
+● Mida tahan teha?
+● Mis on minu motivatsioon, miks peaksin seda
+tegema (ehk mis on minu kasu)?
+User story
+● Mõista, miks kasutaja midagi teha tahab – kui
+te ei suuda välja mõelda, võib-olla ei tahagi
+ükski kasutaja seda teha?
+● Ehitada tarkvara, mis vastaks kasutaja
+vajadustele
+
+● User storyd on jagatud taskideks
+● Igal taskil on vastutaja, mahuhinnang ja tähtaeg
+● Raport iga liikme tehtud tööde kohta alates aine
+algusest
+● Lühike ülevaade projekti seisust ja tekkinud
+probleemidest, sh kas on valdkondi, kus vajate abi
+
+Leppige kokku ja sõnastage oma Wikisse
+vähemalt viis lean põhimõtet, mida oma
+grupitöös järgima hakkate, vt aluseks näiteks
+see:
+– http://www.allaboutagile.com/7-key-principles-of
+-lean-software-development-2/
+– Kõigi põhimõtetega tutvumine nõuab aega, võibolla
+saate printsiibid ära jagada ja teete üksteisele
+kokkuvõtteid?
