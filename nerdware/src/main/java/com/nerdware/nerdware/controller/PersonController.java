@@ -4,6 +4,7 @@ import com.nerdware.nerdware.entity.Person;
 import com.nerdware.nerdware.entity.Role;
 import com.nerdware.nerdware.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,6 +45,10 @@ public class PersonController {
         Role role = new Role();
         role.setPerson(person);
         //role.setRoleType(roleId);
+    }
+
+    public List<Person> findAllHairdressers() {
+        return personRepository.findPersonByRole(1L);
     }
 
 }

@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import java.util.List;
 
 @Entity
 @Getter
@@ -20,13 +22,13 @@ public class ColorRecipe {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @JoinColumn(name = "color_id")
-    @ManyToOne(optional=false)
-    private Color color;
+    @JoinColumn(name = "colors_id")
+    @OneToMany
+    private List<Color> colors;
 
-    @JoinColumn(name = "hydrogen_id")
-    @ManyToOne(optional=false)
-    private Hydrogen hydrogen;
+    @JoinColumn(name = "hydrogens_id")
+    @OneToMany
+    private List<Hydrogen> hydrogens;
 
 }
 
