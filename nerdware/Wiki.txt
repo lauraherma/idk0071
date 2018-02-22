@@ -148,6 +148,22 @@ Lühike ülevaade projekti seisust:
 
     Meie projekt on senimaani kulgenud väga kenasti ning ilma suuremate
 
+Lean põhimõtted meie projektis:
+
+    Deliver Fast
+
+    Amplify learning
+
+    Eliminate Waste
+
+    Build Quality In
+
+    Respect People
+
+    Optimise The Whole
+    
+    Decide as late as possible
+
 
 
 
