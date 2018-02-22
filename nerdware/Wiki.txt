@@ -161,7 +161,7 @@ Lean põhimõtted meie projektis:
     Respect People
 
     Optimise The Whole
-    
+
     Decide as late as possible
 
 
