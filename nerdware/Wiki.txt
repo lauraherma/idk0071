@@ -1,51 +1,154 @@
-﻿Vahearuanne sisaldab
-● Meie soov ei ole kasutajalugu: kasutaja tuleb
-lehele ja saab toote ostukorvi lisada, et hiljem
-kõige eest korraga maksta
-● Kasutuslugu: Sisselogimata kasutajana saan
-vajalikud tooted enne maksmist kõik välja
-valida ning näha kogumaksumust
-User story
-● Liiga üldine user story: Uue kasutajana saan
-veebilehel registreeruda, et lehte kasutada
-● Uue kasutajana saan veebilehel
-identiftseerida, et saaksin lisada uusi
-kuulutusi
-User story
-● Kes ma olen?
-● Mida tahan teha?
-● Mis on minu motivatsioon, miks peaksin seda
-tegema (ehk mis on minu kasu)?
-User story
-● Mõista, miks kasutaja midagi teha tahab – kui
-te ei suuda välja mõelda, võib-olla ei tahagi
-ükski kasutaja seda teha?
-● Ehitada tarkvara, mis vastaks kasutaja
-vajadustele
+﻿Master-admini user story-d:
 
-● User storyd on jagatud taskideks
-● Igal taskil on vastutaja, mahuhinnang ja tähtaeg
-● Raport iga liikme tehtud tööde kohta alates aine
-algusest
-● Lühike ülevaade projekti seisust ja tekkinud
-probleemidest, sh kas on valdkondi, kus vajate abi
+    Master-adminina lisan süsteemi uue admini, kes on seotud kindla juuksurisalongiga, et tema saaks oma tööd adminina
+    alustada.
 
-Leppige kokku ja sõnastage oma Wikisse
-vähemalt viis lean põhimõtet, mida oma
-grupitöös järgima hakkate, vt aluseks näiteks
-see:
-– http://www.allaboutagile.com/7-key-principles-of
--lean-software-development-2/
-– Kõigi põhimõtetega tutvumine nõuab aega, võibolla
-saate printsiibid ära jagada ja teete üksteisele
-kokkuvõtteid?
+    Master-adminina muudan admini andmeid, kelle andmed on uuenenud või valesti sisestatud.
+
+    Master-adminina kustutan admini, kes enam süsteemiga seotud pole.
 
 
-Juuksuri registreerimine
-Juuksuri sisse logimine
-Admin vaatab kõiki juuksureid
-Admin registreerib uue juuksuri
-Admin/juuksur registreerib uue kliendi
-Klient määrab juuksuri tööle (algne)
-Juuksur loob uue appointmenti
-Admin/juuksur lisab uusi tooteid (värv/vesinik)
+
+Admini user story-d:
+
+    Adminina lisan uue juuksuri koos tema andmetega registrisse, et juuksur saaks kasutada infosüsteemi. Selle peale määratakse
+    juuksurile juhuslik parool, mille admin talle edastab.
+
+    Adminina saan ennast juuksurina tööle panna, kui oman samaaegselt nii admini kui juuksuri rolli.
+
+    Adminina saan muuta enda andmeid, kui need on muutunud või valesti sisestatud.
+
+    Adminina muudan juuksuri andmeid, kelle andmed on uuenenud või valesti sisestatud.
+
+    Adminina kustutan juuksuri, kes enam süsteemiga seotud pole.
+
+    Adminina määran juuksuri graafiku alusel kalendrisse tööle.
+
+    Adminina saan lisada süsteemi uue kliendi, kes on avaldanud soovi teenust osta.
+
+    Adminina saan muuuta kliendi andmeid, kelle andmed on uuenenud või valesti sisestatud.
+
+    Adminina saan kustutada kliendi, kes enam süsteemiga seotud pole.
+
+    Adminina sisestan vastavalt juuksuri graafikule kliendile aja, mida klient on eelnevalt telefoni teel/suusõnaliselt
+    soovinud.
+
+    Adminina saan lisada tööliike, mida juuksurid saavad hiljem töö loomisel kasutada/määrata.
+
+    Adminina saan aja lisades luua uue töö, kuhu on märgitud tööliik, vajadusel kliendi värvikaart ja soovi korral
+    kirjeldus.
+
+    Adminina saan vaadata loodud aegu, sellega seotud klienti, algus- ja lõõaega, sellega seotud juuksurit ja tööd.
+
+    Adminina saad sisestada süsteemi töövahendid/materjalid (värvid ja vesinikud), mida juuksurid kasutavad.
+
+    Adminina uue aja sisestades saan luua uue töö, kuhu sisestan töö liigi, ja kui tööliigiks on värvimine, lisan ka
+    värvikaardi ja vajadusel kirjelduse.
+
+    Adminina saan lisada graafikusse pausi nii endale kui juuksuritele.
+
+    Adminina kui olen lisanud värvikaardi, siis värvikaardile saan lisada värviretsepti ja soovi korral kirjelduse.
+
+    Adminina saan uue värviretsepti loomisel sisestada sinna kuitahes palju värve ja vesinikke.
+
+    Adminina on mul võimalus näha kõiki juuksureid ja kliente, kui soovin neist ülevaadet.
+
+    Adminina saan määrata inimese puhkusele, mille jooksul talle aegu määrata ei saa.
+
+    Adminina saan määrata kliendile saadetava meeldetuletuse saatmise aja (emailile).
+
+
+
+Juuksuri user story-d:
+
+    Juuksurina login admini edastatud parooliga süsteemi sisse, peale mida on mul võimalik valida uus meelepärane parool.
+
+    Juuksurina saan muuta iseenda adnmeid, kui need on muutunud või valesti sisestatud.
+
+    Juuksurina saan lisada süsteemi uue kliendi, kes on avaldanud soovi teenust osta.
+
+    Juuksurina saan muuuta kliendi andmeid, kelle andmed on uuenenud või valesti sisestatud.
+
+    Juuksurina saan kustutada kliendi, kes enam süsteemiga seotud pole.
+
+    Juuksurina sisestan vastavalt graafikule kliendile aja, mida klient on eelnevalt telefoni teel/suusõnaliselt
+    soovinud.
+
+    Juuksurina saan aja lisades luua uue töö, kuhu on märgitud tööliik, vajadusel kliendi värvikaart ja soovi korral
+    kirjeldus.
+
+    Juuksurina saan vaadata loodud aegu, sellega seotud klienti, algus- ja lõõaega ja tööd.
+
+    Juuksurina saan lisada graafikusse pausi, kui ta soovib tööpäeva puhkust.
+
+    Juuksurina kui olen lisanud värvikaardi, siis värvikaardile saan lisada värviretsepti ja soovi korral kirjelduse.
+
+    Juuksurina saan uue värviretsepti loomisel sisestada sinna kuitahes palju värve ja vesinikke.
+
+    Juuksurina saan vaadata töögraafiku kalendrit etteulatuvalt, et näha ja lisada aegu, mis on tulevikus.
+
+    Juuksurina on mul võimalus näha kõiki juuksureid ja kliente, kui soovin neist ülevaadet.
+
+    Juuksurina saan määrata inimese puhkusele, mille jooksul talle aegu määrata ei saa.
+
+    Juuksurina saan määrata kliendile saadetava meeldetuletuse saatmise aja (emailile).
+
+
+
+
+Taskid:
+
+    Mocupide+disaini tegemine - 4. nädal Laura H., 4
+
+    Mockupide realisatsioon - 5.-6. nädal, Laura H., 3
+
+    Reacti ja Springi liidestamine - 5. nädal, Laura E., 2
+
+    Sisselogimise funktsionaalsus - 6. nädal, Laura E., 5
+
+    Juuksurite+klientide lisamise vaade - 6. nädal, Triinu, 3
+
+    Juuksurite+klientide nägemise vaade - 6. nädal, Triinu 2
+
+    Materjalide+värviliikide lisamise vaade - 2-3 iteratsioon
+
+    Materjalide+värviliikide nägemise vaade - 2-3 iteratsioon
+
+    Kuu kalendrivaade - 2-3 iteratsioon
+
+    Nädala kalendrivaade - 2-3 iteratsioon
+
+    Aja/pausi lisamise vaade - 2-3 iteratsioon
+
+    Aja/pausi nägemise vaade - 2-3 iteratsioon
+
+
+Mahu hinnang: 1-mitte väga mahukas, 5-väga mahukas
+
+
+
+Iga liikme tööd alates aine algusest:
+
+
+    Springi setup - kõik koos
+
+    Andmebaasi/süsteemianalüüs - Laura H.
+
+    Entityte loomine - kõik koos
+
+    Entityte relatsioonide loomine - Triinu
+
+    Esialgsed vaated paberkujul - kõik koos
+
+    Disaini alustamine - Laura H.
+
+
+Lühike ülevaade projekti seisust:
+
+
+    Meie projekt on senimaani kulgenud väga kenasti ning ilma suuremate
+
+
+
+
+
