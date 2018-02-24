@@ -146,7 +146,15 @@ Iga liikme tööd alates aine algusest:
 Lühike ülevaade projekti seisust:
 
 
-    Meie projekt on senimaani kulgenud väga kenasti ning ilma suuremate
+    Meie projekt on senimaani kulgenud väga kenasti ning ilma suuremate probleemideta ning me oleme oma asjadega
+    suhtleilselt järjel. AGA mis pole okei on see, et praktikumi tunnis ei õpetata raamistikke kasutama ning väga
+    paljud tudengid on positsioonis, kus nad ei saa hakkama ning tunnis ei aidata sellele kuidagi kaasa. Samuti pole
+    pooltel tudengitel (Ari IT) vastavaid teadmisi aine läbimiseks ning pole reaalne, et Javat esimest korda nägevad
+    inimesed peavad tegema Springiga projekti. Vähim, mis te teha võiks, oleks praktikumides projekti setupi kasvõi
+    õpetada.
+
+
+
 
 Lean põhimõtted meie projektis:
 
