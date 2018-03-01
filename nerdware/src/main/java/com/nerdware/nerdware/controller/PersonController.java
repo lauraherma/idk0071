@@ -31,20 +31,20 @@ public class PersonController {
     @ResponseBody
     public void createNewPerson(@PathVariable String firstName, @PathVariable String lastName, @PathVariable String phone,
                                   @PathVariable String email, @PathVariable LocalDate dateOfBirth) {
-        Person person = new Person();
+        /*Person person = new Person();
         person.setFirstName(firstName);
         person.setLastName(lastName);
         person.setDateOfBirth(dateOfBirth);
         person.setEmail(email);
         person.setPhone(phone);
-        person = personRepository.save(person);
+        person = personRepository.save(person);*/
     }
 
     public void assignRoleToPerson(Long personId, Long roleId) {
-        Person person = personRepository.findOne(personId);
+        /*Person person = personRepository.findOne(personId);
         Role role = new Role();
         role.setPerson(person);
-        //role.setRoleType(roleId);
+        //role.setRoleType(roleId);*/
     }
 
     public List<Person> findAllHairdressers() {
