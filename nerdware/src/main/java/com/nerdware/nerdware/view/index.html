@@ -1,13 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
 <div id="root">
+    <script src="https://unpkg.com/react@16.0.0-rc.3/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16.0.0-rc.3/umd/react-dom.development.js"></script>
+    <script src=" https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script type="text/babel">
+        class Toggle extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = {isToggleOn: true};
+                this.handleClick = this.handleClick.bind(this);
+                //this.home = this.home.bind(this);
+            }
 
+            handleClick() {
+                /*this.setState(prevState => ({
+                    isToggleOn: !prevState.isToggleOn
+                }));*/
+                window.location = 'calendar.html';
+            }
+
+            render() {
+                return (
+                    <button onClick={this.handleClick}>
+                        {this.state.isToggleOn ? 'ON' : 'OFF'}
+                    </button>
+                );
+            }
+        }
+
+        ReactDOM.render(
+            <Toggle />,
+            document.getElementById('root')
+        );
+    </script>
 </div>
-</body>
-</html>
-

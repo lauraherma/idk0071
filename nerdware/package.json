@@ -5,10 +5,14 @@
   "license": "MIT",
   "dependencies": {
     "react": "^16.2.0",
-    "react-dom": "^16.2.0"
+    "react-dom": "^16.2.0",
+    "react-native": "^0.54.0"
   },
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).",
-  "devDependencies": {},
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
