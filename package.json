@@ -4,12 +4,15 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "lodash": "^4.17.5",
     "moment": "^2.21.0",
+    "moment-range": "^3.1.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-native": "^0.54.0",
     "react-router-dom": "^4.2.2",
-    "react-scripts": "^1.1.1"
+    "react-scripts": "^1.1.1",
+    "reactstrap": "^5.0.0-beta.2"
   },
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).",
   "devDependencies": {

@@ -1,26 +1,23 @@
 import React from 'react';
 import "./Hairdresser.css";
 import moment from "moment";
-import lodash from 'lodash';
 
 export class Hairdresser extends React.Component {
     state = {
         timeSlots: [],
-    }
+    };
 
     componentDidMount() {
-        console.log(this.props);
         const timeSlots = [];
         for (let i = 0; i < 26; i++) {
             const halfHourInMinutes = 30;
             const timeSlot = moment()
                 .startOf('day')
                 .set('hour', 8)
-                .add(i * halfHourInMinutes, 'minute')
+                .add(i * halfHourInMinutes, 'minute');
             timeSlots.push(timeSlot);
         }
         this.setState({
-            ...this.state,
             timeSlots: timeSlots,
         });
     }

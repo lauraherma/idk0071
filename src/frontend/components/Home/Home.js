@@ -1,6 +1,7 @@
 import React from "react";
-import {Hairdresser} from "../hairdresser/Hairdresser";
+import {Hairdresser} from "../Hairdresser/Hairdresser";
 import "./Home.css"
+import {HairdresserAddModal} from "../HairdresserAddModal/HairdresserAddModal";
 
 export class Home extends React.Component {
     state = {
@@ -11,17 +12,30 @@ export class Home extends React.Component {
     componentDidMount() {
         setTimeout(() => {
             const newState = {
-                ...this.state,
                 isLoading: false,
                 hairdressers: [
                     {
                         id: 1,
                         name: "Sille",
-
+                        appointments: [
+                            {
+                                id: 11,
+                                startTime: '2018-03-03T10:30:00+02:00',
+                                endTime: '2018-03-03T13:30:00+02:00',
+                                description: 'Värv lõikus soeng',
+                            },
+                            {
+                                id: 12,
+                                startTime: '2018-03-03T15:30:00+02:00',
+                                endTime: '2018-03-03T16:00:00+02:00',
+                                description: 'Värv lõikus soeng',
+                            },
+                        ]
                     },
                     {
                         id: 2,
                         name: "Minni",
+                        appointments: []
                     }
                 ]
             };
@@ -43,18 +57,18 @@ export class Home extends React.Component {
         })
     }
 
-    addHairDresser = () => {
-        const hairdresser = {
-            id: 3,
-            name: "kati",
+    addHairDresser = (hairdresser) => {
+        const newHairdresser = {
+            id: Math.random(),
+            name: hairdresser.firstName,
+            appointments: []
         };
         const newState = {
-            ...this.state,
             hairdressers: [
                 ...this.state.hairdressers,
-                hairdresser
+                newHairdresser
             ]
-        }
+        };
         this.setState(newState);
     };
 
@@ -64,9 +78,7 @@ export class Home extends React.Component {
             {this.getLoader()}
             <div className="hairdressers">
                 {this.getHairdressers()}
-                <button className="btn btn-primary"
-                        onClick={this.addHairDresser}>+ Lisa juuksur
-                </button>
+                <HairdresserAddModal addHairdresser={this.addHairDresser}/>
             </div>
         </div>
     }

@@ -8,8 +8,14 @@
     color: #fff;
     padding: 8px;
 }
+
 .Hairdresser .time {
-    border-top:1px solid #eee;
+    border-top: 1px solid #eee;
     padding: 8px;
     font-size: 12px;
+}
+
+.Hairdresser .time.active {
+    background-color: #ff524d;
+    color: white;
 }
