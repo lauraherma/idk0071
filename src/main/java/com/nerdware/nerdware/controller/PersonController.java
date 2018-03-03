@@ -16,39 +16,39 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
-@RestController
-public class PersonController {
+//@RestController
+//public class PersonController {
+//
+//    @Autowired
+//    PersonRepository personRepository;
+//
+//    @GetMapping("/")
+//    public List<String> personList() {
+//        return Arrays.asList("Triinu", "Laura");
+//    }
 
-    @Autowired
-    PersonRepository personRepository;
+//    @RequestMapping(value="/create/{name}", method= RequestMethod.GET)
+//    @ResponseBody
+//    public void createNewPerson(@PathVariable String firstName, @PathVariable String lastName, @PathVariable String phone,
+//                                  @PathVariable String email, @PathVariable LocalDate dateOfBirth) {
+//        Person person = new Person();
+//        person.setFirstName(firstName);
+//        person.setLastName(lastName);
+//        person.setDateOfBirth(dateOfBirth);
+//        person.setEmail(email);
+//        person.setPhone(phone);
+//        person = personRepository.save(person);
+//    }
+//
+//    public void assignRoleToPerson(Long personId, Long roleId) {
+//        Person person = personRepository.findOne(personId);
+//        Role role = new Role();
+//        role.setPerson(person);
+//        //role.setRoleType(roleId);
+//    }
+//
+//    public List<Person> findAllHairdressers() {
+//        return personRepository.findPersonByRole(1L);
+//    }
 
-    @GetMapping("/")
-    public List<String> personList() {
-        return Arrays.asList("Triinu", "Laura");
-    }
-
-    @RequestMapping(value="/create/{name}", method= RequestMethod.GET)
-    @ResponseBody
-    public void createNewPerson(@PathVariable String firstName, @PathVariable String lastName, @PathVariable String phone,
-                                  @PathVariable String email, @PathVariable LocalDate dateOfBirth) {
-        Person person = new Person();
-        person.setFirstName(firstName);
-        person.setLastName(lastName);
-        person.setDateOfBirth(dateOfBirth);
-        person.setEmail(email);
-        person.setPhone(phone);
-        person = personRepository.save(person);
-    }
-
-    public void assignRoleToPerson(Long personId, Long roleId) {
-        Person person = personRepository.findOne(personId);
-        Role role = new Role();
-        role.setPerson(person);
-        //role.setRoleType(roleId);
-    }
-
-    public List<Person> findAllHairdressers() {
-        return personRepository.findPersonByRole(1L);
-    }
-
-}
+//}
