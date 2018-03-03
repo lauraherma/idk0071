@@ -30,7 +30,7 @@ public class PersonController {
     @RequestMapping(value="/create/{name}", method= RequestMethod.GET)
     @ResponseBody
     public void createNewPerson(@PathVariable String firstName, @PathVariable String lastName, @PathVariable String phone,
-                                  @PathVariable String email, @PathVariable LocalDate dateOfBirth) {
+                                @PathVariable String email, @PathVariable LocalDate dateOfBirth) {
         /*Person person = new Person();
         person.setFirstName(firstName);
         person.setLastName(lastName);
