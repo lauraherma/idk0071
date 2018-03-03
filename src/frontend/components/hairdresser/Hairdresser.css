@@ -1,3 +1,8 @@
 .Hairdresser{
-
+    border-right: 1px solid #eeeeee;
+    padding: 8px;
+    width:150px;
 }
+.Hairdresser:nth-child(odd){
+}
+

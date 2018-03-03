@@ -1,5 +1,6 @@
 import React from "react";
 import {Hairdresser} from "../hairdresser/Hairdresser";
+import "./Home.css"
 
 export class Home extends React.Component {
     state = {
@@ -25,7 +26,7 @@ export class Home extends React.Component {
                 ]
             };
             this.setState(newState);
-        }, 1000);
+        }, 100);
     }
 
     getLoader() {
@@ -42,11 +43,31 @@ export class Home extends React.Component {
         })
     }
 
+    addHairDresser = () => {
+        const hairdresser = {
+            id: 3,
+            name: "kati",
+        };
+        const newState = {
+            ...this.state,
+            hairdressers: [
+                ...this.state.hairdressers,
+                hairdresser
+            ]
+        }
+        this.setState(newState);
+    };
+
     render() {
         return <div className="Home">
             <h1>Juuksurid:</h1>
             {this.getLoader()}
-            {this.getHairdressers()}
+            <div className="hairdressers">
+                {this.getHairdressers()}
+                <button className="btn btn-primary"
+                        onClick={this.addHairDresser}>+ Lisa juuksur
+                </button>
+            </div>
         </div>
     }
 }
