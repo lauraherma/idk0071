@@ -1,13 +1,24 @@
 import React from 'react';
 import "./Hairdresser.css";
 import moment from "moment";
+import {HairdresserAddModal} from "../HairdresserAddModal/HairdresserAddModal";
+import {HairdresserAddTimeModal} from "../HairdresserAddTimeModal/HairdresserAddTimeModal";
 
 export class Hairdresser extends React.Component {
     state = {
         timeSlots: [],
     };
+    addTime = (form) => {
+        this.getHairdresser().appointments.push({
+            id: Math.random(),
+            startTime: moment(form.startTime),
+            endTime: moment(form.endTime),
+            description: "",
+        });
+        this.createTimeSlots();
+    };
 
-    componentDidMount() {
+    createTimeSlots() {
         const timeSlots = [];
         for (let i = 0; i < 26; i++) {
             const halfHourInMinutes = 30;
@@ -22,28 +33,41 @@ export class Hairdresser extends React.Component {
         });
     }
 
+
+    componentDidMount() {
+        this.createTimeSlots();
+
+    }
+
     getHairdresser() {
         return this.props.hairdresser;
     }
 
+
     getTimes() {
-        const times = this.state.timeSlots.map(timeSlot => {
-            const classes = ['time'];
-            const isActive = this.getHairdresser()
-                .appointments
-                .filter(appointment => {
-                    return moment()
-                        .range(appointment.startTime, appointment.endTime)
-                        .contains(timeSlot);
-                })
-                .length > 0;
-            if (isActive) {
-                classes.push('active');
-            }
-            return <div key={timeSlot} className={classes.join(' ')}>
-                {timeSlot.format("HH:mm")}
-            </div>
-        });
+        const
+            times = this.state.timeSlots.map(timeSlot => {
+                const classes = ['time'];
+                const appointment = this.getHairdresser()
+                    .appointments
+                    .filter(appointment => {
+                        return moment()
+                            .range(appointment.startTime, appointment.endTime)
+                            .contains(timeSlot);
+                    })[0];
+                if (appointment) {
+                    classes.push('active');
+                }
+                const appointmentElement = appointment ?
+                    <span>{appointment.name}</span> :
+                    <HairdresserAddTimeModal timeSlot={timeSlot}
+                                             addTime={this.addTime}/>
+
+                return <div key={timeSlot} className={classes.join(' ')}>
+                    {timeSlot.format("HH:mm")}
+                    {appointmentElement}
+                </div>
+            });
 
         return <div className="times">
             {times}

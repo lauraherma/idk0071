@@ -13,6 +13,17 @@
     border-top: 1px solid #eee;
     padding: 8px;
     font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.Hairdresser .time i {
+    opacity:0;
+    transition:opacity 300ms;
+}
+.Hairdresser .time:not(.active):hover i {
+    opacity: 1;
 }
 
 .Hairdresser .time.active {

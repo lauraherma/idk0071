@@ -2,6 +2,7 @@ import React from "react";
 import {Hairdresser} from "../Hairdresser/Hairdresser";
 import "./Home.css"
 import {HairdresserAddModal} from "../HairdresserAddModal/HairdresserAddModal";
+import moment from "moment";
 
 export class Home extends React.Component {
     state = {
@@ -20,22 +21,32 @@ export class Home extends React.Component {
                         appointments: [
                             {
                                 id: 11,
-                                startTime: '2018-03-03T10:30:00+02:00',
-                                endTime: '2018-03-03T13:30:00+02:00',
+                                startTime: moment().startOf('day').add(10,'hour'),
+                                endTime: moment().startOf('day').add(12,'hour'),
                                 description: 'Värv lõikus soeng',
+                                name:'Laura'
                             },
                             {
                                 id: 12,
-                                startTime: '2018-03-03T15:30:00+02:00',
-                                endTime: '2018-03-03T16:00:00+02:00',
+                                startTime: moment().startOf('day').add(14,'hour'),
+                                endTime: moment().startOf('day').add(15,'hour'),
                                 description: 'Värv lõikus soeng',
+                                name:'Triinu',
                             },
                         ]
                     },
                     {
                         id: 2,
                         name: "Minni",
-                        appointments: []
+                        appointments: [{
+                            id: 12,
+                            startTime: moment().startOf('day').add(17,'hour'),
+                            endTime: moment().startOf('day').add(19,'hour'),
+                            description: 'Värv lõikus soeng',
+                            name:'Laura',
+                        }
+
+                        ]
                     }
                 ]
             };
