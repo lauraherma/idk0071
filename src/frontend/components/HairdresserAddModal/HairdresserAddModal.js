@@ -20,7 +20,7 @@ export class HairdresserAddModal extends React.Component {
     };
 
     addHairdresser = () => {
-        fetch('http://localhost:3000/persons/add/', {
+        fetch('http://localhost:8080/persons/add', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -30,16 +30,10 @@ export class HairdresserAddModal extends React.Component {
                 firstName: 'yourValue',
                 lastName: 'yourOtherValue',
                 email: 'e@gmail.com',
-                dateOfBirth: "2018-06-25",
-                phone: "34554"
+                dateOfBirth: '2018-06-25',
+                phone: '34554'
             })
-        }).then(response => {
-            response.text();
-        }).then(html => {
-            console.log(html)
         });
-
-        console.log("fetch call");
 
         this.props.addHairdresser({
             firstName: this.state.firstName,
