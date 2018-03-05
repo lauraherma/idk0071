@@ -20,6 +20,27 @@ export class HairdresserAddModal extends React.Component {
     };
 
     addHairdresser = () => {
+        fetch('http://localhost:3000/persons/add/', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                firstName: 'yourValue',
+                lastName: 'yourOtherValue',
+                email: 'e@gmail.com',
+                dateOfBirth: "2018-06-25",
+                phone: "34554"
+            })
+        }).then(response => {
+            response.text();
+        }).then(html => {
+            console.log(html)
+        });
+
+        console.log("fetch call");
+
         this.props.addHairdresser({
             firstName: this.state.firstName,
         });
