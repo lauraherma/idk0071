@@ -1,15 +1,8 @@
 package com.nerdware.nerdware.controller;
 
 import com.nerdware.nerdware.entity.Person;
-import com.nerdware.nerdware.entity.Role;
-import com.nerdware.nerdware.repository.PersonRepository;
 import com.nerdware.nerdware.service.PersonService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -17,7 +10,7 @@ public class PersonController {
 
     /*@Autowired
     PersonRepository personRepository;*/
-    
+
     private PersonService personService;
 
 

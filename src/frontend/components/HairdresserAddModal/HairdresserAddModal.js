@@ -20,6 +20,7 @@ export class HairdresserAddModal extends React.Component {
     };
 
     addHairdresser = () => {
+        console.log(this.state.firstName);
         fetch('http://localhost:8080/persons/add', {
             method: 'POST',
             headers: {
