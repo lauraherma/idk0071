@@ -13,4 +13,60 @@ public class NerdwareApplicationTests {
 	public void contextLoads() {
 	}
 
+	@Test
+	public void addHairdresserToDatabase() {
+	}
+
+	@Test
+	public void editHairdresserData() {
+	}
+
+	@Test
+	public void addHairdresserToCalendarView() {
+	}
+
+	@Test
+	public void deleteHairdresserFromDatabase() {
+	}
+
+	@Test
+	public void addClientToDatabase() {
+	}
+
+	@Test
+	public void editClientData() {
+	}
+
+	@Test
+	public void addClientToCalendarView() {
+	}
+
+	@Test
+	public void deleteClientFromDatabase() {
+	}
+
+	@Test
+	public void addAppointmentToDatabase() {
+	}
+
+	@Test
+	public void editAppointmentData() {
+	}
+
+	@Test
+	public void addAppointmentToCalendarView() {
+	}
+
+	@Test
+	public void deleteappointmentFromDatabase() {
+	}
+
+	@Test
+	public void addNotificationToClientViaEmail() {
+	}
+
+	@Test
+	public void viewCalendarView() {
+	}
+
 }
