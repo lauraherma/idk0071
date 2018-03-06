@@ -3,6 +3,7 @@ import {Hairdresser} from "../Hairdresser/Hairdresser";
 import "./Home.css"
 import {HairdresserAddModal} from "../HairdresserAddModal/HairdresserAddModal";
 import moment from "moment";
+import lodash from "lodash";
 
 export class Home extends React.Component {
     state = {
@@ -60,12 +61,23 @@ export class Home extends React.Component {
             null;
     }
 
+    getHairdressers () {
+        return lodash.times(6, i => {
+            const hairdresser = this.state.hairdressers[i];
+            const emptyHairdresser = {
+                name: '+ Lisa juuksur',
+                appointments: []
+            };
 
-    getHairdressers() {
-        return this.state.hairdressers.map(hairdresser => {
-            return <Hairdresser key={hairdresser.id}
-                                hairdresser={hairdresser}/>
-        })
+            return hairdresser ?
+                <div key={hairdresser.id} className="Hairdresser-wrapper">
+                    <Hairdresser hairdresser={hairdresser}/>
+                </div> :
+                <div key={Math.random()} className="Hairdresser-empty">
+                    <Hairdresser hairdresser={emptyHairdresser}
+                                 addHairdresser={this.addHairDresser}/>
+                </div>;
+        });
     }
 
     addHairDresser = (hairdresser) => {
@@ -85,11 +97,10 @@ export class Home extends React.Component {
 
     render() {
         return <div className="Home">
-            <h1>Juuksurid:</h1>
+            <h1>{moment().format('MMMM Do YYYY')}</h1>
             {this.getLoader()}
             <div className="hairdressers">
                 {this.getHairdressers()}
-                <HairdresserAddModal addHairdresser={this.addHairDresser}/>
             </div>
         </div>
     }
