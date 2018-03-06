@@ -38,6 +38,7 @@ export class HairdresserAddModal extends React.Component {
         this.props.addHairdresser({
             firstName: this.state.firstName,
         });
+
         this.setState({
             firstName: '',
             modal: false,
@@ -47,9 +48,10 @@ export class HairdresserAddModal extends React.Component {
     render() {
         return (
             <div>
-                <Button color="primary"
-                        onClick={this.toggle}>+ Lisa juuksur
-                </Button>
+                <span onClick={this.toggle}>
+                    + Lisa juuksur
+                </span>
+
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
                     <ModalHeader toggle={this.toggle}>Lisa juuksur</ModalHeader>
                     <ModalBody>

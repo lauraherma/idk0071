@@ -3,6 +3,7 @@ import "./Hairdresser.css";
 import moment from "moment";
 import {HairdresserAddModal} from "../HairdresserAddModal/HairdresserAddModal";
 import {HairdresserAddTimeModal} from "../HairdresserAddTimeModal/HairdresserAddTimeModal";
+import lodash from "lodash";
 
 export class Hairdresser extends React.Component {
     state = {
@@ -14,6 +15,7 @@ export class Hairdresser extends React.Component {
             startTime: moment(form.startTime),
             endTime: moment(form.endTime),
             description: "",
+            name:form.firstName,
         });
         this.createTimeSlots();
     };
@@ -58,8 +60,12 @@ export class Hairdresser extends React.Component {
                 if (appointment) {
                     classes.push('active');
                 }
+                const removeAppointment=()=>{
+                    lodash.remove(this.getHairdresser().appointments, appointment);
+                    this.createTimeSlots();
+                };
                 const appointmentElement = appointment ?
-                    <span>{appointment.name}</span> :
+                    <span onClick={removeAppointment}>{appointment.name}</span> :
                     <HairdresserAddTimeModal timeSlot={timeSlot}
                                              addTime={this.addTime}/>
 
@@ -74,12 +80,17 @@ export class Hairdresser extends React.Component {
         </div>
     }
 
-    render() {
+    render () {
+        const header = this.getHairdresser().id ?
+            this.getHairdresser().name :
+            <HairdresserAddModal addHairdresser={this.props.addHairdresser}/>;
+
         return <div className="Hairdresser">
             <div className="name">
-                {this.getHairdresser().name}
+                {header}
             </div>
+
             {this.getTimes()}
-        </div>
+        </div>;
     }
 }
