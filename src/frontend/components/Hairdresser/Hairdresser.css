@@ -1,21 +1,43 @@
-.Hairdresser {
+.Hairdresser-wrapper,
+.Hairdresser-empty {
     border-right: 1px solid #eeeeee;
-    width: 150px;
+    flex: 1;
+    min-width: 150px;
+}
+
+.Hairdresser-empty .time {
+    opacity: 0.1;
 }
 
 .Hairdresser .name {
-    background-color: blueviolet;
+    background-color:#007bff;
     color: #fff;
-    padding: 8px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .Hairdresser .time {
     border-top: 1px solid #eee;
     padding: 8px;
     font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.Hairdresser .time i {
+    color:#007bff;
+    opacity:0;
+    transition:opacity 300ms;
+}
+.Hairdresser .time:not(.active):hover i {
+    opacity: 1;
 }
 
 .Hairdresser .time.active {
-    background-color: #ff524d;
+    background-color: #007bff;
     color: white;
+    border-color: #007bff;
 }
