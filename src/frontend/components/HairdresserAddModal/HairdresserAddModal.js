@@ -1,10 +1,15 @@
 import React from 'react';
-import {Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, Input, FormGroup, Label,} from 'reactstrap';
+import {Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, Input, FormGroup, Label} from 'reactstrap';
+import {API_URL} from "../Constants";
+import axios from 'axios';
 
 export class HairdresserAddModal extends React.Component {
     state = {
         modal: false,
         firstName: '',
+        lastName: '',
+        email: '',
+        dateOfBirth: '1990-01-01'
     };
 
     toggle = () => {
@@ -13,40 +18,42 @@ export class HairdresserAddModal extends React.Component {
         });
     };
 
-    firstNameChanged = (event) => {
+    formChanged = (event) => {
+        const target = event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
+
         this.setState({
-            firstName: event.target.value,
-        })
+            [name]: value
+        });
     };
 
     addHairdresser = () => {
-        console.log(this.state.firstName);
-        fetch('http://localhost:8080/persons/add', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                firstName: 'yourValue',
-                lastName: 'yourOtherValue',
-                email: 'e@gmail.com',
-                dateOfBirth: '2018-06-25',
-                phone: '34554'
-            })
-        });
-
-        this.props.addHairdresser({
+        axios.post(API_URL + 'persons/add', {
             firstName: this.state.firstName,
-        });
+            lastName: this.state.lastName,
+            email: this.state.email,
+            dateOfBirth: this.state.dateOfBirth,
+            phone: '34554'
+        }).then(() => {
+            this.props.addHairdresser({
+                firstName: this.state.firstName,
+                lastName: this.state.lastName,
+                email: this.state.email
+            });
 
-        this.setState({
-            firstName: '',
-            modal: false,
-        })
+            this.setState({
+                modal: false,
+                firstName: '',
+                lastName: '',
+                email: '',
+                dateOfBirth: '1990-01-01'
+            });
+        });
     };
 
     render() {
+        /* name and value have to be the same */
         return (
             <div>
                 <span onClick={this.toggle}>
@@ -58,11 +65,25 @@ export class HairdresserAddModal extends React.Component {
                     <ModalBody>
                         <Form>
                             <FormGroup>
-                                <Label>Nimi</Label>
-                                <Input name="name"
+                                <Label>Eesnimi</Label>
+                                <Input name="firstName"
                                        placeholder="Sisesta nimi"
                                        value={this.state.firstName}
-                                       onChange={this.firstNameChanged}/>
+                                       onChange={this.formChanged}/>
+                            </FormGroup>
+                            <FormGroup>
+                                <Label>Perenimi</Label>
+                                <Input name="lastName"
+                                       placeholder="Sisesta nimi"
+                                       value={this.state.lastName}
+                                       onChange={this.formChanged}/>
+                            </FormGroup>
+                            <FormGroup>
+                                <Label>Email</Label>
+                                <Input name="email"
+                                       placeholder="Sisesta nimi"
+                                       value={this.state.email}
+                                       onChange={this.formChanged}/>
                             </FormGroup>
                         </Form>
 

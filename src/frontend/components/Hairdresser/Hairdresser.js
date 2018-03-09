@@ -15,7 +15,7 @@ export class Hairdresser extends React.Component {
             startTime: moment(form.startTime),
             endTime: moment(form.endTime),
             description: "",
-            name:form.firstName,
+            name: form.firstName,
         });
         this.createTimeSlots();
     };
@@ -60,7 +60,7 @@ export class Hairdresser extends React.Component {
                 if (appointment) {
                     classes.push('active');
                 }
-                const removeAppointment=()=>{
+                const removeAppointment = () => {
                     lodash.remove(this.getHairdresser().appointments, appointment);
                     this.createTimeSlots();
                 };
@@ -80,7 +80,7 @@ export class Hairdresser extends React.Component {
         </div>
     }
 
-    render () {
+    render() {
         const header = this.getHairdresser().id ?
             this.getHairdresser().name :
             <HairdresserAddModal addHairdresser={this.props.addHairdresser}/>;

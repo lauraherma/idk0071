@@ -14,17 +14,17 @@ public class AppointmentController {
         this.appointmentService = appointmentService;
     }
 
-    @RequestMapping(value = "/appointments/add", method = RequestMethod.POST, consumes = "application/json")
+    @PostMapping(value = "/appointments/add", consumes = "application/json")
     public Appointment addHairdresser(@RequestBody Appointment appointment) {
         return appointmentService.addAppointment(appointment);
     }
 
-    @RequestMapping(value = "/appointments/{id}", method= RequestMethod.GET)
+    @GetMapping(value = "/appointments/{id}")
     public Appointment getAppointment(@PathVariable("id") long userId) {
         return appointmentService.getAppointmentById(userId);
     }
 
-    @RequestMapping(value = "/appointments", method = RequestMethod.GET)
+    @GetMapping(value = "/appointments")
     public List<Appointment> findAllAppointments() {
         return appointmentService.getAllAppointments();
     }
