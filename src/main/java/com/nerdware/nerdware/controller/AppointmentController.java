@@ -1,9 +1,12 @@
 package com.nerdware.nerdware.controller;
 
 import com.nerdware.nerdware.entity.Appointment;
-import com.nerdware.nerdware.entity.WorkType;
 import com.nerdware.nerdware.service.AppointmentService;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -30,8 +33,5 @@ public class AppointmentController {
         return appointmentService.getAllAppointments();
     }
 
-    @GetMapping(value = "/appointments/workTypes")
-    public List<WorkType> findAvailableWorkTypes() {
-        return appointmentService.getAvailableWorkTypes();
-    }
+
 }

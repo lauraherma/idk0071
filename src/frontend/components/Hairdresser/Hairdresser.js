@@ -41,11 +41,13 @@ export class Hairdresser extends React.Component {
 
     componentDidMount() {
         this.createTimeSlots();
-        axios.get(API_URL + 'appointments/workTypes')
+        let tempWorks = [];
+        axios.get(API_URL + 'workTypes')
             .then(function(response){
-                console.log(response.data); // ex.: { user: 'Your User'}
-                console.log(response.status); // ex.: 200
-            }).then(data => this.setState({ allWorks: data }));
+                tempWorks.push(response.data[0].name);
+            }).then(this.setState({
+            allWorks: tempWorks,
+        }));
     }
 
     getHairdresser() {
