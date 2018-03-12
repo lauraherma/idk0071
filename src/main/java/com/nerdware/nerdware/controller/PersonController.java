@@ -28,10 +28,17 @@ public class PersonController {
         return personService.getPersonById(userId);
     }
 
-    @GetMapping(value = "/persons")
+    @GetMapping(value = "/persons/hairdressers")
     public List<Person> findAllHairdressers() {
-        return personService.getAllPersons();
+        return personService.getAllHairdressers();
     }
+
+    @GetMapping(value = "/persons/clients")
+    public List<Person> findAllClients() {
+        return personService.getAllClients();
+    }
+
+
 
     /*@GetMapping("/")
     public List<String> personList() {

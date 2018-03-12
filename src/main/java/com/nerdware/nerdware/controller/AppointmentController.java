@@ -1,6 +1,7 @@
 package com.nerdware.nerdware.controller;
 
 import com.nerdware.nerdware.entity.Appointment;
+import com.nerdware.nerdware.entity.WorkType;
 import com.nerdware.nerdware.service.AppointmentService;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,5 +28,10 @@ public class AppointmentController {
     @GetMapping(value = "/appointments")
     public List<Appointment> findAllAppointments() {
         return appointmentService.getAllAppointments();
+    }
+
+    @GetMapping(value = "/appointments/workTypes")
+    public List<WorkType> findAvailableWorkTypes() {
+        return appointmentService.getAvailableWorkTypes();
     }
 }

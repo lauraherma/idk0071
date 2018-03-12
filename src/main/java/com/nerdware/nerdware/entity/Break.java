@@ -26,5 +26,5 @@ public class Break {
 
     @JoinColumn(name = "hairdresser_id")
     @ManyToOne(optional=false)
-    private Role hairdresserId;
+    private Role hairdresser;
 }

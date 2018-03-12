@@ -32,6 +32,10 @@ public class PersonService {
        return personRepository.findAll();
     }
 
+    public List<Person> getAllHairdressers() { return personRepository.findAllHairdressers(); }
+
+    public List<Person> getAllClients() { return personRepository.findAllClients(); }
+
     public Person getPersonById(long id) {
         return personRepository.findOne(id);
     }
