@@ -75,7 +75,7 @@ export class Home extends React.Component {
                 </div> :
                 <div key={Math.random()} className="Hairdresser-empty">
                     <Hairdresser hairdresser={emptyHairdresser}
-                                 addHairdresser={this.addHairDresser}/>
+                                 onHairdresserAdded={this.addHairDresser}/>
                 </div>;
         });
     }

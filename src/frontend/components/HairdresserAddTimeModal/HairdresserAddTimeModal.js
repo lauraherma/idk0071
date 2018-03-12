@@ -47,9 +47,9 @@ export class HairdresserAddTimeModal extends React.Component {
     componentDidMount() {
         this.setState({
             startTime: this.props.timeSlot.format(),
-            endTime:this.props.timeSlot.clone().add(90,'minutes').format(),
-            firstName:"",
-            modal:false,
+            endTime: this.props.timeSlot.clone().add(90, 'minutes').format(),
+            firstName: "",
+            modal: false,
         });
     }
 
