@@ -18,20 +18,27 @@ public class PersonController {
         this.personService = personService;
     }
 
-    @RequestMapping(value = "/persons/add", method = RequestMethod.POST, consumes = "application/json")
+    @PostMapping(value = "/persons/add", consumes = "application/json")
     public Person addHairdresser(@RequestBody Person person) {
         return personService.addPerson(person);
     }
 
-    @RequestMapping(value = "/persons/{id}", method=RequestMethod.GET)
+    @GetMapping(value = "/persons/{id}")
     public Person getHairdresser(@PathVariable("id") long userId) {
         return personService.getPersonById(userId);
     }
 
-    @RequestMapping(value = "/persons", method = RequestMethod.GET)
+    @GetMapping(value = "/persons/hairdressers")
     public List<Person> findAllHairdressers() {
-        return personService.getAllPersons();
+        return personService.getAllHairdressers();
     }
+
+    @GetMapping(value = "/persons/clients")
+    public List<Person> findAllClients() {
+        return personService.getAllClients();
+    }
+
+
 
     /*@GetMapping("/")
     public List<String> personList() {

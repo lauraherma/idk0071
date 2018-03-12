@@ -4,10 +4,13 @@ import moment from "moment";
 import {HairdresserAddModal} from "../HairdresserAddModal/HairdresserAddModal";
 import {HairdresserAddTimeModal} from "../HairdresserAddTimeModal/HairdresserAddTimeModal";
 import lodash from "lodash";
+import axios from "axios/index";
+import {API_URL} from "../Constants";
 
 export class Hairdresser extends React.Component {
     state = {
         timeSlots: [],
+        allWorks: []
     };
     addTime = (form) => {
         this.getHairdresser().appointments.push({
@@ -15,7 +18,7 @@ export class Hairdresser extends React.Component {
             startTime: moment(form.startTime),
             endTime: moment(form.endTime),
             description: "",
-            name:form.firstName,
+            name: form.firstName,
         });
         this.createTimeSlots();
     };
@@ -38,7 +41,11 @@ export class Hairdresser extends React.Component {
 
     componentDidMount() {
         this.createTimeSlots();
-
+        axios.get(API_URL + 'appointments/workTypes')
+            .then(function(response){
+                console.log(response.data); // ex.: { user: 'Your User'}
+                console.log(response.status); // ex.: 200
+            }).then(data => this.setState({ allWorks: data }));
     }
 
     getHairdresser() {
@@ -60,13 +67,14 @@ export class Hairdresser extends React.Component {
                 if (appointment) {
                     classes.push('active');
                 }
-                const removeAppointment=()=>{
+                const removeAppointment = () => {
                     lodash.remove(this.getHairdresser().appointments, appointment);
                     this.createTimeSlots();
                 };
                 const appointmentElement = appointment ?
                     <span onClick={removeAppointment}>{appointment.name}</span> :
                     <HairdresserAddTimeModal timeSlot={timeSlot}
+                                             allWorks={this.state.allWorks}
                                              addTime={this.addTime}/>
 
                 return <div key={timeSlot} className={classes.join(' ')}>
@@ -80,7 +88,7 @@ export class Hairdresser extends React.Component {
         </div>
     }
 
-    render () {
+    render() {
         const header = this.getHairdresser().id ?
             this.getHairdresser().name :
             <HairdresserAddModal addHairdresser={this.props.addHairdresser}/>;
