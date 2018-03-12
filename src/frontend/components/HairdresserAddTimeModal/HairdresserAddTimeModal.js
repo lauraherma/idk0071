@@ -104,7 +104,7 @@ export class HairdresserAddTimeModal extends React.Component {
 
     getAvailableWorks() {
         return this.props.allWorks.map(work => {
-            return <option key={work} value={work}>{work.name}</option>;
+            return <option key={work} value={work}>{work}</option>;
         });
     }
 
