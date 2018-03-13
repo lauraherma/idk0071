@@ -8,11 +8,7 @@ import java.util.List;
 @RestController
 public class PersonController {
 
-    /*@Autowired
-    PersonRepository personRepository;*/
-
     private PersonService personService;
-
 
     public PersonController(PersonService personService) {
         this.personService = personService;
@@ -37,27 +33,6 @@ public class PersonController {
     public List<Person> findAllClients() {
         return personService.getAllClients();
     }
-
-
-
-    /*@GetMapping("/")
-    public List<String> personList() {
-        return Arrays.asList("Triinu", "Laura");
-    }*/
-
-    /*
-    @RequestMapping(value="/create/{name}", method= RequestMethod.GET)
-    @ResponseBody
-    public void createNewPerson(@PathVariable String firstName, @PathVariable String lastName, @PathVariable String phone,
-                                @PathVariable String email, @PathVariable LocalDate dateOfBirth) {
-        /*Person person = new Person();
-        person.setFirstName(firstName);
-        person.setLastName(lastName);
-        person.setDateOfBirth(dateOfBirth);
-        person.setEmail(email);
-        person.setPhone(phone);
-        person = personRepository.save(person);
-    }*/
 
     /*
     public void assignRoleToPerson(Long personId, Long roleId) {
