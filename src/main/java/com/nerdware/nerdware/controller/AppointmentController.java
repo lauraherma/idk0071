@@ -12,18 +12,19 @@ import java.util.List;
 
 @RestController
 public class AppointmentController {
+
     private AppointmentService appointmentService;
 
     public AppointmentController(AppointmentService appointmentService) {
         this.appointmentService = appointmentService;
     }
 
-    @PostMapping(value = "/appointments/add", consumes = "application/json")
-    public Appointment addHairdresser(@RequestBody Appointment appointment) {
+    @PostMapping(value = "/appointment/add", consumes = "application/json")
+    public Appointment addAppointment(@RequestBody Appointment appointment) {
         return appointmentService.addAppointment(appointment);
     }
 
-    @GetMapping(value = "/appointments/{id}")
+    @GetMapping(value = "/appointment/{id}")
     public Appointment getAppointment(@PathVariable("id") long userId) {
         return appointmentService.getAppointmentById(userId);
     }

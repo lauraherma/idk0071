@@ -17,6 +17,9 @@ public class WorkType {
     @Column
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @Column(length = 200, unique = true)
     private String name;
+
     private String description;
 }

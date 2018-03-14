@@ -2,14 +2,13 @@ import React from 'react';
 import {Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, Input, FormGroup, Label} from 'reactstrap';
 import {API_URL} from "../Constants";
 import axios from 'axios';
+import {DataService} from "../DataService";
 
 export class HairdresserAddModal extends React.Component {
+    dataService = new DataService();
     state = {
         modal: false,
-        firstName: '',
-        lastName: '',
-        email: '',
-        dateOfBirth: '1990-01-01'
+        hairdresserForm: new HairdresserForm(),
     };
 
     toggle = () => {
@@ -29,31 +28,19 @@ export class HairdresserAddModal extends React.Component {
     };
 
     addHairdresser = () => {
-        axios.post(API_URL + 'persons/add', {
-            firstName: this.state.firstName,
-            lastName: this.state.lastName,
-            email: this.state.email,
-            dateOfBirth: this.state.dateOfBirth,
-            phone: '34554'
-        }).then(() => {
-            this.props.addHairdresser({
-                firstName: this.state.firstName,
-                lastName: this.state.lastName,
-                email: this.state.email
-            });
+        this.dataService.addPerson(this.state.hairdresserForm)
+            .then(() => {this.props.addHairdresser(this.state.hairdresserForm);
 
             this.setState({
                 modal: false,
-                firstName: '',
-                lastName: '',
-                email: '',
-                dateOfBirth: '1990-01-01'
+                hairdresserForm: new HairdresserForm(),
             });
         });
     };
 
     render() {
-        /* name and value have to be the same */
+        const hairdresserForm = this.state.hairdresserForm;
+
         return (
             <div>
                 <span onClick={this.toggle}>
@@ -68,21 +55,21 @@ export class HairdresserAddModal extends React.Component {
                                 <Label>Eesnimi</Label>
                                 <Input name="firstName"
                                        placeholder="Sisesta nimi"
-                                       value={this.state.firstName}
+                                       value={hairdresserForm.firstName}
                                        onChange={this.formChanged}/>
                             </FormGroup>
                             <FormGroup>
                                 <Label>Perenimi</Label>
                                 <Input name="lastName"
                                        placeholder="Sisesta nimi"
-                                       value={this.state.lastName}
+                                       value={hairdresserForm.lastName}
                                        onChange={this.formChanged}/>
                             </FormGroup>
                             <FormGroup>
                                 <Label>Email</Label>
                                 <Input name="email"
                                        placeholder="Sisesta nimi"
-                                       value={this.state.email}
+                                       value={hairdresserForm.email}
                                        onChange={this.formChanged}/>
                             </FormGroup>
                         </Form>
@@ -96,5 +83,12 @@ export class HairdresserAddModal extends React.Component {
             </div>
         );
     }
+}
+
+export class HairdresserForm {
+    firstName;
+    lastName;
+    email;
+    dateOfBirth;
 }
 

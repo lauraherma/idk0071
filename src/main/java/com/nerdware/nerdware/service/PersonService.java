@@ -9,22 +9,13 @@ import java.util.List;
 @Service
 public class PersonService {
     private PersonRepository personRepository;
-    private Long id = 2L;
 
     public PersonService(PersonRepository personRepository) {
         this.personRepository = personRepository;
     }
 
+
     public Person addPerson(Person person) {
-        // siia kõik setterid person.set..
-
-        /*person.setId(id++);
-        person.setFirstName(person.getFirstName());
-        person.setLastName(person.getLastName());
-        person.setDateOfBirth(person.getDateOfBirth());
-        person.setEmail(person.getEmail());
-        person.setPhone(person.getPhone());*/
-
         return personRepository.save(person);
     }
 

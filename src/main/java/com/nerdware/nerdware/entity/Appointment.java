@@ -22,6 +22,8 @@ public class Appointment {
     private Long id;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
+
+    @Column(length = 1000)
     private String description;
 
     @JoinColumn(name = "hairdresser_id")

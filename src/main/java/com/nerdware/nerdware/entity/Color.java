@@ -17,6 +17,8 @@ public class Color {
     @Column
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @Column(unique = true)
     private String code;
     private Double amount;
 

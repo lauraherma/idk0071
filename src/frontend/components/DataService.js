@@ -1,0 +1,37 @@
+import axios from "axios/index";
+import {API_URL} from "./Constants";
+
+export class DataService  {
+
+    getRequest(...urlParts) {
+        let url = urlParts.join('/');
+        return axios.get(API_URL + url)
+    }
+
+    postRequest(data, ...urlParts) {
+        let url = urlParts.join('/');
+        return axios.post(API_URL + url, data)
+    }
+
+    getHairdressers() {
+        return this.getRequest('hairdressers');
+    }
+
+    getAllWorkTypes() {
+        return this.getRequest('work-types');
+    }
+
+    addPerson(data) {
+        return this.postRequest(data, 'person', 'add');
+    }
+
+    addAppointment(data) {
+        return this.postRequest(data, 'appointment', 'add');
+    }
+
+    getClients(name) {
+        return this.getRequest('roles', 'clients', name);
+    }
+
+
+}

@@ -6,8 +6,12 @@ import {HairdresserAddTimeModal} from "../HairdresserAddTimeModal/HairdresserAdd
 import lodash from "lodash";
 import axios from "axios/index";
 import {API_URL} from "../Constants";
+import {DataService} from "../DataService";
 
 export class Hairdresser extends React.Component {
+
+    dataService = new DataService();
+
     state = {
         timeSlots: [],
         allWorks: []
@@ -42,7 +46,7 @@ export class Hairdresser extends React.Component {
     componentDidMount() {
         this.createTimeSlots();
         let tempWorks = [];
-        axios.get(API_URL + 'workTypes')
+        this.dataService.getAllWorkTypes()
             .then(function(response){
                 tempWorks.push(response.data[0].name);
             }).then(this.setState({
