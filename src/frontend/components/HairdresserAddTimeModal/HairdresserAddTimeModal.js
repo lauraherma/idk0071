@@ -1,13 +1,34 @@
 import React from 'react';
 import {Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, Input, FormGroup, Label, Row, Col} from 'reactstrap';
 import moment from "moment";
+import {API_URL} from "../Constants";
+import axios from "axios/index";
+import {AddWorkTypeButton} from "../AddWorkTypeButton/AddWorkTypeButton";
 
 export class HairdresserAddTimeModal extends React.Component {
     state = {
         modal: false,
         firstName: '',
+        lastName: '',
         startTime: '',
         endTime: '',
+        description: '',
+        hairdresser: '',
+        client: '',
+        work: '',
+        allClients: [],
+        allWorks: [],
+        workTypes: [{
+            id: 1,
+            name: "Lõikus",
+        }, {
+            id: 2,
+            name: "Soeng",
+        }, {
+            id: 3,
+            name: "Värvimine",
+        },
+        ],
     };
 
     toggle = () => {
@@ -33,16 +54,71 @@ export class HairdresserAddTimeModal extends React.Component {
         })
     };
 
+    formChanged = (event) => {
+        const target = event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
+
+        this.setState({
+            [name]: value
+        });
+    };
+
 
     addTime = () => {
-        this.props.addTime({
-            firstName:this.state.firstName,
-            startTime:this.state.startTime,
-            endTime:this.state.endTime,
-        });
         this.componentDidMount();
+    };
+
+    addAppointment = () => {
+
+        this.getClient();
+
+        axios.post(API_URL + 'appointments/add', {
+            startTime: this.state.startTime,
+            endTime: this.state.endTime,
+            description: this.state.description,
+            hairdresser: this.state.hairdresser,
+            client: this.state.client,
+            work: this.state.work
+        }).then(() => {
+            this.props.addAppointment({
+                startTime: this.state.startTime,
+                endTime: this.state.endTime,
+                description: this.state.description,
+                hairdresser: this.state.hairdresser,
+                client: this.state.client,
+                work: this.state.work
+            });
+
+            this.setState({
+                modal: false,
+                firstName: '',
+                lastName: '',
+                startTime: '',
+                endTime: '',
+                description: '',
+                hairdresser: '',
+                client: '',
+                work: '',
+                allClients: [],
+            });
+        });
+
+        this.addTime();
 
     };
+
+    getClient() {
+        axios.get(API_URL + 'roles/client/' + this.state.firstName + '&' + this.state.lastName, {
+            client: this.state.client
+        });
+    }
+
+    getAvailableWorks() {
+        return this.props.allWorks.map(work => {
+            return <option key={work} value={work}>{work}</option>;
+        });
+    }
 
     componentDidMount() {
         this.setState({
@@ -73,7 +149,37 @@ export class HairdresserAddTimeModal extends React.Component {
         });
     }
 
+    getWorkTypes() {
+
+        return this.state.workTypes.map(workType => {
+            return <FormGroup check inline>
+                <Label check>
+                    <Input type="checkbox"/>
+                    {workType.name}
+                </Label>
+            </FormGroup>
+
+        })
+    }
+
+    addWorkType = (workType) => {
+        this.setState({
+            workTypes: [
+                ...this.state.workTypes,
+                {
+                    id: Math.random(),
+                    name: workType,
+                }
+            ]
+
+        })
+
+
+    };
+
+
     render() {
+
         return (
             <div>
                 <i onClick={this.toggle} className="fas fa-plus-circle"/>
@@ -82,16 +188,28 @@ export class HairdresserAddTimeModal extends React.Component {
                     <ModalBody>
                         <Form>
                             <FormGroup>
-                                <Label>Kliendi nimi</Label>
-                                <Input name="name"
-                                       placeholder="Sisesta nimi"
+                                <Label>Nimi *</Label>
+                                <Input name="firstName"
+                                       placeholder="Sisesta ees- ja perenimi"
                                        value={this.state.firstName}
                                        onChange={this.firstNameChanged}/>
+                            </FormGroup>
+                            <FormGroup>
+                                <div>Tööliik</div>
+                                {this.getWorkTypes()}
+                                <AddWorkTypeButton addWorkType={this.addWorkType}/>
+                            </FormGroup>
+                            <FormGroup>
+                                <Label>Kirjeldus</Label>
+                                <Input name="description"
+                                       placeholder="Sisesta kirjeldus"
+                                       value={this.state.description}
+                                       onChange={this.formChanged}/>
                             </FormGroup>
                             <Row>
                                 <Col sm={6}>
                                     <FormGroup>
-                                        <Label>Algus</Label>
+                                        <Label>Algus *</Label>
                                         <select name="startTime"
                                                 placeholder="HH:mm"
                                                 value={this.state.startTime}
@@ -104,7 +222,7 @@ export class HairdresserAddTimeModal extends React.Component {
                                 </Col>
                                 <Col sm={6}>
                                     <FormGroup>
-                                        <Label>Lõpp</Label>
+                                        <Label>Lõpp *</Label>
                                         <select name="endTime"
                                                 placeholder="HH:mm"
                                                 value={this.state.endTime}
@@ -114,16 +232,12 @@ export class HairdresserAddTimeModal extends React.Component {
                                         </select>
                                     </FormGroup>
                                 </Col>
-
                             </Row>
-
-
                         </Form>
-
                     </ModalBody>
                     <ModalFooter>
                         <Button color="light" onClick={this.toggle}>Cancel</Button>
-                        <Button color="primary" onClick={this.addTime}>Lisa aeg</Button>
+                        <Button color="primary" onClick={this.addAppointment}>Lisa aeg</Button>
                     </ModalFooter>
                 </Modal>
             </div>

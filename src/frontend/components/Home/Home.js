@@ -1,13 +1,13 @@
 import React from "react";
 import {Hairdresser} from "../Hairdresser/Hairdresser";
 import "./Home.css"
-import {HairdresserAddModal} from "../HairdresserAddModal/HairdresserAddModal";
 import moment from "moment";
 import lodash from "lodash";
 
 export class Home extends React.Component {
     state = {
         isLoading: true,
+        sidebarOpen : false,
         hairdressers: [],
     };
 
@@ -96,12 +96,15 @@ export class Home extends React.Component {
     };
 
     render() {
-        return <div className="Home">
+        return (
+            <div className="Home">
+
             <h1>{moment().format('MMMM Do YYYY')}</h1>
             {this.getLoader()}
             <div className="hairdressers">
                 {this.getHairdressers()}
             </div>
         </div>
+        );
     }
 }

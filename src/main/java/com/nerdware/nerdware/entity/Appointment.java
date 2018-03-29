@@ -26,14 +26,13 @@ public class Appointment {
 
     @JoinColumn(name = "hairdresser_id")
     @ManyToOne(optional=false)
-    private Role hairdresserId;
+    private Role hairdresser;
 
     @JoinColumn(name = "client_id")
     @ManyToOne(optional=false)
-    private Role clientId;
+    private Role client;
 
     @JoinColumn(name = "work_id")
     @ManyToOne(optional=false)
-    private Work workId;
-
+    private Work work;
 }

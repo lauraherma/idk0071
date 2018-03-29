@@ -53,7 +53,6 @@ export class HairdresserAddModal extends React.Component {
     };
 
     render() {
-        /* name and value have to be the same */
         return (
             <div>
                 <span onClick={this.toggle}>
