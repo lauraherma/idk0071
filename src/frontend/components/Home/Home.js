@@ -25,6 +25,20 @@ export class Home extends React.Component {
                                 startTime: moment().startOf('day').add(10,'hour'),
                                 endTime: moment().startOf('day').add(10,'hour').add(119,'minute').endOf('minute'),
                                 description: 'Värv lõikus soeng',
+                                workTypes:[{
+                                    id:1,
+                                    name:'Lõikus'
+                                },
+                                    {
+                                        id:1,
+                                        name:'kuumkäär'
+
+                                    },
+                                    {
+                                        id:1,
+                                        name:'soeng'
+
+                                    }],
                                 client: {
                                     firstName: 'Laura',
                                 }
@@ -33,7 +47,21 @@ export class Home extends React.Component {
                                 id: 12,
                                 startTime: moment().startOf('day').add(14,'hour'),
                                 endTime: moment().startOf('day').add(14,'hour').add(59,'minute').endOf('minute'),
-                                description: 'Värv lõikus soeng',
+                                description: 'Kommentaar',
+                                workTypes:[{
+                                    id:1,
+                                    name:'Lõikus'
+                                },
+                                    {
+                                        id:1,
+                                        name:'kuumkäär'
+
+                                    },
+                                    {
+                                        id:1,
+                                        name:'soeng'
+
+                                    }],
                                 client: {
                                     firstName: 'Triinu',
                                 }
@@ -47,7 +75,21 @@ export class Home extends React.Component {
                             id: 12,
                             startTime: moment().startOf('day').add(17,'hour'),
                             endTime: moment().startOf('day').add(17,'hour').add(119,'minute').endOf('minute'),
-                            description: 'Värv lõikus soeng',
+                            description: 'Kommentaar',
+                            workTypes:[{
+                                id:1,
+                                name:'Lõikus'
+                            },
+                                {
+                                    id:1,
+                                    name:'kuumkäär'
+
+                                },
+                                {
+                                    id:1,
+                                    name:'soeng'
+
+                                }],
                             client: {
                                 firstName: 'Laura',
                             }

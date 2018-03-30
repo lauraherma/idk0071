@@ -1,6 +1,7 @@
 import React from 'react';
 import {Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, Input, FormGroup, Label, Row, Col} from 'reactstrap';
 import moment from "moment";
+import lodash from 'lodash';
 import {API_URL} from "../Constants";
 import axios from "axios/index";
 import {AddWorkTypeButton} from "../AddWorkTypeButton/AddWorkTypeButton";
@@ -18,17 +19,19 @@ export class HairdresserAddTimeModal extends React.Component {
         work: '',
         allClients: [],
         allWorks: [],
-        workTypes: [{
-            id: 1,
-            name: "Lõikus",
-        }, {
-            id: 2,
-            name: "Soeng",
-        }, {
-            id: 3,
-            name: "Värvimine",
-        },
+        workTypes: [
+            {
+                id: 1,
+                name: "Lõikus",
+            }, {
+                id: 2,
+                name: "Soeng",
+            }, {
+                id: 3,
+                name: "Värvimine",
+            },
         ],
+        checkedWorkTypes:[],
     };
 
     toggle = () => {
@@ -54,6 +57,21 @@ export class HairdresserAddTimeModal extends React.Component {
         })
     };
 
+    workTypeChanged = (event) => {
+        const id=Number(event.target.value)
+        if(event.target.checked){
+            this.setState({
+                checkedWorkTypes:[...this.state.checkedWorkTypes,id]
+            })
+        }
+        else{
+            this.setState({
+                checkedWorkTypes:lodash.without(this.state.checkedWorkTypes,id)
+            })
+        }
+    };
+
+
     formChanged = (event) => {
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -73,14 +91,17 @@ export class HairdresserAddTimeModal extends React.Component {
         this.getClient();
 
         const newAppointment = {
-            startTime: this.state.startTime,
+            startTime: moment(this.state.startTime),
             endTime: moment(this.state.endTime).subtract(1, 'second'),
             description: this.state.description,
             hairdresser: this.state.hairdresser,
             client: this.state.client || {
                 firstName: this.state.firstName
             },
-            work: this.state.work
+            work: this.state.work,
+            workTypes:this.state.checkedWorkTypes.map(id=>lodash.find(this.state.workTypes,{
+                id:id
+            }))
         };
 
         this.props.addTime(newAppointment);
@@ -151,7 +172,7 @@ export class HairdresserAddTimeModal extends React.Component {
         return this.state.workTypes.map(workType => {
             return <FormGroup check inline>
                 <Label check>
-                    <Input type="checkbox"/>
+                    <Input type="checkbox" value={workType.id} onChange={this.workTypeChanged}/>
                     {workType.name}
                 </Label>
             </FormGroup>

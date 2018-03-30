@@ -13,13 +13,7 @@ export class Hairdresser extends React.Component {
         allWorks: []
     };
     addTime = (form) => {
-        this.getHairdresser().appointments.push({
-            id: Math.random(),
-            startTime: moment(form.startTime),
-            endTime: moment(form.endTime),
-            description: "",
-            client: form.client,
-        });
+        this.getHairdresser().appointments.push(form);
         this.createTimeSlots();
     };
 
@@ -98,8 +92,11 @@ export class Hairdresser extends React.Component {
                     lodash.remove(this.getHairdresser().appointments, appointment);
                     this.createTimeSlots();
                 };
+                const workTypes=appointment ?
+                    appointment.workTypes.map((workType)=>workType.name+" ") :
+                "";
                 const appointmentInfo = appointment ?
-                    appointment.client.firstName :
+                    appointment.client.firstName+" "+workTypes:
                     "";
 
                 const appointmentElement = appointment ?
