@@ -23,16 +23,20 @@ export class Home extends React.Component {
                             {
                                 id: 11,
                                 startTime: moment().startOf('day').add(10,'hour'),
-                                endTime: moment().startOf('day').add(12,'hour'),
+                                endTime: moment().startOf('day').add(10,'hour').add(119,'minute').endOf('minute'),
                                 description: 'Värv lõikus soeng',
-                                name:'Laura'
+                                client: {
+                                    firstName: 'Laura',
+                                }
                             },
                             {
                                 id: 12,
                                 startTime: moment().startOf('day').add(14,'hour'),
-                                endTime: moment().startOf('day').add(15,'hour'),
+                                endTime: moment().startOf('day').add(14,'hour').add(59,'minute').endOf('minute'),
                                 description: 'Värv lõikus soeng',
-                                name:'Triinu',
+                                client: {
+                                    firstName: 'Triinu',
+                                }
                             },
                         ]
                     },
@@ -42,9 +46,11 @@ export class Home extends React.Component {
                         appointments: [{
                             id: 12,
                             startTime: moment().startOf('day').add(17,'hour'),
-                            endTime: moment().startOf('day').add(19,'hour'),
+                            endTime: moment().startOf('day').add(17,'hour').add(119,'minute').endOf('minute'),
                             description: 'Värv lõikus soeng',
-                            name:'Laura',
+                            client: {
+                                firstName: 'Laura',
+                            }
                         }
 
                         ]

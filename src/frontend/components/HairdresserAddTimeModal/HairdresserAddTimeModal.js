@@ -70,25 +70,23 @@ export class HairdresserAddTimeModal extends React.Component {
     };
 
     addAppointment = () => {
-
         this.getClient();
 
-        axios.post(API_URL + 'appointments/add', {
+        const newAppointment = {
             startTime: this.state.startTime,
-            endTime: this.state.endTime,
+            endTime: moment(this.state.endTime).subtract(1, 'second'),
             description: this.state.description,
             hairdresser: this.state.hairdresser,
-            client: this.state.client,
+            client: this.state.client || {
+                firstName: this.state.firstName
+            },
             work: this.state.work
-        }).then(() => {
-            this.props.addAppointment({
-                startTime: this.state.startTime,
-                endTime: this.state.endTime,
-                description: this.state.description,
-                hairdresser: this.state.hairdresser,
-                client: this.state.client,
-                work: this.state.work
-            });
+        };
+
+        this.props.addTime(newAppointment);
+
+        axios.post(API_URL + 'appointments/add', newAppointment).then(() => {
+            this.props.addTime(newAppointment);
 
             this.setState({
                 modal: false,
@@ -105,7 +103,6 @@ export class HairdresserAddTimeModal extends React.Component {
         });
 
         this.addTime();
-
     };
 
     getClient() {

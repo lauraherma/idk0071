@@ -22,9 +22,38 @@
     border-top: 1px solid #eee;
     padding: 8px;
     font-size: 12px;
+    height: 35px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+.Hairdresser .time.minutes-30 {
+    height: 35px
+}
+
+.Hairdresser .time.minutes-60 {
+    height: 70px
+}
+
+.Hairdresser .time.minutes-90 {
+    height: 105px
+}
+
+.Hairdresser .time.minutes-120 {
+    height: 140px
+}
+
+.Hairdresser .time.minutes-150 {
+    height: 175px
+}
+
+.Hairdresser .time.minutes-180 {
+    height: 210px
+}
+
+.Hairdresser .time.minutes-210 {
+    height: 245px
 }
 
 .Hairdresser .time i {

@@ -52,7 +52,6 @@ export class Client extends React.Component {
 
     render() {
         return <div className="Client">
-            <h1>Mina olin siin :)</h1>
             <ClientAddModal onClientAdded={this.onClientAdded}/>
             <Table striped bordered>
                 <thead>

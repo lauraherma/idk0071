@@ -18,26 +18,10 @@ export class Hairdresser extends React.Component {
             startTime: moment(form.startTime),
             endTime: moment(form.endTime),
             description: "",
-            name: form.firstName,
+            client: form.client,
         });
         this.createTimeSlots();
     };
-
-    createTimeSlots() {
-        const timeSlots = [];
-        for (let i = 0; i < 26; i++) {
-            const halfHourInMinutes = 30;
-            const timeSlot = moment()
-                .startOf('day')
-                .set('hour', 8)
-                .add(i * halfHourInMinutes, 'minute');
-            timeSlots.push(timeSlot);
-        }
-        this.setState({
-            timeSlots: timeSlots,
-        });
-    }
-
 
     componentDidMount() {
         this.createTimeSlots();
@@ -45,15 +29,50 @@ export class Hairdresser extends React.Component {
         axios.get(API_URL + 'workTypes')
             .then(function(response){
                 tempWorks.push(response.data[0].name);
-            }).then(this.setState({
-            allWorks: tempWorks,
-        }));
+
+                this.setState({
+                    allWorks: tempWorks,
+                })
+            });
+    }
+
+    createTimeSlots() {
+        const timeSlots = [];
+
+        for (let i = 0; i < 26; i++) {
+            const halfHourInMinutes = 30;
+            const timeSlot = moment()
+                .startOf('day')
+                .set('hour', 8)
+                .add(i * halfHourInMinutes, 'minute');
+
+            const appointmentOnTimeSlot = this.getAppointmentOnTimeSlot(timeSlot);
+            const isStartTime = appointmentOnTimeSlot && timeSlot.format() === moment(appointmentOnTimeSlot.startTime).format();
+            const isEndTime = appointmentOnTimeSlot && timeSlot.format() === moment(appointmentOnTimeSlot.endTime).format();
+
+            if (!appointmentOnTimeSlot || (appointmentOnTimeSlot && isStartTime) || (appointmentOnTimeSlot && isEndTime)) {
+                timeSlots.push(timeSlot);
+            }
+        }
+
+        this.setState({
+            timeSlots: timeSlots,
+        });
     }
 
     getHairdresser() {
         return this.props.hairdresser;
     }
 
+    getAppointmentOnTimeSlot(timeSlot) {
+        return this.getHairdresser()
+            .appointments
+            .filter(appointment => {
+                return moment()
+                    .range(appointment.startTime, appointment.endTime)
+                    .contains(timeSlot);
+            })[0];
+    }
 
     getTimes() {
         const
@@ -66,24 +85,35 @@ export class Hairdresser extends React.Component {
                             .range(appointment.startTime, appointment.endTime)
                             .contains(timeSlot);
                     })[0];
+
                 if (appointment) {
                     classes.push('active');
+                    const appointmentDurationInMinutes = Math.round(
+                        (appointment.endTime.clone().utc() - appointment.startTime.clone().utc()) / 1000 / 60
+                    );
+                    classes.push('minutes-' + appointmentDurationInMinutes);
                 }
+
                 const removeAppointment = () => {
                     lodash.remove(this.getHairdresser().appointments, appointment);
                     this.createTimeSlots();
                 };
-                const appointmentInfo = appointment && moment(appointment.startTime).format()===timeSlot.format() ?
-                    appointment.name :
+                const appointmentInfo = appointment ?
+                    appointment.client.firstName :
                     "";
+
                 const appointmentElement = appointment ?
                     <span onClick={removeAppointment}>{appointmentInfo}</span> :
                     <HairdresserAddTimeModal timeSlot={timeSlot}
                                              allWorks={this.state.allWorks}
                                              addTime={this.addTime}/>
 
+                const timeFormat = appointment ?
+                    appointment.startTime.format("HH:mm") + "-" + appointment.endTime.clone().startOf("minute").add(1, 'minute').format("HH:mm") :
+                    timeSlot.format("HH:mm");
+
                 return <div key={timeSlot} className={classes.join(' ')}>
-                    {timeSlot.format("HH:mm")}
+                    {timeFormat}
                     {appointmentElement}
                 </div>
             });
