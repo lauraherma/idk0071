@@ -73,8 +73,11 @@ export class Hairdresser extends React.Component {
                     lodash.remove(this.getHairdresser().appointments, appointment);
                     this.createTimeSlots();
                 };
+                const appointmentInfo = appointment && moment(appointment.startTime).format()===timeSlot.format() ?
+                    appointment.name :
+                    "";
                 const appointmentElement = appointment ?
-                    <span onClick={removeAppointment}>{appointment.name}</span> :
+                    <span onClick={removeAppointment}>{appointmentInfo}</span> :
                     <HairdresserAddTimeModal timeSlot={timeSlot}
                                              allWorks={this.state.allWorks}
                                              addTime={this.addTime}/>
