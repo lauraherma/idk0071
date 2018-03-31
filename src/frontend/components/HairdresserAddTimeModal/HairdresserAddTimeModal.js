@@ -147,6 +147,12 @@ export class HairdresserAddTimeModal extends React.Component {
         });
     }
 
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            modal: nextProps.isOpened,
+        });
+    }
+
     getTimeOptions() {
         const timeSlots = [];
 

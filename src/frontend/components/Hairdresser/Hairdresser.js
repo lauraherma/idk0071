@@ -10,9 +10,11 @@ import {AppointmentModal} from "../AppointmentModal/AppointmentModal";
 
 export class Hairdresser extends React.Component {
     state = {
+        timeSlotOpened: '',
         timeSlots: [],
         allWorks: []
     };
+
     addTime = (form) => {
         this.getHairdresser().appointments.push(form);
         this.createTimeSlots();
@@ -95,19 +97,26 @@ export class Hairdresser extends React.Component {
                     this.createTimeSlots();
                 };
 
+                const openTimeSlot = () => {
+                    this.setState({
+                        timeSlotOpened: timeSlot,
+                    });
+                };
 
                 const appointmentElement = appointment ?
                     <AppointmentModal appointment={appointment}
+                                      isOpened={timeSlot === this.state.timeSlotOpened}
                                       removeAppointment={removeAppointment}/> :
                     <HairdresserAddTimeModal timeSlot={timeSlot}
                                              allWorks={this.state.allWorks}
-                                             addTime={this.addTime}/>
+                                             isOpened={timeSlot === this.state.timeSlotOpened}
+                                             addTime={this.addTime}/>;
 
                 const timeFormat = appointment ?
                     appointment.startTime.format("HH:mm") + "-" + appointment.endTime.clone().startOf("minute").add(1, 'minute').format("HH:mm") :
                     timeSlot.format("HH:mm");
 
-                return <div key={timeSlot} className={classes.join(' ')}>
+                return <div onClick={openTimeSlot} key={timeSlot} className={classes.join(' ')}>
                     {timeFormat}
                     {appointmentElement}
                 </div>
