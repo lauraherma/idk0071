@@ -173,6 +173,8 @@ Lean põhimõtted meie projektis:
     Decide as late as possible
 
 
+TO DO
+
 
 
 
