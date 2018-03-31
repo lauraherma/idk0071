@@ -145,8 +145,13 @@ export class AppointmentModal extends React.Component {
             description: this.props.appointment.description,
             startTime: this.props.appointment.startTime.format(),
             endTime: this.props.appointment.endTime.clone().add(1, 'second').format(),
+            modal: this.props.isOpened,
+        });
+    }
 
-
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            modal: nextProps.isOpened,
         });
     }
 
@@ -208,11 +213,11 @@ export class AppointmentModal extends React.Component {
             {this.props.appointment.client.firstName}
             <br/>
             {this.props.appointment.workTypes.map(workType => workType.name).join(", ")}
-            </span>
+            </span>;
 
         return (
             <div>
-                <span onClick={this.toggle}>{appointmentLabel}</span>
+                <span>{appointmentLabel}</span>
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
                     <ModalHeader toggle={this.toggle}>Muuda aega</ModalHeader>
                     <ModalBody>
