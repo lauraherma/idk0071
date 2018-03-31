@@ -7,7 +7,7 @@ import lodash from "lodash";
 export class Home extends React.Component {
     state = {
         isLoading: true,
-        sidebarOpen : false,
+        sidebarOpen: false,
         hairdressers: [],
     };
 
@@ -22,21 +22,21 @@ export class Home extends React.Component {
                         appointments: [
                             {
                                 id: 11,
-                                startTime: moment().startOf('day').add(10,'hour'),
-                                endTime: moment().startOf('day').add(10,'hour').add(119,'minute').endOf('minute'),
+                                startTime: moment().startOf('day').add(10, 'hour'),
+                                endTime: moment().startOf('day').add(10, 'hour').add(119, 'minute').endOf('minute'),
                                 description: 'Värv lõikus soeng',
-                                workTypes:[{
-                                    id:1,
-                                    name:'Lõikus'
+                                workTypes: [{
+                                    id: 1,
+                                    name: 'Lõikus'
                                 },
                                     {
-                                        id:1,
-                                        name:'kuumkäär'
+                                        id: 2,
+                                        name: 'Soeng'
 
                                     },
                                     {
-                                        id:1,
-                                        name:'soeng'
+                                        id: 3,
+                                        name: 'Värvimine'
 
                                     }],
                                 client: {
@@ -45,23 +45,15 @@ export class Home extends React.Component {
                             },
                             {
                                 id: 12,
-                                startTime: moment().startOf('day').add(14,'hour'),
-                                endTime: moment().startOf('day').add(14,'hour').add(59,'minute').endOf('minute'),
+                                startTime: moment().startOf('day').add(14, 'hour'),
+                                endTime: moment().startOf('day').add(14, 'hour').add(59, 'minute').endOf('minute'),
                                 description: 'Kommentaar',
-                                workTypes:[{
-                                    id:1,
-                                    name:'Lõikus'
-                                },
+                                workTypes: [
                                     {
-                                        id:1,
-                                        name:'kuumkäär'
-
+                                        id: 1,
+                                        name: 'Lõikus'
                                     },
-                                    {
-                                        id:1,
-                                        name:'soeng'
-
-                                    }],
+                                ],
                                 client: {
                                     firstName: 'Triinu',
                                 }
@@ -73,23 +65,16 @@ export class Home extends React.Component {
                         name: "Minni",
                         appointments: [{
                             id: 12,
-                            startTime: moment().startOf('day').add(17,'hour'),
-                            endTime: moment().startOf('day').add(17,'hour').add(119,'minute').endOf('minute'),
+                            startTime: moment().startOf('day').add(17, 'hour'),
+                            endTime: moment().startOf('day').add(17, 'hour').add(119, 'minute').endOf('minute'),
                             description: 'Kommentaar',
-                            workTypes:[{
-                                id:1,
-                                name:'Lõikus'
-                            },
+                            workTypes: [
                                 {
-                                    id:1,
-                                    name:'kuumkäär'
+                                    id: 2,
+                                    name: 'Soeng'
 
                                 },
-                                {
-                                    id:1,
-                                    name:'soeng'
-
-                                }],
+                            ],
                             client: {
                                 firstName: 'Laura',
                             }
@@ -109,7 +94,7 @@ export class Home extends React.Component {
             null;
     }
 
-    getHairdressers () {
+    getHairdressers() {
         return lodash.times(6, i => {
             const hairdresser = this.state.hairdressers[i];
             const emptyHairdresser = {
@@ -147,12 +132,12 @@ export class Home extends React.Component {
         return (
             <div className="Home">
 
-            <h1>{moment().format('MMMM Do YYYY')}</h1>
-            {this.getLoader()}
-            <div className="hairdressers">
-                {this.getHairdressers()}
+                <h1>{moment().format('MMMM Do YYYY')}</h1>
+                {this.getLoader()}
+                <div className="hairdressers">
+                    {this.getHairdressers()}
+                </div>
             </div>
-        </div>
         );
     }
 }

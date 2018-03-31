@@ -6,6 +6,7 @@ import {HairdresserAddTimeModal} from "../HairdresserAddTimeModal/HairdresserAdd
 import lodash from "lodash";
 import axios from "axios/index";
 import {API_URL} from "../Constants";
+import {AppointmentModal} from "../AppointmentModal/AppointmentModal";
 
 export class Hairdresser extends React.Component {
     state = {
@@ -21,7 +22,7 @@ export class Hairdresser extends React.Component {
         this.createTimeSlots();
         let tempWorks = [];
         axios.get(API_URL + 'workTypes')
-            .then(function(response){
+            .then(function (response) {
                 tempWorks.push(response.data[0].name);
 
                 this.setState({
@@ -68,6 +69,7 @@ export class Hairdresser extends React.Component {
             })[0];
     }
 
+
     getTimes() {
         const
             times = this.state.timeSlots.map(timeSlot => {
@@ -88,19 +90,9 @@ export class Hairdresser extends React.Component {
                     classes.push('minutes-' + appointmentDurationInMinutes);
                 }
 
-                const removeAppointment = () => {
-                    lodash.remove(this.getHairdresser().appointments, appointment);
-                    this.createTimeSlots();
-                };
-                const workTypes=appointment ?
-                    appointment.workTypes.map((workType)=>workType.name+" ") :
-                "";
-                const appointmentInfo = appointment ?
-                    appointment.client.firstName+" "+workTypes:
-                    "";
 
                 const appointmentElement = appointment ?
-                    <span onClick={removeAppointment}>{appointmentInfo}</span> :
+                    <AppointmentModal appointment={appointment}/> :
                     <HairdresserAddTimeModal timeSlot={timeSlot}
                                              allWorks={this.state.allWorks}
                                              addTime={this.addTime}/>
