@@ -115,6 +115,7 @@ export class HairdresserAddTimeModal extends React.Component {
                 lastName: '',
                 startTime: '',
                 endTime: '',
+                price:'',
                 description: '',
                 hairdresser: '',
                 client: '',
@@ -224,11 +225,19 @@ export class HairdresserAddTimeModal extends React.Component {
                                 <AddWorkTypeButton addWorkType={this.addWorkType}/>
                             </FormGroup>
                             <FormGroup>
-                                <Label>Kirjeldus</Label>
+                                <Label>Lisa kommentaar</Label>
                                 <Input name="description"
-                                       placeholder="Sisesta kirjeldus"
+                                       placeholder="Sisesta kommentaar"
                                        value={this.state.description}
                                        onChange={this.formChanged}/>
+                            </FormGroup>
+                            <FormGroup>
+                                <Label>Hind</Label>
+                                <Input name="price"
+                                       placeholder="Sisesta hind"
+                                       value={this.state.price}
+                                       onChange={this.formChanged}
+                                       type='number'/>
                             </FormGroup>
                             <Row>
                                 <Col sm={6}>

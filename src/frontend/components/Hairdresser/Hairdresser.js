@@ -97,16 +97,23 @@ export class Hairdresser extends React.Component {
                     this.createTimeSlots();
                 };
 
+
                 const openTimeSlot = () => {
                     this.setState({
                         timeSlotOpened: timeSlot,
                     });
                 };
 
+                const changeAppointment = (changedAppointment) => {
+                    lodash.extend(appointment, changedAppointment);
+                    this.createTimeSlots();
+                };
+
                 const appointmentElement = appointment ?
                     <AppointmentModal appointment={appointment}
                                       isOpened={timeSlot === this.state.timeSlotOpened}
-                                      removeAppointment={removeAppointment}/> :
+                                      removeAppointment={removeAppointment}
+                                      changeAppointment={changeAppointment}/> :
                     <HairdresserAddTimeModal timeSlot={timeSlot}
                                              allWorks={this.state.allWorks}
                                              isOpened={timeSlot === this.state.timeSlotOpened}

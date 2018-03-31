@@ -14,6 +14,7 @@ export class AppointmentModal extends React.Component {
         startTime: '',
         endTime: '',
         description: '',
+        price: '',
         hairdresser: '',
         client: '',
         work: '',
@@ -104,10 +105,10 @@ export class AppointmentModal extends React.Component {
             }))
         };
 
-        this.props.addTime(newAppointment);
+        this.props.changeAppointment(newAppointment);
 
         axios.post(API_URL + 'appointments/add', newAppointment).then(() => {
-            this.props.addTime(newAppointment);
+            this.props.changeAppointment(newAppointment);
 
             this.setState({
                 modal: false,
@@ -235,11 +236,19 @@ export class AppointmentModal extends React.Component {
                                 <AddWorkTypeButton addWorkType={this.addWorkType}/>
                             </FormGroup>
                             <FormGroup>
-                                <Label>Kirjeldus</Label>
+                                <Label>Lisa kommentaar</Label>
                                 <Input name="description"
-                                       placeholder="Sisesta kirjeldus"
+                                       placeholder="Sisesta kommentaar"
                                        value={this.state.description}
                                        onChange={this.formChanged}/>
+                            </FormGroup>
+                            <FormGroup>
+                                <Label>Hind</Label>
+                                <Input name="price"
+                                       placeholder="Sisesta hind"
+                                       value={this.state.price}
+                                       onChange={this.formChanged}
+                                       type='number'/>
                             </FormGroup>
                             <Row>
                                 <Col sm={6}>
