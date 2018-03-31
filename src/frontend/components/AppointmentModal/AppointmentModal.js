@@ -144,7 +144,7 @@ export class AppointmentModal extends React.Component {
             checkedWorkTypes: this.props.appointment.workTypes.map(workType => workType.id),
             description: this.props.appointment.description,
             startTime: this.props.appointment.startTime.format(),
-            endTime: this.props.appointment.endTime.add(1, 'second').format(),
+            endTime: this.props.appointment.endTime.clone().add(1, 'second').format(),
 
 
         });
@@ -267,6 +267,7 @@ export class AppointmentModal extends React.Component {
                     </ModalBody>
                     <ModalFooter>
                         <Button color="light" onClick={this.toggle}>Cancel</Button>
+                        <Button color="danger" onClick={this.props.removeAppointment}>Kustuta</Button>
                         <Button color="primary" onClick={this.addAppointment}>Muuda</Button>
                     </ModalFooter>
                 </Modal>

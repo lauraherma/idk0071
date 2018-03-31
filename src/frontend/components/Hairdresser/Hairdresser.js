@@ -90,9 +90,15 @@ export class Hairdresser extends React.Component {
                     classes.push('minutes-' + appointmentDurationInMinutes);
                 }
 
+                const removeAppointment = () => {
+                    lodash.remove(this.getHairdresser().appointments, appointment);
+                    this.createTimeSlots();
+                };
+
 
                 const appointmentElement = appointment ?
-                    <AppointmentModal appointment={appointment}/> :
+                    <AppointmentModal appointment={appointment}
+                                      removeAppointment={removeAppointment}/> :
                     <HairdresserAddTimeModal timeSlot={timeSlot}
                                              allWorks={this.state.allWorks}
                                              addTime={this.addTime}/>
