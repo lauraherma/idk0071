@@ -9,15 +9,12 @@ import java.util.List;
 @Service
 public class AppointmentService {
     private AppointmentRepository appointmentRepository;
-    private Long id = 2L;
 
     public AppointmentService(AppointmentRepository appointmentRepository) {
         this.appointmentRepository = appointmentRepository;
     }
 
     public Appointment addAppointment(Appointment appointment) {
-
-
         return appointmentRepository.save(appointment);
     }
 

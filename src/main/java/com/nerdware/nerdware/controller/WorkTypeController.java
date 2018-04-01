@@ -16,7 +16,6 @@ public class WorkTypeController {
         this.workTypeService = workTypeService;
     }
 
-
     @GetMapping(value = "/workTypes")
     public List<WorkType> findAvailableWorkTypes() {
         return workTypeService.getAvailableWorkTypes();
