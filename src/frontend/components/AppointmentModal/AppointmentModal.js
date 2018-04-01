@@ -6,7 +6,7 @@ import {API_URL} from "../Constants";
 import axios from "axios/index";
 import {AddWorkTypeButton} from "../AddWorkTypeButton/AddWorkTypeButton";
 
-export class HairdresserAddTimeModal extends React.Component {
+export class AppointmentModal extends React.Component {
     state = {
         modal: false,
         firstName: '',
@@ -14,6 +14,7 @@ export class HairdresserAddTimeModal extends React.Component {
         startTime: '',
         endTime: '',
         description: '',
+        price: '',
         hairdresser: '',
         client: '',
         work: '',
@@ -104,10 +105,10 @@ export class HairdresserAddTimeModal extends React.Component {
             }))
         };
 
-        this.props.addTime(newAppointment);
+        this.props.changeAppointment(newAppointment);
 
         axios.post(API_URL + 'appointments/add', newAppointment).then(() => {
-            this.props.addTime(newAppointment);
+            this.props.changeAppointment(newAppointment);
 
             this.setState({
                 modal: false,
@@ -115,7 +116,6 @@ export class HairdresserAddTimeModal extends React.Component {
                 lastName: '',
                 startTime: '',
                 endTime: '',
-                price:'',
                 description: '',
                 hairdresser: '',
                 client: '',
@@ -141,10 +141,12 @@ export class HairdresserAddTimeModal extends React.Component {
 
     componentDidMount() {
         this.setState({
-            startTime: this.props.timeSlot.format(),
-            endTime: this.props.timeSlot.clone().add(90, 'minutes').format(),
-            firstName: "",
-            modal: false,
+            firstName: this.props.appointment.client.firstName,
+            checkedWorkTypes: this.props.appointment.workTypes.map(workType => workType.id),
+            description: this.props.appointment.description,
+            startTime: this.props.appointment.startTime.format(),
+            endTime: this.props.appointment.endTime.clone().add(1, 'second').format(),
+            modal: this.props.isOpened,
         });
     }
 
@@ -154,7 +156,7 @@ export class HairdresserAddTimeModal extends React.Component {
         });
     }
 
-    getTimeOptions() {
+    getTimeOptions(checkedTime) {
         const timeSlots = [];
 
         for (let i = 0; i < 26; i++) {
@@ -170,16 +172,18 @@ export class HairdresserAddTimeModal extends React.Component {
 
         return timeSlots.map(timeSlot => {
             const formatted = timeSlot.format('HH:mm');
-            return <option key={formatted} value={timeSlot.format()}>{formatted}</option>;
+            const isTimeChecked = moment(checkedTime).format('HH:mm') === formatted;
+            return <option checked={isTimeChecked} key={formatted} value={timeSlot.format()}>{formatted}</option>;
         });
     }
 
     getWorkTypes() {
 
         return this.state.workTypes.map(workType => {
+            const isChecked = this.state.checkedWorkTypes.includes(workType.id);
             return <FormGroup key={workType.id} check inline>
                 <Label check>
-                    <Input type="checkbox" value={workType.id} onChange={this.workTypeChanged}/>
+                    <Input checked={isChecked} type="checkbox" value={workType.id} onChange={this.workTypeChanged}/>
                     {workType.name}
                 </Label>
             </FormGroup>
@@ -205,11 +209,18 @@ export class HairdresserAddTimeModal extends React.Component {
 
     render() {
 
+
+        const appointmentLabel = <span>
+            {this.props.appointment.client.firstName}
+            <br/>
+            {this.props.appointment.workTypes.map(workType => workType.name).join(", ")}
+            </span>;
+
         return (
             <div>
-                <i onClick={this.toggle} className="fas fa-plus-circle"/>
+                <span>{appointmentLabel}</span>
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-                    <ModalHeader toggle={this.toggle}>Lisa Aeg</ModalHeader>
+                    <ModalHeader toggle={this.toggle}>Muuda aega</ModalHeader>
                     <ModalBody>
                         <Form>
                             <FormGroup>
@@ -249,7 +260,7 @@ export class HairdresserAddTimeModal extends React.Component {
                                                 onChange={this.startTimeChanged}
                                                 className="custom-select">
 
-                                            {this.getTimeOptions()}
+                                            {this.getTimeOptions(this.state.startTime)}
                                         </select>
                                     </FormGroup>
                                 </Col>
@@ -261,7 +272,7 @@ export class HairdresserAddTimeModal extends React.Component {
                                                 value={this.state.endTime}
                                                 onChange={this.endTimeChanged}
                                                 className="custom-select">
-                                            {this.getTimeOptions()}
+                                            {this.getTimeOptions(this.state.endTime)}
                                         </select>
                                     </FormGroup>
                                 </Col>
@@ -270,7 +281,8 @@ export class HairdresserAddTimeModal extends React.Component {
                     </ModalBody>
                     <ModalFooter>
                         <Button color="light" onClick={this.toggle}>Cancel</Button>
-                        <Button color="primary" onClick={this.addAppointment}>Lisa aeg</Button>
+                        <Button color="danger" onClick={this.props.removeAppointment}>Kustuta</Button>
+                        <Button color="primary" onClick={this.addAppointment}>Muuda</Button>
                     </ModalFooter>
                 </Modal>
             </div>

@@ -3,13 +3,14 @@ import {Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, Input, FormGro
 import {API_URL} from "../Constants";
 import axios from 'axios';
 
-export class HairdresserAddModal extends React.Component {
+export class ClientAddModal extends React.Component {
     state = {
         modal: false,
         firstName: '',
         lastName: '',
         email: '',
-        dateOfBirth: '1990-01-01'
+        phone: '',
+        dateOfBirth: '1990-01-01',
     };
 
     toggle = () => {
@@ -17,6 +18,28 @@ export class HairdresserAddModal extends React.Component {
             modal: !this.state.modal
         });
     };
+
+    addClient = () => {
+        this.props.onClientAdded({
+            id:Math.random(),
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            email: this.state.email,
+            phone:this.state.phone,
+            dateOfBirth:this.state.dateOfBirth,
+
+        });
+
+        this.setState({
+            modal: false,
+            firstName: '',
+            lastName: '',
+            email: '',
+            phone: 12345,
+            dateOfBirth: '1990-01-01'
+        });
+
+    }
 
     formChanged = (event) => {
         const target = event.target;
@@ -28,60 +51,51 @@ export class HairdresserAddModal extends React.Component {
         });
     };
 
-    addHairdresser = () => {
-        axios.post(API_URL + 'persons/add', {
-            firstName: this.state.firstName,
-            lastName: this.state.lastName,
-            email: this.state.email,
-            dateOfBirth: this.state.dateOfBirth,
-            phone: '34554'
-        }).then(() => {
-            this.props.onHairdresserAdded({
-                firstName: this.state.firstName,
-                lastName: this.state.lastName,
-                email: this.state.email
-            });
-
-            this.setState({
-                modal: false,
-                firstName: '',
-                lastName: '',
-                email: '',
-                dateOfBirth: '1990-01-01'
-            });
-        });
-    };
 
     render() {
         return (
             <div>
-                <span onClick={this.toggle}>
-                    + Lisa juuksur
-                </span>
+                <Button onClick={this.toggle}>
+                    + Lisa Klient
+                </Button>
 
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-                    <ModalHeader toggle={this.toggle}>Lisa juuksur</ModalHeader>
+                    <ModalHeader toggle={this.toggle}>Lisa Klient</ModalHeader>
                     <ModalBody>
                         <Form>
                             <FormGroup>
                                 <Label>Eesnimi</Label>
                                 <Input name="firstName"
-                                       placeholder="Sisesta nimi"
+                                       placeholder="Sisesta eesnimi"
                                        value={this.state.firstName}
                                        onChange={this.formChanged}/>
                             </FormGroup>
                             <FormGroup>
                                 <Label>Perenimi</Label>
                                 <Input name="lastName"
-                                       placeholder="Sisesta nimi"
+                                       placeholder="Sisesta perekonnanimi"
                                        value={this.state.lastName}
                                        onChange={this.formChanged}/>
                             </FormGroup>
                             <FormGroup>
                                 <Label>Email</Label>
                                 <Input name="email"
-                                       placeholder="Sisesta nimi"
+                                       placeholder="Sisesta email"
                                        value={this.state.email}
+                                       onChange={this.formChanged}/>
+                            </FormGroup>
+                            <FormGroup>
+                                <Label>Number</Label>
+                                <Input name="phone"
+                                       placeholder="Sisesta number"
+                                       value={this.state.phone}
+                                       onChange={this.formChanged}/>
+                            </FormGroup>
+                            <FormGroup>
+                                <Label>Number</Label>
+                                <Input name="dateOfBirth"
+                                       placeholder="Sisesta sünnikuupäev"
+                                       value={this.state.dateOfBirth}
                                        onChange={this.formChanged}/>
                             </FormGroup>
                         </Form>
@@ -89,7 +103,7 @@ export class HairdresserAddModal extends React.Component {
                     </ModalBody>
                     <ModalFooter>
                         <Button color="light" onClick={this.toggle}>Cancel</Button>
-                        <Button color="primary" onClick={this.onHairdresserAdded}>Lisa juuksur</Button>
+                        <Button color="primary" onClick={this.addClient}>Lisa Klient</Button>
                     </ModalFooter>
                 </Modal>
             </div>

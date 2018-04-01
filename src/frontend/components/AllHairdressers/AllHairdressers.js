@@ -63,7 +63,6 @@ export class AllHairdressers extends React.Component {
     }
 
     render() {
-        /* name and value have to be the same */
         return (
             <div>
                 {this.getHairdressers()}
