@@ -10,9 +10,18 @@ import java.util.List;
 @Repository
 public interface PersonRepository extends CrudRepository<Person, Long> {
 
+
     Person findOne(Long id);
     @Override
     List<Person> findAll();
+
+    @Query("select r from Role r where r.roleType = 1")
+    List<Person> findAllHairdressers();
+
+    @Query("select r from Role r where r.roleType = 2")
+    List<Person> findAllClients();
+
+
 
     /*
     @Query("select Person from Role r where r.roletype.id = :roleTypeId")

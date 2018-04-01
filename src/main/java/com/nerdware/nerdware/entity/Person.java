@@ -25,5 +25,4 @@ public class Person {
     private String email;
     private LocalDate dateOfBirth;
     private String phone;
-
 }

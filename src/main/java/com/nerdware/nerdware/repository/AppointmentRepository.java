@@ -1,7 +1,6 @@
 package com.nerdware.nerdware.repository;
 
 import com.nerdware.nerdware.entity.Appointment;
-import com.nerdware.nerdware.entity.Person;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -16,6 +15,9 @@ public interface AppointmentRepository extends CrudRepository<Appointment, Long>
     Person save(Person person);*/
     @Override
     List<Appointment> findAll();
+
+    @Query("select name from WorkType wt")
+    List<String> findAllWorkTypes();
 
     /*
     @Query("select Person from Role r where r.roletype.id = :roleTypeId")

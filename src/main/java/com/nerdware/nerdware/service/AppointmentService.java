@@ -9,22 +9,12 @@ import java.util.List;
 @Service
 public class AppointmentService {
     private AppointmentRepository appointmentRepository;
-    private Long id = 2L;
 
     public AppointmentService(AppointmentRepository appointmentRepository) {
         this.appointmentRepository = appointmentRepository;
     }
 
     public Appointment addAppointment(Appointment appointment) {
-        // siia kõik setterid person.set..
-
-        /*person.setId(id++);
-        person.setFirstName(person.getFirstName());
-        person.setLastName(person.getLastName());
-        person.setDateOfBirth(person.getDateOfBirth());
-        person.setEmail(person.getEmail());
-        person.setPhone(person.getPhone());*/
-
         return appointmentRepository.save(appointment);
     }
 
@@ -35,4 +25,5 @@ public class AppointmentService {
     public Appointment getAppointmentById(long id) {
         return appointmentRepository.findOne(id);
     }
+
 }

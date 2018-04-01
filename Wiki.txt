@@ -142,6 +142,8 @@ Iga liikme tööd alates aine algusest:
 
     Disaini alustamine - Laura H.
 
+    Kalendrivaate ja juuksurite lisamine - Laura H.
+
 
 Lühike ülevaade projekti seisust:
 
@@ -152,8 +154,6 @@ Lühike ülevaade projekti seisust:
     pooltel tudengitel (Ari IT) vastavaid teadmisi aine läbimiseks ning pole reaalne, et Javat esimest korda nägevad
     inimesed peavad tegema Springiga projekti. Vähim, mis te teha võiks, oleks praktikumides projekti setupi kasvõi
     õpetada.
-
-
 
 
 Lean põhimõtted meie projektis:
@@ -172,6 +172,8 @@ Lean põhimõtted meie projektis:
 
     Decide as late as possible
 
+
+TO DO
 
 
 
