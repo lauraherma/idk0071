@@ -1,7 +1,5 @@
 import React from 'react';
 import {Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, Input, FormGroup, Label} from 'reactstrap';
-import {API_URL} from "../Constants";
-import axios from 'axios';
 import {DataService} from "../DataService";
 
 export class HairdresserAddModal extends React.Component {
@@ -21,19 +19,28 @@ export class HairdresserAddModal extends React.Component {
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
+        const hairDresserForm = this.state.hairdresserForm;
+        hairDresserForm[name] = value;
 
         this.setState({
-            [name]: value
+            hairdresserForm: hairDresserForm
         });
     };
 
     addHairdresser = () => {
-        this.dataService.addPerson(this.state.hairdresserForm)
-            .then(() => {this.props.addHairdresser(this.state.hairdresserForm);
+        console.log(this.state);
+        const hairdresserData = new RoleForm();
+        hairdresserData.person = this.state.hairdresserForm;
+        this.dataService.getRoleTypeByName('hairdresser').then(response => {
+            hairdresserData.roleType = response.data;
+            console.log(hairdresserData);
+            this.dataService.addRole(hairdresserData).then(() => {
+                this.props.addHairdresser(hairdresserData);
 
-            this.setState({
-                modal: false,
-                hairdresserForm: new HairdresserForm(),
+                this.setState({
+                    modal: false,
+                    hairdresserForm: new HairdresserForm(),
+                });
             });
         });
     };
@@ -77,7 +84,7 @@ export class HairdresserAddModal extends React.Component {
                     </ModalBody>
                     <ModalFooter>
                         <Button color="light" onClick={this.toggle}>Cancel</Button>
-                        <Button color="primary" onClick={this.addHairdresser}>Lisa juuksur</Button>
+                        <Button color="primary" onClick={this.onHairdresserAdded}>Lisa juuksur</Button>
                     </ModalFooter>
                 </Modal>
             </div>
@@ -86,9 +93,14 @@ export class HairdresserAddModal extends React.Component {
 }
 
 export class HairdresserForm {
-    firstName;
-    lastName;
-    email;
-    dateOfBirth;
+    firstName = '';
+    lastName = '';
+    email = '';
+    dateOfBirth = '';
+}
+
+export class RoleForm {
+    person;
+    roleType;
 }
 

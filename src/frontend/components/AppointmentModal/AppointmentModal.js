@@ -1,27 +1,25 @@
 import React from 'react';
 import {Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, Input, FormGroup, Label, Row, Col} from 'reactstrap';
 import moment from "moment";
-import {DataService} from "../DataService";
-import {AsyncTypeahead} from "react-bootstrap-typeahead";
-
 import lodash from 'lodash';
 import {API_URL} from "../Constants";
 import axios from "axios/index";
 import {AddWorkTypeButton} from "../AddWorkTypeButton/AddWorkTypeButton";
 
-export class HairdresserAddTimeModal extends React.Component {
-
-    dataService = new DataService();
-
+export class AppointmentModal extends React.Component {
     state = {
-        appointmentForm: new AppointmentForm(),
         modal: false,
-        fullName: '',
+        firstName: '',
+        lastName: '',
+        startTime: '',
+        endTime: '',
+        description: '',
+        price: '',
+        hairdresser: '',
+        client: '',
+        work: '',
+        allClients: [],
         allWorks: [],
-        allowNew: false,
-        isLoading: false,
-        multiple: false,
-        options: [],
         workTypes: [
             {
                 id: 1,
@@ -93,17 +91,38 @@ export class HairdresserAddTimeModal extends React.Component {
     addAppointment = () => {
         this.getClient();
 
+        const newAppointment = {
+            startTime: moment(this.state.startTime),
+            endTime: moment(this.state.endTime).subtract(1, 'second'),
+            description: this.state.description,
+            hairdresser: this.state.hairdresser,
+            client: this.state.client || {
+                firstName: this.state.firstName
+            },
+            work: this.state.work,
+            workTypes: this.state.checkedWorkTypes.map(id => lodash.find(this.state.workTypes, {
+                id: id
+            }))
+        };
 
-        this.dataService.addAppointment(this.state.appointmentForm)
-            .then(() => {
-                this.props.addAppointment(this.state.appointmentForm);
+        this.props.changeAppointment(newAppointment);
 
-                this.setState({
-                    modal: false,
-                    appointmentForm: new AppointmentForm(),
-                    allClients: [],
-                });
+        axios.post(API_URL + 'appointments/add', newAppointment).then(() => {
+            this.props.changeAppointment(newAppointment);
+
+            this.setState({
+                modal: false,
+                firstName: '',
+                lastName: '',
+                startTime: '',
+                endTime: '',
+                description: '',
+                hairdresser: '',
+                client: '',
+                work: '',
+                allClients: [],
             });
+        });
 
         this.addTime();
     };
@@ -122,13 +141,12 @@ export class HairdresserAddTimeModal extends React.Component {
 
     componentDidMount() {
         this.setState({
-            startTime: this.props.timeSlot.format(),
-            endTime: this.props.timeSlot.clone().add(90, 'minutes').format(),
-            firstName: "",
-            modal: false
-            endTime: this.props.timeSlot.clone().add(90, 'minutes').format(),
-            firstName: "",
-            modal: false,
+            firstName: this.props.appointment.client.firstName,
+            checkedWorkTypes: this.props.appointment.workTypes.map(workType => workType.id),
+            description: this.props.appointment.description,
+            startTime: this.props.appointment.startTime.format(),
+            endTime: this.props.appointment.endTime.clone().add(1, 'second').format(),
+            modal: this.props.isOpened,
         });
     }
 
@@ -138,7 +156,7 @@ export class HairdresserAddTimeModal extends React.Component {
         });
     }
 
-    getTimeOptions() {
+    getTimeOptions(checkedTime) {
         const timeSlots = [];
 
         for (let i = 0; i < 26; i++) {
@@ -154,48 +172,58 @@ export class HairdresserAddTimeModal extends React.Component {
 
         return timeSlots.map(timeSlot => {
             const formatted = timeSlot.format('HH:mm');
-            return <option key={formatted} value={timeSlot.format()}>{formatted}</option>;
+            const isTimeChecked = moment(checkedTime).format('HH:mm') === formatted;
+            return <option checked={isTimeChecked} key={formatted} value={timeSlot.format()}>{formatted}</option>;
         });
     }
 
-    _handleSearch = (name) => {
-        console.log(name);
-        this.setState({isLoading: true});
-        this.dataService.getClients(name)
-            .then(options => {
-                return options.data.map(d => {
-                    d.label = d.person.firstName + ' ' + d.person.lastName;
-                    return d;
-                });
-            })
-            .then(options => {
-                this.setState({
-                    isLoading: false,
-                    options: options
-                });
-            });
+    getWorkTypes() {
+
+        return this.state.workTypes.map(workType => {
+            const isChecked = this.state.checkedWorkTypes.includes(workType.id);
+            return <FormGroup key={workType.id} check inline>
+                <Label check>
+                    <Input checked={isChecked} type="checkbox" value={workType.id} onChange={this.workTypeChanged}/>
+                    {workType.name}
+                </Label>
+            </FormGroup>
+
+        })
+    }
+
+    addWorkType = (workType) => {
+        this.setState({
+            workTypes: [
+                ...this.state.workTypes,
+                {
+                    id: Math.random(),
+                    name: workType,
+                }
+            ]
+
+        })
+
+
     };
 
+
     render() {
-        const appointmentForm = this.state.appointmentForm;
+
+
+        const appointmentLabel = <span>
+            {this.props.appointment.client.firstName}
+            <br/>
+            {this.props.appointment.workTypes.map(workType => workType.name).join(", ")}
+            </span>;
+
         return (
             <div>
-                <i onClick={this.toggle} className="fas fa-plus-circle"/>
+                <span>{appointmentLabel}</span>
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-                    <ModalHeader toggle={this.toggle}>Lisa Aeg</ModalHeader>
+                    <ModalHeader toggle={this.toggle}>Muuda aega</ModalHeader>
                     <ModalBody>
                         <Form>
                             <FormGroup>
-                                <div>
-                                    <AsyncTypeahead
-                                        labelKey="label"
-                                        minLength={2}
-                                        onSearch={this._handleSearch}
-                                        isLoading={this.state.isLoading}
-                                        placeholder="Kliendi nimi..."
-                                        options={this.state.options}
-                                    />
-                                </div>
                                 <Label>Nimi *</Label>
                                 <Input name="firstName"
                                        placeholder="Sisesta ees- ja perenimi"
@@ -210,21 +238,9 @@ export class HairdresserAddTimeModal extends React.Component {
                             <FormGroup>
                                 <Label>Lisa kommentaar</Label>
                                 <Input name="description"
-                                       placeholder="Kirjeldus"
-                                       value={form.description}
                                        placeholder="Sisesta kommentaar"
                                        value={this.state.description}
-                                       value={appointmentForm.description}
                                        onChange={this.formChanged}/>
-                                <Label>Töö liik</Label>
-                                <select name="work"
-                                        value={appointmentForm.work}
-                                        onChange={this.formChanged}
-                                        className="custom-select">
-
-                                    {this.getAvailableWorks()}
-                                </select>
-                                <a>Tegu on uue kliendiga? Registreeri ta siin!</a>
                             </FormGroup>
                             <FormGroup>
                                 <Label>Hind</Label>
@@ -240,11 +256,11 @@ export class HairdresserAddTimeModal extends React.Component {
                                         <Label>Algus *</Label>
                                         <select name="startTime"
                                                 placeholder="HH:mm"
-                                                value={appointmentForm.startTime}
+                                                value={this.state.startTime}
                                                 onChange={this.startTimeChanged}
                                                 className="custom-select">
 
-                                            {this.getTimeOptions()}
+                                            {this.getTimeOptions(this.state.startTime)}
                                         </select>
                                     </FormGroup>
                                 </Col>
@@ -253,20 +269,20 @@ export class HairdresserAddTimeModal extends React.Component {
                                         <Label>Lõpp *</Label>
                                         <select name="endTime"
                                                 placeholder="HH:mm"
-                                                value={appointmentForm.endTime}
+                                                value={this.state.endTime}
                                                 onChange={this.endTimeChanged}
                                                 className="custom-select">
-                                            {this.getTimeOptions()}
+                                            {this.getTimeOptions(this.state.endTime)}
                                         </select>
                                     </FormGroup>
                                 </Col>
-
                             </Row>
                         </Form>
                     </ModalBody>
                     <ModalFooter>
                         <Button color="light" onClick={this.toggle}>Cancel</Button>
-                        <Button color="primary" onClick={this.addAppointment}>Lisa aeg</Button>
+                        <Button color="danger" onClick={this.props.removeAppointment}>Kustuta</Button>
+                        <Button color="primary" onClick={this.addAppointment}>Muuda</Button>
                     </ModalFooter>
                 </Modal>
             </div>
@@ -274,16 +290,3 @@ export class HairdresserAddTimeModal extends React.Component {
     }
 }
 
-export class AppointmentForm {
-    firstName;
-    lastName;
-    fullName;
-    startTime;
-    endTime;
-    description;
-    hairdresser;
-    client;
-    work;
-    allClients;
-    allWorks;
-}

@@ -3,57 +3,27 @@ import {Hairdresser} from "../Hairdresser/Hairdresser";
 import "./Home.css"
 import moment from "moment";
 import lodash from "lodash";
+import {DataService} from "../DataService";
 
 export class Home extends React.Component {
+
+    dataService = new DataService();
+
     state = {
         isLoading: true,
-        sidebarOpen : false,
+        sidebarOpen: false,
         hairdressers: [],
     };
 
     componentDidMount() {
-        setTimeout(() => {
-            const newState = {
-                isLoading: false,
-                hairdressers: [
-                    {
-                        id: 1,
-                        name: "Sille",
-                        appointments: [
-                            {
-                                id: 11,
-                                startTime: moment().startOf('day').add(10,'hour'),
-                                endTime: moment().startOf('day').add(12,'hour'),
-                                description: 'Värv lõikus soeng',
-                                name:'Laura'
-                            },
-                            {
-                                id: 12,
-                                startTime: moment().startOf('day').add(14,'hour'),
-                                endTime: moment().startOf('day').add(15,'hour'),
-                                description: 'Värv lõikus soeng',
-                                name:'Triinu',
-                            },
-                        ]
-                    },
-                    {
-                        id: 2,
-                        name: "Minni",
-                        appointments: [{
-                            id: 12,
-                            startTime: moment().startOf('day').add(17,'hour'),
-                            endTime: moment().startOf('day').add(19,'hour'),
-                            description: 'Värv lõikus soeng',
-                            name:'Laura',
-                        }
 
-                        ]
-                    }
-                ]
-            };
-            this.setState(newState);
-        }, 100);
+        const newState = {
+            isLoading: false,
+        };
+        this.loadHairdressers();
+        this.setState(newState);
     }
+
 
     getLoader() {
         return this.state.isLoading ?
@@ -61,7 +31,15 @@ export class Home extends React.Component {
             null;
     }
 
-    getHairdressers () {
+    loadHairdressers() {
+        this.dataService.getHairdressers().then(response => {
+            this.setState({
+                hairdressers: response.data,
+            });
+        });
+    }
+
+    getHairdressers() {
         return lodash.times(6, i => {
             const hairdresser = this.state.hairdressers[i];
             const emptyHairdresser = {
@@ -99,12 +77,12 @@ export class Home extends React.Component {
         return (
             <div className="Home">
 
-            <h1>{moment().format('MMMM Do YYYY')}</h1>
-            {this.getLoader()}
-            <div className="hairdressers">
-                {this.getHairdressers()}
+                <h1>{moment().format('MMMM Do YYYY')}</h1>
+                {this.getLoader()}
+                <div className="hairdressers">
+                    {this.getHairdressers()}
+                </div>
             </div>
-        </div>
         );
     }
 }

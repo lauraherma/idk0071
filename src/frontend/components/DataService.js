@@ -14,7 +14,7 @@ export class DataService  {
     }
 
     getHairdressers() {
-        return this.getRequest('hairdressers');
+        return this.getRequest('roles','hairdressers');
     }
 
     getAllWorkTypes() {
@@ -25,12 +25,20 @@ export class DataService  {
         return this.postRequest(data, 'person', 'add');
     }
 
+    addRole(data) {
+        return this.postRequest(data, 'role', 'add');
+    }
+
     addAppointment(data) {
         return this.postRequest(data, 'appointment', 'add');
     }
 
     getClients(name) {
         return this.getRequest('roles', 'clients', name);
+    }
+
+    getRoleTypeByName(name) {
+        return this.getRequest('role-type', name)
     }
 
 

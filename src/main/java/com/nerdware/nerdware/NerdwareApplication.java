@@ -1,8 +1,9 @@
 package com.nerdware.nerdware;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackageClasses = {NerdwareApplication.class, Jsr310JpaConverters.class})
 public class NerdwareApplication {
 
 	public static void main(String[] args) {
@@ -10,14 +11,3 @@ public class NerdwareApplication {
 	}
 
 }
-
-/*
-Võtsin selle Spring Booti ametlikust tutvustusest ehk annab sellega midagi analoogset teha adminile
-@Configuration
-@EnableWebSecurity
-class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-	@Bean
-	UserDetailsService users () {
-		return new InMemoryUserDetailsManager(Collections.singleton(User.withUsername().roles("ADMIN").password("pw").build()))
-	}
-}*/
