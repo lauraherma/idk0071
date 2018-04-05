@@ -1,5 +1,5 @@
 import React from "react";
-import {Hairdresser} from "../Hairdresser/Hairdresser";
+import {HairdresserDailyAppointments} from "../HairdresserDailyAppointments/HairdresserDailyAppointments";
 import "./Home.css"
 import moment from "moment";
 import lodash from "lodash";
@@ -49,11 +49,11 @@ export class Home extends React.Component {
 
             return hairdresser ?
                 <div key={hairdresser.id} className="Hairdresser-wrapper">
-                    <Hairdresser hairdresser={hairdresser}/>
+                    <HairdresserDailyAppointments hairdresser={hairdresser}/>
                 </div> :
                 <div key={Math.random()} className="Hairdresser-empty">
-                    <Hairdresser hairdresser={emptyHairdresser}
-                                 addHairdresser={this.addHairDresser}/>
+                    <HairdresserDailyAppointments hairdresser={emptyHairdresser}
+                                                  onHairdresserAdded={this.addHairDresser}/>
                 </div>;
         });
     }
