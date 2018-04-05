@@ -8,6 +8,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @Configuration
 public class JPAConfig {
-    //kes suhtleb minu eest postgre andmebaasiga
+
 
 }

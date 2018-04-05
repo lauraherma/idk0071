@@ -3,8 +3,12 @@ import {Hairdresser} from "../Hairdresser/Hairdresser";
 import "./Home.css"
 import moment from "moment";
 import lodash from "lodash";
+import {DataService} from "../DataService";
 
 export class Home extends React.Component {
+
+    dataService = new DataService();
+
     state = {
         isLoading: true,
         sidebarOpen: false,
@@ -12,86 +16,27 @@ export class Home extends React.Component {
     };
 
     componentDidMount() {
-        setTimeout(() => {
-            const newState = {
-                isLoading: false,
-                hairdressers: [
-                    {
-                        id: 1,
-                        name: "Sille",
-                        appointments: [
-                            {
-                                id: 11,
-                                startTime: moment().startOf('day').add(10, 'hour'),
-                                endTime: moment().startOf('day').add(10, 'hour').add(119, 'minute').endOf('minute'),
-                                description: 'Värv lõikus soeng',
-                                workTypes: [{
-                                    id: 1,
-                                    name: 'Lõikus'
-                                },
-                                    {
-                                        id: 2,
-                                        name: 'Soeng'
 
-                                    },
-                                    {
-                                        id: 3,
-                                        name: 'Värvimine'
-
-                                    }],
-                                client: {
-                                    firstName: 'Laura',
-                                }
-                            },
-                            {
-                                id: 12,
-                                startTime: moment().startOf('day').add(14, 'hour'),
-                                endTime: moment().startOf('day').add(14, 'hour').add(59, 'minute').endOf('minute'),
-                                description: 'Kommentaar',
-                                workTypes: [
-                                    {
-                                        id: 1,
-                                        name: 'Lõikus'
-                                    },
-                                ],
-                                client: {
-                                    firstName: 'Triinu',
-                                }
-                            },
-                        ]
-                    },
-                    {
-                        id: 2,
-                        name: "Minni",
-                        appointments: [{
-                            id: 12,
-                            startTime: moment().startOf('day').add(17, 'hour'),
-                            endTime: moment().startOf('day').add(17, 'hour').add(119, 'minute').endOf('minute'),
-                            description: 'Kommentaar',
-                            workTypes: [
-                                {
-                                    id: 2,
-                                    name: 'Soeng'
-
-                                },
-                            ],
-                            client: {
-                                firstName: 'Laura',
-                            }
-                        }
-
-                        ]
-                    }
-                ]
-            };
-            this.setState(newState);
-        }, 100);
+        const newState = {
+            isLoading: false,
+        };
+        this.loadHairdressers();
+        this.setState(newState);
     }
+
 
     getLoader() {
         return this.state.isLoading ?
             <div>Loading...</div> :
             null;
+    }
+
+    loadHairdressers() {
+        this.dataService.getHairdressers().then(response => {
+            this.setState({
+                hairdressers: response.data,
+            });
+        });
     }
 
     getHairdressers() {
@@ -108,7 +53,7 @@ export class Home extends React.Component {
                 </div> :
                 <div key={Math.random()} className="Hairdresser-empty">
                     <Hairdresser hairdresser={emptyHairdresser}
-                                 onHairdresserAdded={this.addHairDresser}/>
+                                 addHairdresser={this.addHairDresser}/>
                 </div>;
         });
     }

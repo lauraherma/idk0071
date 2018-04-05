@@ -15,6 +15,7 @@ public class WorkTypeService {
         this.workTypeRepository = workTypeRepository;
     }
 
+
     public List<WorkType> getAvailableWorkTypes() {
         return workTypeRepository.findAll();
     }

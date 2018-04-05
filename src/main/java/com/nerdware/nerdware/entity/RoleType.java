@@ -16,6 +16,9 @@ public class RoleType {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String name;
 
+    @Column(unique = true)
+    private String name;
 }
+
+
