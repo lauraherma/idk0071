@@ -23,3 +23,4 @@ public class WorkType {
 
     private String description;
 }
+

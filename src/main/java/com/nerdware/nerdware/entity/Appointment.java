@@ -38,3 +38,4 @@ public class Appointment {
     @ManyToOne(optional=false)
     private Work work;
 }
+

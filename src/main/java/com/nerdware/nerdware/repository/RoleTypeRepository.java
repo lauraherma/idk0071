@@ -9,3 +9,4 @@ public interface RoleTypeRepository extends CrudRepository<RoleType, Long> {
 
     RoleType findRoleTypeByName(String name);
 }
+

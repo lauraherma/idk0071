@@ -20,3 +20,5 @@ public class RoleType {
     @Column(unique = true)
     private String name;
 }
+
+

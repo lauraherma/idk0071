@@ -11,3 +11,4 @@ public interface WorkTypeRepository extends CrudRepository<WorkType, Long> {
 
     List<WorkType> findAll();
 }
+

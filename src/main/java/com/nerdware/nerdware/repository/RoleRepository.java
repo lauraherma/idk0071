@@ -20,4 +20,5 @@ public interface RoleRepository extends CrudRepository<Role, Long> {
 
     @Query("select r from Role r where r.roleType = 3")
     List<Role> findAllClients();
+
 }

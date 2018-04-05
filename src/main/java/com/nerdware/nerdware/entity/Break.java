@@ -28,3 +28,4 @@ public class Break {
     @ManyToOne(optional=false)
     private Role hairdresser;
 }
+

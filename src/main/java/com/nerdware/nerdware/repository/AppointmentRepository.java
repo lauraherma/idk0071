@@ -13,4 +13,5 @@ public interface AppointmentRepository extends CrudRepository<Appointment, Long>
 
     @Override
     List<Appointment> findAll();
+
 }

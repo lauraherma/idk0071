@@ -23,3 +23,4 @@ public class Color {
     private Double amount;
 
 }
+

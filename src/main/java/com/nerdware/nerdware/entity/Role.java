@@ -21,6 +21,7 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+
     @JoinColumn(name = "person_id")
     @ManyToOne(optional=false)
     private Person person;

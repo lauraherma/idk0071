@@ -21,4 +21,5 @@ public class RoleTypeController {
         System.out.println(roleTypeService.getRoleTypeByName(name));
         return roleTypeService.getRoleTypeByName(name);
     }
+
 }

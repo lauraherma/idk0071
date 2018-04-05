@@ -22,3 +22,4 @@ public class WorkTypeController {
         return workTypeService.getAvailableWorkTypes();
     }
 }
+
