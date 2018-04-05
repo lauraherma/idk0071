@@ -35,6 +35,35 @@ export class AppointmentModal extends React.Component {
         checkedWorkTypes: [],
     };
 
+    componentDidMount() {
+        const appointment = this.props.appointment;
+
+        const appointmentInfo = {
+            firstName: appointment ? appointment.client.firstName : "",
+            checkedWorkTypes: appointment ?
+                appointment.workTypes.map(workType => workType.id) :
+                [],
+            description: appointment ? appointment.description : "",
+            startTime: appointment ?
+                appointment.startTime.format() :
+                this.props.timeSlot.format(),
+            endTime: appointment ?
+                appointment.endTime.clone().add(1, 'second').format() :
+                this.props.timeSlot.clone().add(90, 'minutes').format(),
+        };
+
+        this.setState({
+            ...appointmentInfo,
+            modal: this.props.isOpened,
+        });
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            modal: nextProps.isOpened,
+        });
+    }
+
     toggle = () => {
         this.setState({
             modal: !this.state.modal
@@ -139,23 +168,6 @@ export class AppointmentModal extends React.Component {
         });
     }
 
-    componentDidMount() {
-        this.setState({
-            firstName: this.props.appointment.client.firstName,
-            checkedWorkTypes: this.props.appointment.workTypes.map(workType => workType.id),
-            description: this.props.appointment.description,
-            startTime: this.props.appointment.startTime.format(),
-            endTime: this.props.appointment.endTime.clone().add(1, 'second').format(),
-            modal: this.props.isOpened,
-        });
-    }
-
-    componentWillReceiveProps(nextProps) {
-        this.setState({
-            modal: nextProps.isOpened,
-        });
-    }
-
     getTimeOptions(checkedTime) {
         const timeSlots = [];
 
@@ -209,12 +221,14 @@ export class AppointmentModal extends React.Component {
 
     render() {
 
-
-        const appointmentLabel = <span>
-            {this.props.appointment.client.firstName}
-            <br/>
-            {this.props.appointment.workTypes.map(workType => workType.name).join(", ")}
-            </span>;
+        const appointment = this.props.appointment;
+        const appointmentLabel = appointment ?
+            <span>
+                {this.props.appointment.client.firstName}
+                <br/>
+                {this.props.appointment.workTypes.map(workType => workType.name).join(", ")}
+            </span> :
+            <i onClick={this.toggle} className="fas fa-plus-circle"/>;
 
         return (
             <div>
@@ -231,12 +245,12 @@ export class AppointmentModal extends React.Component {
                                        onChange={this.firstNameChanged}/>
                             </FormGroup>
                             <FormGroup>
-                                <div>Tööliik</div>
+                                <div>Teenused</div>
                                 {this.getWorkTypes()}
                                 <AddWorkTypeButton addWorkType={this.addWorkType}/>
                             </FormGroup>
                             <FormGroup>
-                                <Label>Lisa kommentaar</Label>
+                                <Label>Kommentaar</Label>
                                 <Input name="description"
                                        placeholder="Sisesta kommentaar"
                                        value={this.state.description}
