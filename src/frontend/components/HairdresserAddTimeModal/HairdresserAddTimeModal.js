@@ -125,9 +125,6 @@ export class HairdresserAddTimeModal extends React.Component {
             startTime: this.props.timeSlot.format(),
             endTime: this.props.timeSlot.clone().add(90, 'minutes').format(),
             firstName: "",
-            modal: false
-            endTime: this.props.timeSlot.clone().add(90, 'minutes').format(),
-            firstName: "",
             modal: false,
         });
     }
@@ -208,12 +205,9 @@ export class HairdresserAddTimeModal extends React.Component {
                                 <AddWorkTypeButton addWorkType={this.addWorkType}/>
                             </FormGroup>
                             <FormGroup>
-                                <Label>Lisa kommentaar</Label>
+                                <Label>Lisa kirjeldus</Label>
                                 <Input name="description"
                                        placeholder="Kirjeldus"
-                                       value={form.description}
-                                       placeholder="Sisesta kommentaar"
-                                       value={this.state.description}
                                        value={appointmentForm.description}
                                        onChange={this.formChanged}/>
                                 <Label>Töö liik</Label>
