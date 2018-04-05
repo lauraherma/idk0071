@@ -24,19 +24,6 @@ export class HairdresserDailyAppointments extends React.Component {
         this.createTimeSlots();
     };
 
-    componentDidMount() {
-        this.createTimeSlots();
-        let tempWorks = [];
-        axios.get(API_URL + 'workTypes')
-            .then( (response)=> {
-                tempWorks.push(response.data[0].name);
-
-                this.setState({
-                    allWorks: tempWorks,
-                })
-            });
-    }
-
     createTimeSlots() {
         const timeSlots = [];
         for (let i = 0; i < 26; i++) {

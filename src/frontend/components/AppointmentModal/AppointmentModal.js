@@ -5,8 +5,15 @@ import lodash from 'lodash';
 import {API_URL} from "../Constants";
 import axios from "axios/index";
 import {AddWorkTypeButton} from "../AddWorkTypeButton/AddWorkTypeButton";
+import {DataService} from "../DataService";
+import {AppointmentForm} from "../HairdresserAddTimeModal/HairdresserAddTimeModal";
+import {AsyncTypeahead} from "react-bootstrap-typeahead";
+
 
 export class AppointmentModal extends React.Component {
+
+    dataService = new DataService();
+
     state = {
         modal: false,
         firstName: '',
@@ -51,6 +58,8 @@ export class AppointmentModal extends React.Component {
                 appointment.endTime.clone().add(1, 'second').format() :
                 this.props.timeSlot.clone().add(90, 'minutes').format(),
         };
+
+        this.loadWorkTypes()
 
         this.setState({
             ...appointmentInfo,
@@ -101,6 +110,15 @@ export class AppointmentModal extends React.Component {
         }
     };
 
+    loadWorkTypes() {
+
+        this.dataService.getAllWorkTypes().then(response => {
+            this.setState({
+                workTypes: response.data,
+            });
+        });
+    }
+
 
     formChanged = (event) => {
         const target = event.target;
@@ -117,7 +135,9 @@ export class AppointmentModal extends React.Component {
         this.componentDidMount();
     };
 
+
     addAppointment = () => {
+
         this.getClient();
 
         const newAppointment = {
@@ -134,24 +154,27 @@ export class AppointmentModal extends React.Component {
             }))
         };
 
+        console.log(newAppointment);
+
         this.props.changeAppointment(newAppointment);
 
-        axios.post(API_URL + 'appointments/add', newAppointment).then(() => {
-            this.props.changeAppointment(newAppointment);
-
-            this.setState({
-                modal: false,
-                firstName: '',
-                lastName: '',
-                startTime: '',
-                endTime: '',
-                description: '',
-                hairdresser: '',
-                client: '',
-                work: '',
-                allClients: [],
+        this.dataService.addAppointment(newAppointment)
+            .then(() => {
+                this.props.addAppointment(newAppointment);
+                this.props.changeAppointment(newAppointment);
+                this.setState({
+                    modal: false,
+                    firstName: '',
+                    lastName: '',
+                    startTime: '',
+                    endTime: '',
+                    description: '',
+                    hairdresser: '',
+                    client: '',
+                    work: '',
+                    allClients: [],
+                });
             });
-        });
 
         this.addTime();
     };
@@ -159,12 +182,6 @@ export class AppointmentModal extends React.Component {
     getClient() {
         axios.get(API_URL + 'roles/client/' + this.state.firstName + '&' + this.state.lastName, {
             client: this.state.client
-        });
-    }
-
-    getAvailableWorks() {
-        return this.props.allWorks.map(work => {
-            return <option key={work} value={work}>{work}</option>;
         });
     }
 
@@ -191,6 +208,7 @@ export class AppointmentModal extends React.Component {
 
     getWorkTypes() {
 
+
         return this.state.workTypes.map(workType => {
             const isChecked = this.state.checkedWorkTypes.includes(workType.id);
             return <FormGroup key={workType.id} check inline>
@@ -212,10 +230,25 @@ export class AppointmentModal extends React.Component {
                     name: workType,
                 }
             ]
-
         })
+    };
 
-
+    _handleSearch = (name) => {
+        console.log(name);
+        this.setState({isLoading: true});
+        this.dataService.getClients(name)
+            .then(options => {
+                return options.data.map(d => {
+                    d.label = d.person.firstName + ' ' + d.person.lastName;
+                    return d;
+                });
+            })
+            .then(options => {
+                this.setState({
+                    isLoading: false,
+                    options: options
+                });
+            });
     };
 
 
@@ -238,6 +271,16 @@ export class AppointmentModal extends React.Component {
                     <ModalBody>
                         <Form>
                             <FormGroup>
+                                <div>
+                                    <AsyncTypeahead
+                                        labelKey="label"
+                                        minLength={2}
+                                        onSearch={this._handleSearch}
+                                        isLoading={this.state.isLoading}
+                                        placeholder="Kliendi nimi..."
+                                        options={this.state.options}
+                                    />
+                                </div>
                                 <Label>Nimi *</Label>
                                 <Input name="firstName"
                                        placeholder="Sisesta ees- ja perenimi"
