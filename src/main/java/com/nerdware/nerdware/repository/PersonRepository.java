@@ -1,7 +1,6 @@
 package com.nerdware.nerdware.repository;
 
 import com.nerdware.nerdware.entity.Person;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,15 +14,4 @@ public interface PersonRepository extends CrudRepository<Person, Long> {
     @Override
     List<Person> findAll();
 
-    @Query("select r from Role r where r.roleType = 1")
-    List<Person> findAllHairdressers();
-
-    @Query("select r from Role r where r.roleType = 2")
-    List<Person> findAllClients();
-
-
-
-    /*
-    @Query("select Person from Role r where r.roletype.id = :roleTypeId")
-    List<Person> findPersonByRole(Long roleTypeid);*/
 }

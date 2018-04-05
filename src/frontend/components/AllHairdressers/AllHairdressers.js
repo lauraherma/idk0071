@@ -19,7 +19,7 @@ export class AllHairdressers extends React.Component {
     };
 
     addHairdresser = () => {
-        axios.post(API_URL + 'persons/add', {
+        axios.post(API_URL + 'person/add', {
             firstName: this.state.firstName,
             lastName: this.state.lastName,
             email: this.state.email,

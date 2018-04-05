@@ -6,9 +6,13 @@ import {HairdresserAddTimeModal} from "../HairdresserAddTimeModal/HairdresserAdd
 import lodash from "lodash";
 import axios from "axios/index";
 import {API_URL} from "../Constants";
+import {DataService} from "../DataService";
 import {AppointmentModal} from "../AppointmentModal/AppointmentModal";
 
 export class HairdresserDailyAppointments extends React.Component {
+
+    dataService = new DataService();
+
     state = {
         timeSlotOpened: '',
         timeSlots: [],
@@ -35,7 +39,6 @@ export class HairdresserDailyAppointments extends React.Component {
 
     createTimeSlots() {
         const timeSlots = [];
-
         for (let i = 0; i < 26; i++) {
             const halfHourInMinutes = 30;
             const timeSlot = moment()
@@ -51,10 +54,21 @@ export class HairdresserDailyAppointments extends React.Component {
                 timeSlots.push(timeSlot);
             }
         }
-
         this.setState({
             timeSlots: timeSlots,
         });
+    }
+
+
+    componentDidMount() {
+        this.createTimeSlots();
+        let tempWorks = [];
+        this.dataService.getAllWorkTypes()
+            .then(function(response){
+                tempWorks.push(response.data[0].name);
+            }).then(this.setState({
+            allWorks: tempWorks,
+        }));
     }
 
     getHairdresser() {
@@ -83,7 +97,6 @@ export class HairdresserDailyAppointments extends React.Component {
                             .range(appointment.startTime, appointment.endTime)
                             .contains(timeSlot);
                     })[0];
-
                 if (appointment) {
                     classes.push('active');
                     const appointmentDurationInMinutes = Math.round(
@@ -133,6 +146,8 @@ export class HairdresserDailyAppointments extends React.Component {
         const header = this.getHairdresser().id ?
             this.getHairdresser().name :
             <HairdresserAddModal onHairdresserAdded={this.props.onHairdresserAdded}/>;
+            this.getHairdresser().person.firstName :
+            <HairdresserAddModal addHairdresser={this.props.addHairdresser}/>;
 
         return <div className="Hairdresser">
             <div className="name">

@@ -1,15 +1,12 @@
 import React from 'react';
 import {Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, Input, FormGroup, Label} from 'reactstrap';
-import {API_URL} from "../Constants";
-import axios from 'axios';
+import {DataService} from "../DataService";
 
 export class HairdresserAddModal extends React.Component {
+    dataService = new DataService();
     state = {
         modal: false,
-        firstName: '',
-        lastName: '',
-        email: '',
-        dateOfBirth: '1990-01-01'
+        hairdresserForm: new HairdresserForm(),
     };
 
     toggle = () => {
@@ -22,37 +19,35 @@ export class HairdresserAddModal extends React.Component {
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
+        const hairDresserForm = this.state.hairdresserForm;
+        hairDresserForm[name] = value;
 
         this.setState({
-            [name]: value
+            hairdresserForm: hairDresserForm
         });
     };
 
     addHairdresser = () => {
-        axios.post(API_URL + 'persons/add', {
-            firstName: this.state.firstName,
-            lastName: this.state.lastName,
-            email: this.state.email,
-            dateOfBirth: this.state.dateOfBirth,
-            phone: '34554'
-        }).then(() => {
-            this.props.onHairdresserAdded({
-                firstName: this.state.firstName,
-                lastName: this.state.lastName,
-                email: this.state.email
-            });
+        console.log(this.state);
+        const hairdresserData = new RoleForm();
+        hairdresserData.person = this.state.hairdresserForm;
+        this.dataService.getRoleTypeByName('hairdresser').then(response => {
+            hairdresserData.roleType = response.data;
+            console.log(hairdresserData);
+            this.dataService.addRole(hairdresserData).then(() => {
+                this.props.addHairdresser(hairdresserData);
 
-            this.setState({
-                modal: false,
-                firstName: '',
-                lastName: '',
-                email: '',
-                dateOfBirth: '1990-01-01'
+                this.setState({
+                    modal: false,
+                    hairdresserForm: new HairdresserForm(),
+                });
             });
         });
     };
 
     render() {
+        const hairdresserForm = this.state.hairdresserForm;
+
         return (
             <div>
                 <span onClick={this.toggle}>
@@ -67,21 +62,21 @@ export class HairdresserAddModal extends React.Component {
                                 <Label>Eesnimi</Label>
                                 <Input name="firstName"
                                        placeholder="Sisesta nimi"
-                                       value={this.state.firstName}
+                                       value={hairdresserForm.firstName}
                                        onChange={this.formChanged}/>
                             </FormGroup>
                             <FormGroup>
                                 <Label>Perenimi</Label>
                                 <Input name="lastName"
                                        placeholder="Sisesta nimi"
-                                       value={this.state.lastName}
+                                       value={hairdresserForm.lastName}
                                        onChange={this.formChanged}/>
                             </FormGroup>
                             <FormGroup>
                                 <Label>Email</Label>
                                 <Input name="email"
                                        placeholder="Sisesta nimi"
-                                       value={this.state.email}
+                                       value={hairdresserForm.email}
                                        onChange={this.formChanged}/>
                             </FormGroup>
                         </Form>
@@ -95,5 +90,17 @@ export class HairdresserAddModal extends React.Component {
             </div>
         );
     }
+}
+
+export class HairdresserForm {
+    firstName = '';
+    lastName = '';
+    email = '';
+    dateOfBirth = '';
+}
+
+export class RoleForm {
+    person;
+    roleType;
 }
 

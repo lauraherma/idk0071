@@ -27,3 +27,4 @@ public class ColorCard {
     @ManyToOne(optional=false)
     private ColorRecipe colorRecipe;
 }
+
