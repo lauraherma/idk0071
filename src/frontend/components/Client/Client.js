@@ -1,6 +1,6 @@
 import React from 'react';
 import {Button, Table} from 'reactstrap'
-import {ClientAddModal} from '../CliendAddModal/ClientAddModal';
+import {ClientAddModal} from '../ClientAddModal/ClientAddModal';
 
 export class Client extends React.Component {
     state = {

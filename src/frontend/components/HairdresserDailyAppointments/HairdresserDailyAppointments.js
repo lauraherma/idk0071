@@ -1,5 +1,5 @@
 import React from 'react';
-import "./Hairdresser.css";
+import "./HairdresserDailyAppointments.css";
 import moment from "moment";
 import {HairdresserAddModal} from "../HairdresserAddModal/HairdresserAddModal";
 import {HairdresserAddTimeModal} from "../HairdresserAddTimeModal/HairdresserAddTimeModal";
@@ -8,7 +8,7 @@ import axios from "axios/index";
 import {API_URL} from "../Constants";
 import {AppointmentModal} from "../AppointmentModal/AppointmentModal";
 
-export class Hairdresser extends React.Component {
+export class HairdresserDailyAppointments extends React.Component {
     state = {
         timeSlotOpened: '',
         timeSlots: [],
@@ -24,7 +24,7 @@ export class Hairdresser extends React.Component {
         this.createTimeSlots();
         let tempWorks = [];
         axios.get(API_URL + 'workTypes')
-            .then(function (response) {
+            .then( (response)=> {
                 tempWorks.push(response.data[0].name);
 
                 this.setState({
@@ -109,23 +109,18 @@ export class Hairdresser extends React.Component {
                     this.createTimeSlots();
                 };
 
-                const appointmentElement = appointment ?
-                    <AppointmentModal appointment={appointment}
-                                      isOpened={timeSlot === this.state.timeSlotOpened}
-                                      removeAppointment={removeAppointment}
-                                      changeAppointment={changeAppointment}/> :
-                    <HairdresserAddTimeModal timeSlot={timeSlot}
-                                             allWorks={this.state.allWorks}
-                                             isOpened={timeSlot === this.state.timeSlotOpened}
-                                             addTime={this.addTime}/>;
-
                 const timeFormat = appointment ?
                     appointment.startTime.format("HH:mm") + "-" + appointment.endTime.clone().startOf("minute").add(1, 'minute').format("HH:mm") :
                     timeSlot.format("HH:mm");
 
                 return <div onClick={openTimeSlot} key={timeSlot} className={classes.join(' ')}>
                     {timeFormat}
-                    {appointmentElement}
+                    <AppointmentModal appointment={appointment}
+                                      timeSlot={timeSlot}
+                                      isOpened={timeSlot === this.state.timeSlotOpened}
+                                      removeAppointment={removeAppointment}
+                                      addTime={this.addTime}
+                                      changeAppointment={changeAppointment}/>
                 </div>
             });
 

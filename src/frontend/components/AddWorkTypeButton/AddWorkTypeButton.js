@@ -29,9 +29,9 @@ export class AddWorkTypeButton extends React.Component {
     getFormGroup = () => {
         if (this.state.isInputVisible) {
             return <FormGroup>
-                <Label>Tööliik</Label>
+                <Label>Lisa teenus</Label>
                 <Input name="work_type"
-                       placeholder="tööliik"
+                       placeholder="Lisa teenus"
                        value={this.state.workType}
                        onChange={this.workTypeChanged}/>
                 <Button color="primary" onClick={this.addWorkType}>Lisa</Button>

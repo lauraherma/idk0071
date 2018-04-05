@@ -52,11 +52,11 @@ export class AllHairdressers extends React.Component {
             /* const hairdresser = this.state.hairdressers[i];
 
             return hairdresser ?
-                <div key={hairdresser.id} className="Hairdresser-wrapper">
-                    <Hairdresser hairdresser={hairdresser}/>
+                <div key={hairdresser.id} className="HairdresserDailyAppointments-wrapper">
+                    <HairdresserDailyAppointments hairdresser={hairdresser}/>
                 </div> :
-                <div key={Math.random()} className="Hairdresser-empty">
-                    <Hairdresser hairdresser={emptyHairdresser}
+                <div key={Math.random()} className="HairdresserDailyAppointments-empty">
+                    <HairdresserDailyAppointments hairdresser={emptyHairdresser}
                                  addHairdresser={this.addHairDresser}/>
                 </div>;
         });*/
