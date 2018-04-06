@@ -33,7 +33,6 @@ export class HairdresserAddModal extends React.Component {
         hairdresserData.person = this.state.hairdresserForm;
         this.dataService.getRoleTypeByName('hairdresser').then(response => {
             hairdresserData.roleType = response.data;
-            console.log(hairdresserData);
             this.dataService.addRole(hairdresserData).then(() => {
                 this.props.addHairdresser(hairdresserData);
 

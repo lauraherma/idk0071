@@ -8,6 +8,7 @@ import {AddWorkTypeButton} from "../AddWorkTypeButton/AddWorkTypeButton";
 import {DataService} from "../DataService";
 import {AppointmentForm} from "../HairdresserAddTimeModal/HairdresserAddTimeModal";
 import {AsyncTypeahead} from "react-bootstrap-typeahead";
+import {HairdresserForm} from "../HairdresserAddModal/HairdresserAddModal";
 
 
 export class AppointmentModal extends React.Component {
@@ -27,18 +28,7 @@ export class AppointmentModal extends React.Component {
         work: '',
         allClients: [],
         allWorks: [],
-        workTypes: [
-            {
-                id: 1,
-                name: "Lõikus",
-            }, {
-                id: 2,
-                name: "Soeng",
-            }, {
-                id: 3,
-                name: "Värvimine",
-            },
-        ],
+        workTypes: [],
         checkedWorkTypes: [],
     };
 
@@ -59,7 +49,7 @@ export class AppointmentModal extends React.Component {
                 this.props.timeSlot.clone().add(90, 'minutes').format(),
         };
 
-        this.loadWorkTypes()
+        this.loadWorkTypes();
 
         this.setState({
             ...appointmentInfo,
@@ -82,6 +72,12 @@ export class AppointmentModal extends React.Component {
     firstNameChanged = (event) => {
         this.setState({
             firstName: event.target.value,
+        })
+    };
+
+    clientChanged = (event) => {
+        this.setState({
+            client: event.target.value,
         })
     };
 
@@ -138,20 +134,19 @@ export class AppointmentModal extends React.Component {
 
     addAppointment = () => {
 
-        this.getClient();
-
         const newAppointment = {
             startTime: moment(this.state.startTime),
             endTime: moment(this.state.endTime).subtract(1, 'second'),
             description: this.state.description,
-            hairdresser: this.state.hairdresser,
-            client: this.state.client || {
-                firstName: this.state.firstName
-            },
-            work: this.state.work,
+            hairdresser: this.props.hairdresser,
+            client: this.state.options[0],
             workTypes: this.state.checkedWorkTypes.map(id => lodash.find(this.state.workTypes, {
                 id: id
-            }))
+            })),
+            work: {workTypes: this.state.checkedWorkTypes.map(id => lodash.find(this.state.workTypes, {
+                    id: id
+                })), colorCard : {description: "", colorRecipe: {colors:[], hydrogens:[]}}},
+
         };
 
         console.log(newAppointment);
@@ -179,12 +174,6 @@ export class AppointmentModal extends React.Component {
         this.addTime();
     };
 
-    getClient() {
-        axios.get(API_URL + 'roles/client/' + this.state.firstName + '&' + this.state.lastName, {
-            client: this.state.client
-        });
-    }
-
     getTimeOptions(checkedTime) {
         const timeSlots = [];
 
@@ -208,7 +197,6 @@ export class AppointmentModal extends React.Component {
 
     getWorkTypes() {
 
-
         return this.state.workTypes.map(workType => {
             const isChecked = this.state.checkedWorkTypes.includes(workType.id);
             return <FormGroup key={workType.id} check inline>
@@ -221,20 +209,11 @@ export class AppointmentModal extends React.Component {
         })
     }
 
-    addWorkType = (workType) => {
-        this.setState({
-            workTypes: [
-                ...this.state.workTypes,
-                {
-                    id: Math.random(),
-                    name: workType,
-                }
-            ]
-        })
+    addWorkType = () => {
+        this.loadWorkTypes();
     };
 
     _handleSearch = (name) => {
-        console.log(name);
         this.setState({isLoading: true});
         this.dataService.getClients(name)
             .then(options => {

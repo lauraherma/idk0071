@@ -2,6 +2,7 @@ import React from 'react';
 import {Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, Input, FormGroup, Label} from 'reactstrap';
 import {API_URL} from "../Constants";
 import axios from 'axios';
+import {HairdresserForm, RoleForm} from "../HairdresserAddModal/HairdresserAddModal";
 
 export class ClientAddModal extends React.Component {
     state = {
@@ -20,6 +21,21 @@ export class ClientAddModal extends React.Component {
     };
 
     addClient = () => {
+
+            const clientData = new RoleForm();
+            hairdresserData.person = this.state.hairdresserForm;
+            this.dataService.getRoleTypeByName('hairdresser').then(response => {
+                hairdresserData.roleType = response.data;
+                this.dataService.addRole(hairdresserData).then(() => {
+                    this.props.addHairdresser(hairdresserData);
+
+                    this.setState({
+                        modal: false,
+                        hairdresserForm: new HairdresserForm(),
+                    });
+                });
+            });
+
         this.props.onClientAdded({
             id:Math.random(),
             firstName: this.state.firstName,
@@ -109,5 +125,17 @@ export class ClientAddModal extends React.Component {
             </div>
         );
     }
+}
+
+export class PersonForm {
+    firstName = '';
+    lastName = '';
+    email = '';
+    dateOfBirth = '';
+}
+
+export class RoleForm {
+    person;
+    roleType;
 }
 

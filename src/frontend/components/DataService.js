@@ -21,6 +21,10 @@ export class DataService  {
         return this.getRequest('work-types');
     }
 
+    addWorkType(data) {
+        return this.postRequest(data, 'work-type', 'add')
+    }
+
     addPerson(data) {
         return this.postRequest(data, 'person', 'add');
     }
