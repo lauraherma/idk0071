@@ -5,6 +5,8 @@ import lodash from 'lodash';
 import {AddWorkTypeButton} from "../AddWorkTypeButton/AddWorkTypeButton";
 import {DataService} from "../DataService";
 import {AsyncTypeahead} from "react-bootstrap-typeahead";
+import {ColorCard} from "../ColorCard/ColorCard";
+import {ColorRecipe} from "../ColorRecipe/ColorRecipe";
 
 export class AppointmentModal extends React.Component {
 
@@ -25,6 +27,61 @@ export class AppointmentModal extends React.Component {
         allWorks: [],
         workTypes: [],
         checkedWorkTypes: [],
+        colorRecipe: [
+            {
+                id: 1,
+                colorRecipeType: {
+                    id: 1,
+                    name: 'Sebastian'
+                },
+                colors: [
+                    {
+                        id: 1,
+                        code: 'Red',
+                        amount: 0,
+                    },
+                    {
+                        id: 2,
+                        code: 'Blue',
+                        amount: 1,
+                    }
+                ],
+                hydrogens: [
+                    {
+                        id: 1,
+                        name: '6%',
+                        amount: 2,
+
+                    },
+                    {
+                        id: 2,
+                        name: '3%',
+                        amount: 1,
+                    }
+                ]
+            },
+            {
+                id: 2,
+                colorRecipeType: {
+                    id: 2,
+                    name: 'Pastellimine'
+                },
+                colors: [
+                    {
+                        id: 3,
+                        code: 'Purple',
+                        amount: 0,
+                    },
+                ],
+                hydrogens: [
+                    {
+                        id: 1,
+                        name: '6%',
+                        amount: 2,
+                    },
+                ]
+            },
+        ],
     };
 
     componentDidMount() {
@@ -138,9 +195,11 @@ export class AppointmentModal extends React.Component {
             workTypes: this.state.checkedWorkTypes.map(id => lodash.find(this.state.workTypes, {
                 id: id
             })),
-            work: {workTypes: this.state.checkedWorkTypes.map(id => lodash.find(this.state.workTypes, {
+            work: {
+                workTypes: this.state.checkedWorkTypes.map(id => lodash.find(this.state.workTypes, {
                     id: id
-                })), colorCard : {description: "", colorRecipe: {colors:[], hydrogens:[]}}},
+                })), colorCard: {description: "", colorRecipe: {colors: [], hydrogens: []}}
+            },
 
         };
 
@@ -227,8 +286,10 @@ export class AppointmentModal extends React.Component {
 
 
     render() {
-
         const appointment = this.props.appointment;
+
+        const modalTitle = appointment ? 'Muuda aega' : 'Lisa aeg';
+
         const appointmentLabel = appointment ?
             <span>
                 {this.props.appointment.client.firstName}
@@ -237,11 +298,18 @@ export class AppointmentModal extends React.Component {
             </span> :
             <i onClick={this.toggle} className="fas fa-plus-circle"/>;
 
+        const buttonGroup = appointment ?
+            <div>
+                <Button color="danger" onClick={this.props.removeAppointment}>Kustuta</Button>
+                <Button color="primary" onClick={this.addAppointment}>Muuda</Button>
+            </div> :
+            <Button color="primary" onClick={this.addAppointment}>Lisa</Button>;
+
         return (
             <div>
                 <span>{appointmentLabel}</span>
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-                    <ModalHeader toggle={this.toggle}>Muuda aega</ModalHeader>
+                    <ModalHeader toggle={this.toggle}>{modalTitle}</ModalHeader>
                     <ModalBody>
                         <Form>
                             <FormGroup>
@@ -251,7 +319,7 @@ export class AppointmentModal extends React.Component {
                                         minLength={2}
                                         onSearch={this._handleSearch}
                                         isLoading={this.state.isLoading}
-                                        placeholder="Kliendi nimi..."
+                                        placeholder="Sisesta nimi"
                                         options={this.state.options}
                                     />
                                 </div>
@@ -276,6 +344,7 @@ export class AppointmentModal extends React.Component {
                                        onChange={this.formChanged}
                                        type='number'/>
                             </FormGroup>
+
                             <Row>
                                 <Col sm={6}>
                                     <FormGroup>
@@ -303,12 +372,18 @@ export class AppointmentModal extends React.Component {
                                     </FormGroup>
                                 </Col>
                             </Row>
+
+                            {this.state.colorRecipe.map(colorRecipe =>
+                                <div key={colorRecipe.id}>
+                                    <ColorRecipe colorRecipe={colorRecipe}/>
+                                    <hr/>
+                                </div>
+                            )}
                         </Form>
                     </ModalBody>
                     <ModalFooter>
                         <Button color="light" onClick={this.toggle}>Cancel</Button>
-                        <Button color="danger" onClick={this.props.removeAppointment}>Kustuta</Button>
-                        <Button color="primary" onClick={this.addAppointment}>Muuda</Button>
+                        {buttonGroup}
                     </ModalFooter>
                 </Modal>
             </div>

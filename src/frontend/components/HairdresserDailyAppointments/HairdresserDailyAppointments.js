@@ -2,7 +2,6 @@ import React from 'react';
 import "./HairdresserDailyAppointments.css";
 import moment from "moment";
 import {HairdresserAddModal} from "../HairdresserAddModal/HairdresserAddModal";
-import {HairdresserAddTimeModal} from "../HairdresserAddTimeModal/HairdresserAddTimeModal";
 import lodash from "lodash";
 import axios from "axios/index";
 import {API_URL} from "../Constants";
