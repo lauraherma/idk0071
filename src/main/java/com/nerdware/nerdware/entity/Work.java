@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import java.util.List;
 
 @Entity
 @Getter
@@ -20,9 +22,9 @@ public class Work {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @JoinColumn(name = "work_type_id")
-    @ManyToOne(optional=false)
-    private WorkType workType;
+    @JoinColumn(name = "work_types_id")
+    @OneToMany
+    private List<WorkType> workTypes;
 
     @JoinColumn(name = "color_card_id")
     @ManyToOne(optional=false)
@@ -30,5 +32,13 @@ public class Work {
 
     private String description;
 
-
+    @Override
+    public String toString() {
+        return "Work{" +
+                "id=" + id +
+                ", workTypes=" + workTypes +
+                ", colorCard=" + colorCard +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }
