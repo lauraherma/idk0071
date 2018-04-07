@@ -2,6 +2,7 @@ import React from 'react';
 import {Button, Table} from 'reactstrap'
 import {ClientAddModal} from '../ClientAddModal/ClientAddModal';
 import {DataService} from "../DataService";
+import {NavBar} from "../NavBar/NavBar";
 
 export class Client extends React.Component {
 
@@ -43,6 +44,7 @@ export class Client extends React.Component {
 
     render() {
         return <div className="Client">
+            <NavBar/>
             <ClientAddModal onClientAdded={this.onClientAdded}/>
             <Table striped bordered>
                 <thead>
