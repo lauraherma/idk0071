@@ -1,10 +1,13 @@
 import React from 'react';
 import {FormGroup, Input, Label, Button} from 'reactstrap';
+import {DataService} from "../DataService";
 
 export class AddWorkTypeButton extends React.Component {
+
+    dataService = new DataService();
     state = {
         isInputVisible: false,
-        workType: "",
+        workType: {name: ""},
     };
 
     toggle = () => {
@@ -14,16 +17,19 @@ export class AddWorkTypeButton extends React.Component {
     };
     workTypeChanged = (event) => {
         this.setState({
-            workType: event.target.value,
+            workType: {name: event.target.value},
         })
     };
 
     addWorkType = () => {
-        this.props.addWorkType(this.state.workType)
-        this.setState({
-            workType: "",
-            isInputVisible: false,
-        })
+        this.dataService.addWorkType(this.state.workType).then(() => {
+            this.props.addWorkType(this.state.workType);
+
+            this.setState({
+                workType: {name: ""},
+                isInputVisible: false,
+            })
+        });
     };
 
     getFormGroup = () => {
@@ -32,7 +38,7 @@ export class AddWorkTypeButton extends React.Component {
                 <Label>Lisa teenus</Label>
                 <Input name="work_type"
                        placeholder="Lisa teenus"
-                       value={this.state.workType}
+                       value={this.state.workType.name}
                        onChange={this.workTypeChanged}/>
                 <Button color="primary" onClick={this.addWorkType}>Lisa</Button>
             </FormGroup>

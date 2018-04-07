@@ -1,16 +1,14 @@
 import React from 'react';
 import {Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, Input, FormGroup, Label} from 'reactstrap';
-import {API_URL} from "../Constants";
-import axios from 'axios';
+import moment from "moment";
+import {RoleForm} from "../HairdresserAddModal/HairdresserAddModal";
+import {DataService} from "../DataService";
 
 export class ClientAddModal extends React.Component {
+    dataService = new DataService();
     state = {
         modal: false,
-        firstName: '',
-        lastName: '',
-        email: '',
-        phone: '',
-        dateOfBirth: '1990-01-01',
+        personForm: new PersonForm(),
     };
 
     toggle = () => {
@@ -20,39 +18,45 @@ export class ClientAddModal extends React.Component {
     };
 
     addClient = () => {
-        this.props.onClientAdded({
-            id:Math.random(),
-            firstName: this.state.firstName,
-            lastName: this.state.lastName,
-            email: this.state.email,
-            phone:this.state.phone,
-            dateOfBirth:this.state.dateOfBirth,
 
+        const clientData = new RoleForm();
+        this.state.personForm.dateOfBirth=moment();
+        clientData.person = this.state.personForm;
+        this.dataService.getRoleTypeByName('client').then(response => {
+            clientData.roleType = response.data;
+            this.dataService.addRole(clientData).then(() => {
+
+                this.setState({
+                    modal: false,
+                    personForm : new PersonForm(),
+
+                });
+            });
         });
 
-        this.setState({
-            modal: false,
-            firstName: '',
-            lastName: '',
-            email: '',
-            phone: 12345,
-            dateOfBirth: '1990-01-01'
-        });
+        this.props.onClientAdded();
 
-    }
+    };
 
     formChanged = (event) => {
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
+        const personForm = this.state.personForm;
+        personForm[name] = value;
 
         this.setState({
-            [name]: value
+            personForm: personForm,
         });
+
+        console.log(this.props);
     };
 
 
     render() {
+
+        const personForm = this.state.personForm;
+
         return (
             <div>
                 <Button onClick={this.toggle}>
@@ -67,35 +71,35 @@ export class ClientAddModal extends React.Component {
                                 <Label>Eesnimi</Label>
                                 <Input name="firstName"
                                        placeholder="Sisesta eesnimi"
-                                       value={this.state.firstName}
+                                       value={personForm.firstName}
                                        onChange={this.formChanged}/>
                             </FormGroup>
                             <FormGroup>
                                 <Label>Perenimi</Label>
                                 <Input name="lastName"
                                        placeholder="Sisesta perekonnanimi"
-                                       value={this.state.lastName}
+                                       value={personForm.lastName}
                                        onChange={this.formChanged}/>
                             </FormGroup>
                             <FormGroup>
                                 <Label>Email</Label>
                                 <Input name="email"
                                        placeholder="Sisesta email"
-                                       value={this.state.email}
+                                       value={personForm.email}
                                        onChange={this.formChanged}/>
                             </FormGroup>
                             <FormGroup>
                                 <Label>Number</Label>
                                 <Input name="phone"
                                        placeholder="Sisesta number"
-                                       value={this.state.phone}
+                                       value={personForm.phone}
                                        onChange={this.formChanged}/>
                             </FormGroup>
                             <FormGroup>
                                 <Label>Number</Label>
                                 <Input name="dateOfBirth"
                                        placeholder="Sisesta sünnikuupäev"
-                                       value={this.state.dateOfBirth}
+                                       value={personForm.dateOfBirth}
                                        onChange={this.formChanged}/>
                             </FormGroup>
                         </Form>
@@ -110,4 +114,13 @@ export class ClientAddModal extends React.Component {
         );
     }
 }
+
+export class PersonForm {
+    firstName = '';
+    lastName = '';
+    email = '';
+    phone = '';
+    dateOfBirth = '';
+}
+
 

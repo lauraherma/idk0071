@@ -24,19 +24,6 @@ export class HairdresserDailyAppointments extends React.Component {
         this.createTimeSlots();
     };
 
-    componentDidMount() {
-        this.createTimeSlots();
-        let tempWorks = [];
-        axios.get(API_URL + 'workTypes')
-            .then( (response)=> {
-                tempWorks.push(response.data[0].name);
-
-                this.setState({
-                    allWorks: tempWorks,
-                })
-            });
-    }
-
     createTimeSlots() {
         const timeSlots = [];
         for (let i = 0; i < 26; i++) {
@@ -62,13 +49,6 @@ export class HairdresserDailyAppointments extends React.Component {
 
     componentDidMount() {
         this.createTimeSlots();
-        let tempWorks = [];
-        this.dataService.getAllWorkTypes()
-            .then(function(response){
-                tempWorks.push(response.data[0].name);
-            }).then(this.setState({
-            allWorks: tempWorks,
-        }));
     }
 
     getHairdresser() {
@@ -129,6 +109,7 @@ export class HairdresserDailyAppointments extends React.Component {
                 return <div onClick={openTimeSlot} key={timeSlot} className={classes.join(' ')}>
                     {timeFormat}
                     <AppointmentModal appointment={appointment}
+                                      hairdresser={this.getHairdresser()}
                                       timeSlot={timeSlot}
                                       isOpened={timeSlot === this.state.timeSlotOpened}
                                       removeAppointment={removeAppointment}
