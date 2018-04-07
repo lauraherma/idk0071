@@ -20,4 +20,8 @@ public class WorkTypeService {
         return workTypeRepository.findAll();
     }
 
+    public WorkType addWorkType(WorkType workType) {
+        return workTypeRepository.save(workType);
+    }
+
 }

@@ -2,14 +2,9 @@ import React from 'react';
 import {Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, Input, FormGroup, Label, Row, Col} from 'reactstrap';
 import moment from "moment";
 import lodash from 'lodash';
-import {API_URL} from "../Constants";
-import axios from "axios/index";
 import {AddWorkTypeButton} from "../AddWorkTypeButton/AddWorkTypeButton";
 import {DataService} from "../DataService";
-import {AppointmentForm} from "../HairdresserAddTimeModal/HairdresserAddTimeModal";
 import {AsyncTypeahead} from "react-bootstrap-typeahead";
-import {HairdresserForm} from "../HairdresserAddModal/HairdresserAddModal";
-
 
 export class AppointmentModal extends React.Component {
 
@@ -260,11 +255,6 @@ export class AppointmentModal extends React.Component {
                                         options={this.state.options}
                                     />
                                 </div>
-                                <Label>Nimi *</Label>
-                                <Input name="firstName"
-                                       placeholder="Sisesta ees- ja perenimi"
-                                       value={this.state.firstName}
-                                       onChange={this.firstNameChanged}/>
                             </FormGroup>
                             <FormGroup>
                                 <div>Teenused</div>

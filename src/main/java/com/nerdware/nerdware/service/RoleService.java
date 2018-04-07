@@ -37,6 +37,10 @@ public class RoleService {
         return roleRepository.findAllHairdressers();
     }
 
+    public List<Role> getAllClients() {
+        return roleRepository.findAllClients();
+    }
+
     public List<Role> getClientsByPartialName(String name) {
         return roleRepository.findClientsByPartialName(name);
     }

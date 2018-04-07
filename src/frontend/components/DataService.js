@@ -41,6 +41,10 @@ export class DataService  {
         return this.getRequest('roles', 'clients', name);
     }
 
+    getAllClients() {
+        return this.getRequest('roles', 'clients');
+    }
+
     getRoleTypeByName(name) {
         return this.getRequest('role-type', name)
     }

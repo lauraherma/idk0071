@@ -1,49 +1,40 @@
 import React from 'react';
 import {Button, Table} from 'reactstrap'
 import {ClientAddModal} from '../ClientAddModal/ClientAddModal';
+import {DataService} from "../DataService";
 
 export class Client extends React.Component {
+
+    dataService = new DataService();
+
     state = {
         clients: [],
     };
 
-    onClientAdded= client =>{
-        const clients=[
-            ...this.state.clients,
-            client
-        ];
-        this.setState({clients:clients})
+    onClientAdded = () =>{
+        this.loadClients();
     };
-    componentDidMount() {
-        const clients = [
-            {
-                id: 1,
-                firstName: 'Laura',
-                lastName: 'Herma',
 
-            },
-            {
-                id: 2,
-                firstName: 'Yks',
-                lastName: 'Kaks',
-
-            },
-        ];
-
-        this.setState({
-            clients: clients
+    loadClients() {
+        this.dataService.getAllClients().then(response => {
+            this.setState({
+                clients: response.data,
+            });
         });
+    }
 
+    componentDidMount() {
+        this.loadClients();
     }
 
     getClients() {
         return this.state.clients.map(client =>
-            <tr key={client.id}>
-                <td>{client.firstName}</td>
-                <td>{client.lastName}</td>
-                <td>{client.phone}</td>
-                <td>{client.email}</td>
-                <td>{client.dateOfBirth}</td>
+            <tr key={client.person.id}>
+                <td>{client.person.firstName}</td>
+                <td>{client.person.lastName}</td>
+                <td>{client.person.phone}</td>
+                <td>{client.person.email}</td>
+                <td>{client.person.dateOfBirth}</td>
             </tr>
         );
 
