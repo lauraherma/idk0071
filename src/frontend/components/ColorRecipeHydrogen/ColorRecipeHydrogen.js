@@ -1,4 +1,6 @@
 import React from 'react';
+import {Input, Row, Col, FormGroup, Label,} from 'reactstrap'
+
 
 export class ColorRecipeHydrogen extends React.Component {
     state = {};
@@ -7,12 +9,23 @@ export class ColorRecipeHydrogen extends React.Component {
     }
 
     render() {
-        const { id, amount, name } = this.props.hydrogen;
+        const {amount, name} = this.props.hydrogen;
 
         return <div className="ColorRecipeHydrogen">
-            id: {id},
-            amount: {amount},
-            name: {name}
+
+            <Row>
+                <Col col={6}>
+                    <FormGroup>
+                        <Input value={name}/>
+                    </FormGroup>
+                </Col>
+
+                <Col col={6}>
+                    <FormGroup>
+                        <Input value={amount}/>
+                    </FormGroup>
+                </Col>
+            </Row>
         </div>;
     }
 }

@@ -40,11 +40,7 @@ export class AppointmentModal extends React.Component {
                         code: 'Red',
                         amount: 0,
                     },
-                    {
-                        id: 2,
-                        code: 'Blue',
-                        amount: 1,
-                    }
+
                 ],
                 hydrogens: [
                     {
@@ -53,32 +49,7 @@ export class AppointmentModal extends React.Component {
                         amount: 2,
 
                     },
-                    {
-                        id: 2,
-                        name: '3%',
-                        amount: 1,
-                    }
-                ]
-            },
-            {
-                id: 2,
-                colorRecipeType: {
-                    id: 2,
-                    name: 'Pastellimine'
-                },
-                colors: [
-                    {
-                        id: 3,
-                        code: 'Purple',
-                        amount: 0,
-                    },
-                ],
-                hydrogens: [
-                    {
-                        id: 1,
-                        name: '6%',
-                        amount: 2,
-                    },
+
                 ]
             },
         ],
@@ -305,10 +276,17 @@ export class AppointmentModal extends React.Component {
             </div> :
             <Button color="primary" onClick={this.addAppointment}>Lisa</Button>;
 
+
+        const colorCard =this.state.checkedWorkTypes.includes(39)? this.state.colorRecipe.map(colorRecipe =>
+            <div key={colorRecipe.id}>
+                <ColorRecipe colorRecipe={colorRecipe}/>
+                <hr/>
+            </div>
+        ) : "";
         return (
             <div>
                 <span>{appointmentLabel}</span>
-                <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
+                <Modal size="lg" isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
                     <ModalHeader toggle={this.toggle}>{modalTitle}</ModalHeader>
                     <ModalBody>
                         <Form>
@@ -373,12 +351,7 @@ export class AppointmentModal extends React.Component {
                                 </Col>
                             </Row>
 
-                            {this.state.colorRecipe.map(colorRecipe =>
-                                <div key={colorRecipe.id}>
-                                    <ColorRecipe colorRecipe={colorRecipe}/>
-                                    <hr/>
-                                </div>
-                            )}
+                            {colorCard}
                         </Form>
                     </ModalBody>
                     <ModalFooter>
