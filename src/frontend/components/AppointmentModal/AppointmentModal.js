@@ -137,7 +137,6 @@ export class AppointmentModal extends React.Component {
         });
     }
 
-
     formChanged = (event) => {
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -148,11 +147,9 @@ export class AppointmentModal extends React.Component {
         });
     };
 
-
     addTime = () => {
         this.componentDidMount();
     };
-
 
     addAppointment = () => {
 
@@ -276,7 +273,7 @@ export class AppointmentModal extends React.Component {
             <Button color="primary" onClick={this.addAppointment}>Lisa</Button>;
 
 
-        const colorCard =this.state.checkedWorkTypes.includes(39) || true ?
+        const colorCard =this.state.checkedWorkTypes.includes(39) ?
             <div>
                 <ColorRecipe colorRecipe={this.state.colorRecipe}/>
                 <hr/>

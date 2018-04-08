@@ -25,7 +25,10 @@ export class ColorRecipePart extends React.Component {
         this.setState({
             colors: [
                 ...this.state.colors,
-                {},
+                {
+                    code: '',
+                    amount: '',
+                },
             ]
         });
     };
@@ -34,7 +37,10 @@ export class ColorRecipePart extends React.Component {
         this.setState({
             hydrogens: [
                 ...this.state.hydrogens,
-                {},
+                {
+                    name: '',
+                    amount: '',
+                },
             ]
         });
     };
@@ -79,8 +85,8 @@ export class ColorRecipePart extends React.Component {
                         <Col sm={5}>Grammid</Col>
                     </Row>
 
-                    {this.state.colors.map(color =>
-                        <ColorRecipeColor key={color.id}
+                    {this.state.colors.map((color, index) =>
+                        <ColorRecipeColor key={index}
                                           delete={() => this.deleteColorRecipeColor(color)}
                                           color={color}/>
                     )}
@@ -95,8 +101,8 @@ export class ColorRecipePart extends React.Component {
                         <Col sm={5}>Grammid</Col>
                     </Row>
 
-                    {this.state.hydrogens.map(hydrogen =>
-                        <ColorRecipeColorTypeHydrogen key={hydrogen.id}
+                    {this.state.hydrogens.map((hydrogen, index) =>
+                        <ColorRecipeColorTypeHydrogen key={index}
                                                       delete={() => this.deleteColorRecipeHydrogen(hydrogen)}
                                                       hydrogen={hydrogen}/>
                     )}
