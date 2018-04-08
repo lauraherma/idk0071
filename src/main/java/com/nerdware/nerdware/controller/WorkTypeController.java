@@ -23,9 +23,8 @@ public class WorkTypeController {
         return workTypeService.getAvailableWorkTypes();
     }
 
-    @PostMapping(value = "/work-type/add", consumes = "application/json")
+    @PostMapping(value = "/work-type/add")
     public WorkType addWorkType(@RequestBody WorkType workType) {
-        System.out.println("here");
         return workTypeService.addWorkType(workType);
     }
 }

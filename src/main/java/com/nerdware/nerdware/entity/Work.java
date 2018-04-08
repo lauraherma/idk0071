@@ -9,8 +9,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import java.util.List;
 
 @Entity
@@ -22,23 +23,17 @@ public class Work {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @JoinColumn(name = "work_types_id")
-    @OneToMany
+    @ManyToMany
+    @JoinTable(
+            name="work_work_type",
+            joinColumns=@JoinColumn(name="work_id", referencedColumnName="id"),
+            inverseJoinColumns=@JoinColumn(name="work_type_id", referencedColumnName="id"))
     private List<WorkType> workTypes;
 
     @JoinColumn(name = "color_card_id")
-    @ManyToOne(optional=false)
+    @ManyToOne(optional=true)
     private ColorCard colorCard;
 
     private String description;
 
-    @Override
-    public String toString() {
-        return "Work{" +
-                "id=" + id +
-                ", workTypes=" + workTypes +
-                ", colorCard=" + colorCard +
-                ", description='" + description + '\'' +
-                '}';
-    }
 }

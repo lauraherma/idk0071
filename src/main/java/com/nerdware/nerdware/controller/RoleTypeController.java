@@ -18,7 +18,6 @@ public class RoleTypeController {
 
     @GetMapping(value = "/role-type/{name}")
     public RoleType getRoleByName(@PathVariable("name") String name) {
-        System.out.println(roleTypeService.getRoleTypeByName(name));
         return roleTypeService.getRoleTypeByName(name);
     }
 

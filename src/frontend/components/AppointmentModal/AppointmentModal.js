@@ -192,9 +192,6 @@ export class AppointmentModal extends React.Component {
             description: this.state.description,
             hairdresser: this.props.hairdresser,
             client: this.state.options[0],
-            workTypes: this.state.checkedWorkTypes.map(id => lodash.find(this.state.workTypes, {
-                id: id
-            })),
             work: {
                 workTypes: this.state.checkedWorkTypes.map(id => lodash.find(this.state.workTypes, {
                     id: id
