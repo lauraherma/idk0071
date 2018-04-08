@@ -1,6 +1,5 @@
 import React from 'react';
-import {Input, Row, Col, FormGroup, Label,} from 'reactstrap'
-
+import {Input, Row, Col, FormGroup, Label,Button} from 'reactstrap'
 
 export class ColorRecipeColor extends React.Component {
     state = {};
@@ -11,17 +10,23 @@ export class ColorRecipeColor extends React.Component {
     render() {
         const {amount, code} = this.props.color;
 
-        return <div className="ColorRecipeColor">
+        return <div className="ColorRecipeColorTypeColor">
             <Row>
-                <Col col={6}>
+                <Col sm={5}>
                     <FormGroup>
                         <Input value={code}/>
                     </FormGroup>
                 </Col>
 
-                <Col col={6}>
+                <Col sm={5}>
                     <FormGroup>
                         <Input value={amount}/>
+                    </FormGroup>
+                </Col>
+
+                <Col sm={2}>
+                    <FormGroup>
+                        <Button onClick={() => this.props.delete()} color="danger" block>Delete</Button>
                     </FormGroup>
                 </Col>
             </Row>

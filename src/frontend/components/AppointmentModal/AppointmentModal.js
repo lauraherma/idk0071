@@ -5,7 +5,6 @@ import lodash from 'lodash';
 import {AddWorkTypeButton} from "../AddWorkTypeButton/AddWorkTypeButton";
 import {DataService} from "../DataService";
 import {AsyncTypeahead} from "react-bootstrap-typeahead";
-import {ColorCard} from "../ColorCard/ColorCard";
 import {ColorRecipe} from "../ColorRecipe/ColorRecipe";
 
 export class AppointmentModal extends React.Component {
@@ -27,32 +26,32 @@ export class AppointmentModal extends React.Component {
         allWorks: [],
         workTypes: [],
         checkedWorkTypes: [],
-        colorRecipe: [
-            {
-                id: 1,
-                colorRecipeType: {
+        colorRecipe: {
+            id: 1,
+            parts: [
+                {
                     id: 1,
-                    name: 'Sebastian'
+                    colorRecipeType: {
+                        id: 1,
+                        name: 'Sebastian'
+                    },
+                    colors: [
+                        {
+                            id: 1,
+                            code: 'Red',
+                            amount: 0,
+                        },
+                    ],
+                    hydrogens: [
+                        {
+                            id: 1,
+                            name: '6%',
+                            amount: 2,
+                        },
+                    ]
                 },
-                colors: [
-                    {
-                        id: 1,
-                        code: 'Red',
-                        amount: 0,
-                    },
-
-                ],
-                hydrogens: [
-                    {
-                        id: 1,
-                        name: '6%',
-                        amount: 2,
-
-                    },
-
-                ]
-            },
-        ],
+            ],
+        },
     };
 
     componentDidMount() {
@@ -277,12 +276,11 @@ export class AppointmentModal extends React.Component {
             <Button color="primary" onClick={this.addAppointment}>Lisa</Button>;
 
 
-        const colorCard =this.state.checkedWorkTypes.includes(39)? this.state.colorRecipe.map(colorRecipe =>
-            <div key={colorRecipe.id}>
-                <ColorRecipe colorRecipe={colorRecipe}/>
+        const colorCard =this.state.checkedWorkTypes.includes(39) || true ?
+            <div>
+                <ColorRecipe colorRecipe={this.state.colorRecipe}/>
                 <hr/>
-            </div>
-        ) : "";
+            </div> : "";
         return (
             <div>
                 <span>{appointmentLabel}</span>
