@@ -1,29 +1,44 @@
 import React from 'react';
-import {ColorRecipeColor} from "../ColorRecipeColor/ColorRecipeColor";
-import {ColorRecipeHydrogen} from "../ColorRecipeHydrogen/ColorRecipeHydrogen";
+import {ColorRecipeColor} from "../ColorRecipeColorTypeColor/ColorRecipeColorTypeColor";
+import {ColorRecipeColorTypeHydrogen} from "../ColorRecipeColorTypeHydrogen/ColorRecipeColorTypeHydrogen";
+import {Row, Col, Button} from 'reactstrap'
+import lodash from 'lodash';
+import './ColorRecipe.css';
+import {ColorRecipePart} from "../ColorRecipePart/ColorRecipePart";
 
 export class ColorRecipe extends React.Component {
-    state = {};
+    state = {
+        recipeParts: [],
+    };
 
     componentDidMount() {
-        console.log(this.props);
+        this.setState({
+            recipeParts: this.props.colorRecipe.parts,
+        });
     }
 
     render() {
         return <div className="ColorRecipe">
-            Color recipe id: {this.props.colorRecipe.id}
-            <br/>
-            <h4>Type name: {this.props.colorRecipe.colorRecipeType.name}</h4>
+            <h4>Värviretsept</h4>
 
-            <h5>Värvid</h5>
-            {this.props.colorRecipe.colors.map(color =>
-                <ColorRecipeColor key={color.id} color={color}/>
-            )}
+            {this.state.recipeParts.map((recipePart, index) => <ColorRecipePart key={index} colorRecipePart={recipePart}/>)}
 
-            <h5>Vesinikud</h5>
-            {this.props.colorRecipe.hydrogens.map(hydrogen =>
-                <ColorRecipeHydrogen key={hydrogen.id} hydrogen={hydrogen}/>
-            )}
+            <Button onClick={() => this.addRecipePart()} color="primary" block>
+                Lisa värviretsepti osa
+            </Button>
         </div>;
+    }
+
+    addRecipePart() {
+        this.setState({
+            recipeParts: [
+                ...this.state.recipeParts,
+                {
+                    colorRecipeType: {},
+                    colors: [],
+                    hydrogens: [],
+                }
+            ]
+        });
     }
 }

@@ -40,7 +40,7 @@ export class AddWorkTypeButton extends React.Component {
                        placeholder="Lisa teenus"
                        value={this.state.workType.name}
                        onChange={this.workTypeChanged}/>
-                <Button color="primary" onClick={this.addWorkType}>Lisa</Button>
+                <Button color="secondary" onClick={this.addWorkType}>Lisa</Button>
             </FormGroup>
         }
     };
@@ -49,7 +49,7 @@ export class AddWorkTypeButton extends React.Component {
     render() {
         return (
             <div>
-                <Button color="primary" onClick={this.toggle}>Lisa tööliik</Button>
+                <Button color="secondary" onClick={this.toggle}>Lisa tööliik</Button>
                 {this.getFormGroup()}
             </div>
         )
