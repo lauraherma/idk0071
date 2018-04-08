@@ -26,5 +26,7 @@ public class ColorCard {
     @JoinColumn(name = "color_recipe_id")
     @ManyToOne(optional=false)
     private ColorRecipe colorRecipe;
+
+
 }
 

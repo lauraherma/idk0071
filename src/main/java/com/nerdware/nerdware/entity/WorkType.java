@@ -22,5 +22,6 @@ public class WorkType {
     private String name;
 
     private String description;
+
 }
 

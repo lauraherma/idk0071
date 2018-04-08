@@ -49,5 +49,9 @@ export class DataService  {
         return this.getRequest('role-type', name)
     }
 
+    getAppointmentsByHairdresserId(id) {
+        return this.getRequest('appointments', id)
+    }
+
 
 }
