@@ -66,10 +66,10 @@ export class HairdresserDailyAppointments extends React.Component {
 
 
     getTimes() {
+        let appointmentAlreadyInList = false;
         const
             times = this.state.timeSlots.map(timeSlot => {
                 const classes = ['time'];
-                console.log(this.getHairdresser().appointments);
                 const appointment = this.getHairdresser()
                     .appointments
                     .filter(appointment => {
@@ -80,11 +80,11 @@ export class HairdresserDailyAppointments extends React.Component {
                             .contains(timeSlot);
                     })[0];
                 if (appointment) {
-                    classes.push('active');
-                    const appointmentDurationInMinutes = Math.round(
-                        (appointment.endTime.clone().utc() - appointment.startTime.clone().utc()) / 1000 / 60
-                    );
-                    classes.push('minutes-' + appointmentDurationInMinutes);
+                        classes.push('active');
+                        const appointmentDurationInMinutes = Math.round(
+                            (appointment.endTime.clone().utc() - appointment.startTime.clone().utc()) / 1000 / 60
+                        );
+                        classes.push('minutes-' + appointmentDurationInMinutes);
                 }
 
                 const removeAppointment = () => {
@@ -118,7 +118,13 @@ export class HairdresserDailyAppointments extends React.Component {
                     appointment.startTime.format("HH:mm") + "-" + appointment.endTime.clone().startOf("minute").add(1, 'minute').format("HH:mm") :
                     timeSlot.format("HH:mm");
 
-                return <div onClick={openTimeSlot} key={timeSlot} className={classes.join(' ')}>
+                if (appointment && appointmentAlreadyInList) {
+                    console.log(appointment);
+                    return;
+                }
+
+                const potentialTimeSlot =
+                    <div onClick={openTimeSlot} key={timeSlot} className={classes.join(' ')}>
                     {timeFormat}
                     <AppointmentModal appointment={appointment}
                                       hairdresser={this.getHairdresser()}
@@ -128,7 +134,14 @@ export class HairdresserDailyAppointments extends React.Component {
                                       removeAppointment={removeAppointment}
                                       addTime={this.addTime}
                                       changeAppointment={changeAppointment}/>
-                </div>
+                    </div>;
+
+                if (appointment) {
+                    appointmentAlreadyInList = true;
+                    return potentialTimeSlot;
+                }
+
+                return potentialTimeSlot;
             });
 
         return <div className="times">

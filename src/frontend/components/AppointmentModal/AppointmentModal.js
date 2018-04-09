@@ -256,7 +256,7 @@ export class AppointmentModal extends React.Component {
 
         const appointmentLabel = appointment ?
             <span>
-                {this.props.appointment.client.firstName}
+                {this.props.appointment.client.person.firstName}
                 <br/>
                 {this.props.appointment.work.workTypes.map(workType => workType.name).join(", ")}
             </span> :
