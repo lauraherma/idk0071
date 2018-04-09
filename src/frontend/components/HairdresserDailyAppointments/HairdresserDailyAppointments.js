@@ -3,6 +3,8 @@ import "./HairdresserDailyAppointments.css";
 import moment from "moment";
 import {HairdresserAddModal} from "../HairdresserAddModal/HairdresserAddModal";
 import lodash from "lodash";
+import axios from "axios/index";
+import {API_URL} from "../Constants";
 import {DataService} from "../DataService";
 import {AppointmentModal} from "../AppointmentModal/AppointmentModal";
 
@@ -71,12 +73,22 @@ export class HairdresserDailyAppointments extends React.Component {
 
 
     getTimes = () => {
+
+        let alreadyAppearedAppointments = [];
+
         const timeSlot = this.state.timeSlots.map(timeSlot => {
             const appointment = this.getAppointment(timeSlot);
             const appointmentClasses = this.getAppointmentClasses(appointment);
             const timeFormat = appointment ?
                 appointment.startTime.format("HH:mm") + "-" + appointment.endTime.clone().startOf("minute").add(1, 'minute').format("HH:mm") :
                 timeSlot.format("HH:mm");
+
+            if (appointment) {
+                if (alreadyAppearedAppointments.includes(appointment.id)) {
+                    return;
+                }
+                alreadyAppearedAppointments.push(appointment.id)
+            }
 
             return <div onClick={() => this.openTimeSlot(timeSlot)}
                         key={timeSlot}
