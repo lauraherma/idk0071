@@ -12,6 +12,7 @@ export class AppointmentModal extends React.Component {
     dataService = new DataService();
 
     state = {
+        isLoading: false,
         modal: false,
         firstName: '',
         lastName: '',
@@ -26,6 +27,7 @@ export class AppointmentModal extends React.Component {
         allWorks: [],
         workTypes: [],
         checkedWorkTypes: [],
+        options:[],
         colorRecipe: {
             id: 1,
             parts: [
@@ -55,7 +57,7 @@ export class AppointmentModal extends React.Component {
     };
 
     componentDidMount() {
-        const appointment = this.props.appointment;
+        const appointment = this.props.getAppointment;
 
         const appointmentInfo = {
             firstName: appointment ? appointment.client.firstName : "",
