@@ -96,7 +96,7 @@ export class ClientAddModal extends React.Component {
                                        onChange={this.formChanged}/>
                             </FormGroup>
                             <FormGroup>
-                                <Label>Number</Label>
+                                <Label>Sünnikuupäev</Label>
                                 <Input name="dateOfBirth"
                                        placeholder="Sisesta sünnikuupäev"
                                        value={personForm.dateOfBirth}
