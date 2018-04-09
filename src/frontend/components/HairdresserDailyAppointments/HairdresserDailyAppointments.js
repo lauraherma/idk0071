@@ -19,6 +19,15 @@ export class HairdresserDailyAppointments extends React.Component {
         this.createTimeSlots();
     };
 
+    addAppointment = (addedAppointment) => {
+        this.getHairdresser().appointments.setState({
+            appointments: [
+                ...this.state.appointments,
+                addedAppointment,
+            ]
+        });
+    };
+
     createTimeSlots = () => {
         const timeSlots = [];
         for (let i = 0; i < 26; i++) {
@@ -79,6 +88,7 @@ export class HairdresserDailyAppointments extends React.Component {
                                   isOpened={timeSlot === this.state.timeSlotOpened}
                                   removeAppointment={this.removeAppointment}
                                   addTime={this.addTime}
+                                  addAppointment={this.addAppointment}
                                   changeAppointment={(changedAppointment) => this.changeAppointment(changedAppointment, changedAppointment)}/>
             </div>
         });
