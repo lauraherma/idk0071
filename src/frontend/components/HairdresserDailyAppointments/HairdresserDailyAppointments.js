@@ -69,11 +69,12 @@ export class HairdresserDailyAppointments extends React.Component {
         const
             times = this.state.timeSlots.map(timeSlot => {
                 const classes = ['time'];
+                console.log(this.getHairdresser().appointments);
                 const appointment = this.getHairdresser()
                     .appointments
                     .filter(appointment => {
-                        appointment.startTime = moment(appointment.startTime);
-                        appointment.endTime = moment(appointment.endTime);
+                        //appointment.startTime = moment(appointment.startTime);
+                        //appointment.endTime = moment(appointment.endTime);
                         return moment()
                             .range(appointment.startTime, appointment.endTime)
                             .contains(timeSlot);

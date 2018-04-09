@@ -23,13 +23,17 @@ public class RoleService {
 
 
     public Role addRole(Role role) {
-        if (role.getPerson().getId() == null) {
+        if (personNotExists(role.getPerson().getId())) {
             role.setPerson(personRepository.save(role.getPerson()));
         }
 
         role.setRoleType(roleTypeRepository.findOne(role.getRoleType().getId()));
 
         return roleRepository.save(role);
+    }
+
+    public boolean personNotExists(Long id) {
+        return id == null;
     }
 
 

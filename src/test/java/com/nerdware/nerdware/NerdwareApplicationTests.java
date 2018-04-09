@@ -1,5 +1,11 @@
 package com.nerdware.nerdware;
 
+import com.nerdware.nerdware.entity.Person;
+import com.nerdware.nerdware.entity.Role;
+import com.nerdware.nerdware.entity.RoleType;
+import com.nerdware.nerdware.service.RoleService;
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -15,6 +21,30 @@ import org.springframework.test.context.transaction.TransactionalTestExecutionLi
 		DirtiesContextTestExecutionListener.class,
 		TransactionalTestExecutionListener.class })
 public class NerdwareApplicationTests {
+
+	private RoleService roleService;
+	private Role role;
+	private Person person;
+	private RoleType roleType;
+
+	@Before
+	public void setup() {
+		roleService = new RoleService();
+		role = new Role();
+		person = new Person();
+		roleType = new RoleType();
+
+		role.setPerson(person);
+		role.setRoleType(roleType);
+		}
+
+	@Test
+	public void testPersonDoesNotExist() {
+		role.getPerson().setId(null);
+		Long id = role.getPerson().getId();
+
+		Assert.assertEquals(!roleService.personNotExists(id), null);
+	}
 
 	@Test
 	public void contextLoads() {
