@@ -254,7 +254,7 @@ export class AppointmentModal extends React.Component {
     render() {
         const appointment = this.props.appointment;
 
-        const modalTitle = appointment ? 'Muuda aega' : 'Lisa aeg';
+        const modalTitle = appointment ? 'Muuda aega' : `Lisa aeg juuksurile`;
 
         const appointmentLabel = appointment ?
             <span>
