@@ -1,0 +1,7 @@
+.DailyHairdressers {
+    display: flex;
+}
+
+.DailyHairdressers .btn {
+    margin-left: 16px;
+}

@@ -1,12 +1,7 @@
 .Home{
     padding:32px;
 }
-.Home .hairdressers {
-    display: flex;
-}
-.Home .btn{
-    margin-left: 16px;
-}
+
 .Home h1{
     padding-bottom:16px;
 }
