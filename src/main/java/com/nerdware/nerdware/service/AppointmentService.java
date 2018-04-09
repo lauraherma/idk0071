@@ -3,14 +3,17 @@ package com.nerdware.nerdware.service;
 import com.nerdware.nerdware.entity.Appointment;
 import com.nerdware.nerdware.entity.ColorCard;
 import com.nerdware.nerdware.entity.Work;
+import com.nerdware.nerdware.entity.WorkType;
 import com.nerdware.nerdware.repository.AppointmentRepository;
 import com.nerdware.nerdware.repository.ColorCardRepository;
 import com.nerdware.nerdware.repository.ColorRecipeRepository;
 import com.nerdware.nerdware.repository.RoleRepository;
 import com.nerdware.nerdware.repository.WorkRepository;
+import com.nerdware.nerdware.repository.WorkTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,6 +21,9 @@ public class AppointmentService {
 
     @Autowired
     private AppointmentRepository appointmentRepository;
+
+    @Autowired
+    private WorkTypeRepository workTypeRepository;
 
     @Autowired
     private ColorCardRepository colorCardRepository;
@@ -38,6 +44,16 @@ public class AppointmentService {
     public Appointment addAppointment(Appointment appointment) {
 
         Work work = appointment.getWork();
+        List<WorkType> workTypes = work.getWorkTypes();
+        List<WorkType> newWorkTypes = new ArrayList<>();
+        for (WorkType workType: workTypes) {
+            if (workType.getId() == null) {
+                newWorkTypes.add(workTypeRepository.save(workType));
+            } else {
+                newWorkTypes.add(workType);
+            }
+        }
+        work.setWorkTypes(newWorkTypes);
         ColorCard colorCard = work.getColorCard();
         colorCard.setColorRecipe(colorRecipeRepository.save(colorCard.getColorRecipe()));
         work.setColorCard(colorCardRepository.save(colorCard));
