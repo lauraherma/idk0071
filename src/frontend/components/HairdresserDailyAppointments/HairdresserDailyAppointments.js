@@ -73,8 +73,8 @@ export class HairdresserDailyAppointments extends React.Component {
                 const appointment = this.getHairdresser()
                     .appointments
                     .filter(appointment => {
-                        //appointment.startTime = moment(appointment.startTime);
-                        //appointment.endTime = moment(appointment.endTime);
+                        appointment.startTime = moment.utc(appointment.startTime).local();
+                        appointment.endTime = moment.utc(appointment.endTime).local();
                         return moment()
                             .range(appointment.startTime, appointment.endTime)
                             .contains(timeSlot);
