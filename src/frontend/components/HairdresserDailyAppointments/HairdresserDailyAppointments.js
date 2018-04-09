@@ -104,6 +104,16 @@ export class HairdresserDailyAppointments extends React.Component {
                     this.createTimeSlots();
                 };
 
+                //laurale
+                const addAppointment = (addedAppointment) => {
+                    this.getHairdresser().appointments.setState({
+                        appointments: [
+                            ...this.state.appointments,
+                            addedAppointment,
+                        ]
+                    });
+                };
+
                 const timeFormat = appointment ?
                     appointment.startTime.format("HH:mm") + "-" + appointment.endTime.clone().startOf("minute").add(1, 'minute').format("HH:mm") :
                     timeSlot.format("HH:mm");
@@ -112,6 +122,7 @@ export class HairdresserDailyAppointments extends React.Component {
                     {timeFormat}
                     <AppointmentModal appointment={appointment}
                                       hairdresser={this.getHairdresser()}
+                                      addAppointment={addAppointment}
                                       timeSlot={timeSlot}
                                       isOpened={timeSlot === this.state.timeSlotOpened}
                                       removeAppointment={removeAppointment}

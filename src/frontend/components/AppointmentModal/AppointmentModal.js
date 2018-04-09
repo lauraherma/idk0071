@@ -270,11 +270,27 @@ export class AppointmentModal extends React.Component {
             <Button color="primary" onClick={this.addAppointment}>Lisa</Button>;
 
 
-        const colorCard =this.state.checkedWorkTypes.includes(39) ?
+        const colorCard =this.state.checkedWorkTypes.includes(3) ?
             <div>
                 <ColorRecipe colorRecipe={this.state.colorRecipe}/>
                 <hr/>
             </div> : "";
+
+        const nameInput = appointment ?
+            <h3> {appointment.client.person.firstName + ' ' + appointment.client.person.lastName}</h3> :
+            <FormGroup>
+                <div>
+                    <AsyncTypeahead
+                        labelKey="label"
+                        minLength={2}
+                        onSearch={this._handleSearch}
+                        isLoading={this.state.isLoading}
+                        placeholder="Sisesta nimi"
+                        options={this.state.options}
+                    />
+                </div>
+            </FormGroup>
+
         return (
             <div>
                 <span>{appointmentLabel}</span>
@@ -282,18 +298,7 @@ export class AppointmentModal extends React.Component {
                     <ModalHeader toggle={this.toggle}>{modalTitle}</ModalHeader>
                     <ModalBody>
                         <Form>
-                            <FormGroup>
-                                <div>
-                                    <AsyncTypeahead
-                                        labelKey="label"
-                                        minLength={2}
-                                        onSearch={this._handleSearch}
-                                        isLoading={this.state.isLoading}
-                                        placeholder="Sisesta nimi"
-                                        options={this.state.options}
-                                    />
-                                </div>
-                            </FormGroup>
+                            {nameInput}
                             <FormGroup>
                                 <div>Teenused</div>
                                 {this.getWorkTypes()}

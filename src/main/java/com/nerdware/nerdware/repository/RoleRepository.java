@@ -15,7 +15,7 @@ public interface RoleRepository extends CrudRepository<Role, Long> {
     @Query("select r from Role r where LOWER(CONCAT(r.person.firstName, ' ', r.person.lastName)) LIKE lower(concat('%', :fullName, '%'))")
     List<Role> findClientsByPartialName(@Param("fullName") String fullName);
 
-    @Query("select r from Role r where r.roleType = 3")
+    @Query("select r from Role r where r.roleType = 1")
     List<Role> findAllHairdressers();
 
     @Query("select r from Role r where r.roleType = 2")
