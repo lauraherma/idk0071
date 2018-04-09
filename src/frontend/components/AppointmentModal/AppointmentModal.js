@@ -60,7 +60,7 @@ export class AppointmentModal extends React.Component {
         const appointmentInfo = {
             firstName: appointment ? appointment.client.firstName : "",
             checkedWorkTypes: appointment ?
-                appointment.workTypes.map(workType => workType.id) :
+                appointment.work.workTypes.map(workType => workType.id) :
                 [],
             description: appointment ? appointment.description : "",
             startTime: appointment ?
@@ -258,7 +258,7 @@ export class AppointmentModal extends React.Component {
             <span>
                 {this.props.appointment.client.firstName}
                 <br/>
-                {this.props.appointment.workTypes.map(workType => workType.name).join(", ")}
+                {this.props.appointment.work.workTypes.map(workType => workType.name).join(", ")}
             </span> :
             <i onClick={this.toggle} className="fas fa-plus-circle"/>;
 
