@@ -12,6 +12,7 @@ export class AppointmentModal extends React.Component {
     dataService = new DataService();
 
     state = {
+        isLoading: false,
         modal: false,
         firstName: '',
         lastName: '',
@@ -26,6 +27,7 @@ export class AppointmentModal extends React.Component {
         allWorks: [],
         workTypes: [],
         checkedWorkTypes: [],
+        options:[],
         colorRecipe: {
             id: 1,
             parts: [
