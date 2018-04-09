@@ -4,6 +4,7 @@ import "./Home.css"
 import moment from "moment";
 import lodash from "lodash";
 import {DataService} from "../DataService";
+import {NavBar} from "../NavBar/NavBar";
 
 export class Home extends React.Component {
 
@@ -76,7 +77,7 @@ export class Home extends React.Component {
     render() {
         return (
             <div className="Home">
-
+                <NavBar/>
                 <h1>{moment().format('MMMM Do YYYY')}</h1>
                 {this.getLoader()}
                 <div className="hairdressers">

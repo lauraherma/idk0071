@@ -1,10 +1,13 @@
 package com.nerdware.nerdware.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,10 +29,12 @@ public class Appointment {
     @Column(length = 1000)
     private String description;
 
+    @JsonIgnoreProperties({"appointments"})
     @JoinColumn(name = "hairdresser_id")
     @ManyToOne(optional=false)
     private Role hairdresser;
 
+    @JsonIgnoreProperties({"appointments"})
     @JoinColumn(name = "client_id")
     @ManyToOne(optional=false)
     private Role client;
@@ -37,5 +42,7 @@ public class Appointment {
     @JoinColumn(name = "work_id")
     @ManyToOne(optional=false)
     private Work work;
+
+    private Long price;
 }
 

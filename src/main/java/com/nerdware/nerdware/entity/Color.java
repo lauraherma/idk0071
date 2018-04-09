@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 @Getter
@@ -22,5 +24,8 @@ public class Color {
     private String code;
     private Double amount;
 
+    @ManyToOne
+    @JoinColumn(name="color_recipe_id")
+    private ColorRecipe colorRecipe;
 }
 

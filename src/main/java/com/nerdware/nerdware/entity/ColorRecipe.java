@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import java.util.List;
 
@@ -21,12 +20,10 @@ public class ColorRecipe {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @JoinColumn(name = "colors_id")
-    @OneToMany
+    @OneToMany(mappedBy = "colorRecipe")
     private List<Color> colors;
 
-    @JoinColumn(name = "hydrogens_id")
-    @OneToMany
+    @OneToMany(mappedBy = "colorRecipe")
     private List<Hydrogen> hydrogens;
 
 }

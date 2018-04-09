@@ -2,7 +2,6 @@ import React from 'react';
 import "./HairdresserDailyAppointments.css";
 import moment from "moment";
 import {HairdresserAddModal} from "../HairdresserAddModal/HairdresserAddModal";
-import {HairdresserAddTimeModal} from "../HairdresserAddTimeModal/HairdresserAddTimeModal";
 import lodash from "lodash";
 import axios from "axios/index";
 import {API_URL} from "../Constants";
@@ -23,19 +22,6 @@ export class HairdresserDailyAppointments extends React.Component {
         this.getHairdresser().appointments.push(form);
         this.createTimeSlots();
     };
-
-    componentDidMount() {
-        this.createTimeSlots();
-        let tempWorks = [];
-        axios.get(API_URL + 'workTypes')
-            .then( (response)=> {
-                tempWorks.push(response.data[0].name);
-
-                this.setState({
-                    allWorks: tempWorks,
-                })
-            });
-    }
 
     createTimeSlots() {
         const timeSlots = [];
@@ -62,13 +48,6 @@ export class HairdresserDailyAppointments extends React.Component {
 
     componentDidMount() {
         this.createTimeSlots();
-        let tempWorks = [];
-        this.dataService.getAllWorkTypes()
-            .then(function(response){
-                tempWorks.push(response.data[0].name);
-            }).then(this.setState({
-            allWorks: tempWorks,
-        }));
     }
 
     getHairdresser() {
@@ -90,9 +69,12 @@ export class HairdresserDailyAppointments extends React.Component {
         const
             times = this.state.timeSlots.map(timeSlot => {
                 const classes = ['time'];
+                console.log(this.getHairdresser().appointments);
                 const appointment = this.getHairdresser()
                     .appointments
                     .filter(appointment => {
+                        //appointment.startTime = moment(appointment.startTime);
+                        //appointment.endTime = moment(appointment.endTime);
                         return moment()
                             .range(appointment.startTime, appointment.endTime)
                             .contains(timeSlot);
@@ -129,6 +111,7 @@ export class HairdresserDailyAppointments extends React.Component {
                 return <div onClick={openTimeSlot} key={timeSlot} className={classes.join(' ')}>
                     {timeFormat}
                     <AppointmentModal appointment={appointment}
+                                      hairdresser={this.getHairdresser()}
                                       timeSlot={timeSlot}
                                       isOpened={timeSlot === this.state.timeSlotOpened}
                                       removeAppointment={removeAppointment}

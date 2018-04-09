@@ -28,12 +28,10 @@ export class HairdresserAddModal extends React.Component {
     };
 
     addHairdresser = () => {
-        console.log(this.state);
         const hairdresserData = new RoleForm();
         hairdresserData.person = this.state.hairdresserForm;
         this.dataService.getRoleTypeByName('hairdresser').then(response => {
             hairdresserData.roleType = response.data;
-            console.log(hairdresserData);
             this.dataService.addRole(hairdresserData).then(() => {
                 this.props.addHairdresser(hairdresserData);
 
@@ -84,7 +82,7 @@ export class HairdresserAddModal extends React.Component {
                     </ModalBody>
                     <ModalFooter>
                         <Button color="light" onClick={this.toggle}>Cancel</Button>
-                        <Button color="primary" onClick={this.onHairdresserAdded}>Lisa juuksur</Button>
+                        <Button color="primary" onClick={this.addHairdresser}>Lisa juuksur</Button>
                     </ModalFooter>
                 </Modal>
             </div>

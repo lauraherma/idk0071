@@ -24,6 +24,11 @@ public class RoleController {
         return roleService.getClientsByPartialName(name);
     }
 
+    @GetMapping(value = "/roles/clients")
+    public List<Role> findAllClients() {
+        return roleService.getAllClients();
+    }
+
     @GetMapping(value = "/roles/hairdressers")
     public List<Role> findAllHairdressers() {
         return roleService.getAllHairdressers();

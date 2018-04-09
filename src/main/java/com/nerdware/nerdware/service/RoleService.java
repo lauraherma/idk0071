@@ -23,7 +23,7 @@ public class RoleService {
 
 
     public Role addRole(Role role) {
-        if (role.getPerson().getId() == null) {
+        if (personNotExists(role.getPerson().getId())) {
             role.setPerson(personRepository.save(role.getPerson()));
         }
 
@@ -32,9 +32,17 @@ public class RoleService {
         return roleRepository.save(role);
     }
 
+    public boolean personNotExists(Long id) {
+        return id == null;
+    }
+
 
     public List<Role> getAllHairdressers() {
         return roleRepository.findAllHairdressers();
+    }
+
+    public List<Role> getAllClients() {
+        return roleRepository.findAllClients();
     }
 
     public List<Role> getClientsByPartialName(String name) {
