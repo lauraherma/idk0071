@@ -45,9 +45,9 @@ public class AppointmentService {
         appointment.setClient(roleRepository.findOne(appointment.getClient().getId()));
         appointment.setHairdresser(roleRepository.findOne(appointment.getHairdresser().getId()));
 
-        /*List<Appointment> hairdresserAppointments = appointment.getHairdresser().getAppointments();
+        List<Appointment> hairdresserAppointments = appointment.getHairdresser().getAppointments();
         hairdresserAppointments.add(appointment);
-        appointment.getHairdresser().setAppointments(hairdresserAppointments);*/
+        appointment.getHairdresser().setAppointments(hairdresserAppointments);
 
         return appointmentRepository.save(appointment);
     }
