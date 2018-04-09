@@ -39,14 +39,30 @@ export class HairdresserDailyAppointments extends React.Component {
                 .set('hour', 8)
                 .add(i * halfHourInMinutes, 'minute');
 
-            const appointmentOnTimeSlot = this.getAppointmentOnTimeSlot(timeSlot);
-            const isStartTime = appointmentOnTimeSlot && timeSlot.format() === moment(appointmentOnTimeSlot.startTime).format();
-            const isEndTime = appointmentOnTimeSlot && timeSlot.format() === moment(appointmentOnTimeSlot.endTime).format();
+            const appointment = this.getAppointmentOnTimeSlot(timeSlot);
 
-            if (!appointmentOnTimeSlot || (appointmentOnTimeSlot && isStartTime) || (appointmentOnTimeSlot && isEndTime)) {
+            if (appointment) {
+                const { startTime, endTime } = this.getAppointmentStartEndTime(appointment);
+                const isStartTime = appointment && startTime.format() === timeSlot.format();
+                const isEndTime = appointment && endTime.format() === timeSlot.format();
+
+                console.log({
+                    appointment: appointment,
+                    appointmentOnTimeSlot: !!appointment,
+                    isStartTime,
+                    isEndTime,
+                });
+
+                if (isStartTime || isEndTime) {
+                    timeSlots.push(timeSlot);
+                }
+            } else  {
                 timeSlots.push(timeSlot);
             }
         }
+
+        console.log(this.props.hairdresser, timeSlots);
+
         this.setState({
             timeSlots: timeSlots,
         });
@@ -65,12 +81,22 @@ export class HairdresserDailyAppointments extends React.Component {
         return this.getHairdresser()
             .appointments
             .filter(appointment => {
+                const { startTime, endTime } = this.getAppointmentStartEndTime(appointment);
+
                 return moment()
-                    .range(appointment.startTime, appointment.endTime)
+                    .range(startTime, endTime)
                     .contains(timeSlot);
             })[0];
     };
 
+    getTimeSlotTimeFormatLabel = (appointment, timeSlot) => {
+        if (appointment) {
+            const { startTime, endTime } = this.getAppointmentStartEndTime(appointment);
+            return startTime.format("HH:mm") + "-" + endTime.add(1, 'second').format("HH:mm");
+        } else {
+            return timeSlot.format("HH:mm");
+        }
+    };
 
     getTimes = () => {
 
@@ -79,9 +105,8 @@ export class HairdresserDailyAppointments extends React.Component {
         const timeSlot = this.state.timeSlots.map(timeSlot => {
             const appointment = this.getAppointment(timeSlot);
             const appointmentClasses = this.getAppointmentClasses(appointment);
-            const timeFormat = appointment ?
-                appointment.startTime.format("HH:mm") + "-" + appointment.endTime.clone().startOf("minute").add(1, 'minute').format("HH:mm") :
-                timeSlot.format("HH:mm");
+
+            const timeFormat = this.getTimeSlotTimeFormatLabel(appointment, timeSlot);
 
             if (appointment) {
                 if (alreadyAppearedAppointments.includes(appointment.id)) {
@@ -114,10 +139,10 @@ export class HairdresserDailyAppointments extends React.Component {
         const classes = ['time'];
         if (appointment) {
             classes.push('active');
-            const appointmentDurationInMinutes = Math.round(
-                (appointment.endTime.clone().utc() - appointment.startTime.clone().utc()) / 1000 / 60
-            );
-            classes.push('minutes-' + appointmentDurationInMinutes);
+
+            const { startTime, endTime } = this.getAppointmentStartEndTime(appointment);
+            const appointmentDurationInMinutes = Math.round((startTime - endTime) / 1000 / 60);
+            classes.push('minutes-' + Math.abs(appointmentDurationInMinutes));
         }
         return classes;
     };
@@ -126,12 +151,19 @@ export class HairdresserDailyAppointments extends React.Component {
         return this.getHairdresser()
             .appointments
             .filter(appointment => {
-                appointment.startTime = moment.utc(appointment.startTime).local();
-                appointment.endTime = moment.utc(appointment.endTime).local();
+                const { startTime, endTime } = this.getAppointmentStartEndTime(appointment);
+
                 return moment()
-                    .range(appointment.startTime, appointment.endTime)
+                    .range(startTime, endTime)
                     .contains(timeSlot);
             })[0];
+    };
+
+    getAppointmentStartEndTime = (appointment) => {
+        return {
+            startTime: moment.utc(appointment.startTime).local(),
+            endTime: moment.utc(appointment.endTime).local(),
+        };
     };
 
     openTimeSlot = (timeSlot) => {

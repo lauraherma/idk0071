@@ -28,6 +28,7 @@ export class AppointmentModal extends React.Component {
         workTypes: [],
         checkedWorkTypes: [],
         options:[],
+        optionKey:'',
         colorRecipe: {
             id: 1,
             parts: [
@@ -101,8 +102,8 @@ export class AppointmentModal extends React.Component {
 
     clientChanged = (event) => {
         this.setState({
-            client: event.target.value,
-        })
+            client: event[0],
+        });
     };
 
     startTimeChanged = (event) => {
@@ -160,7 +161,7 @@ export class AppointmentModal extends React.Component {
             endTime: moment(this.state.endTime).subtract(1, 'second'),
             description: this.state.description,
             hairdresser: this.props.hairdresser,
-            client: this.state.options[0],
+            client: this.state.client,
             work: {
                 workTypes: this.state.checkedWorkTypes.map(id => lodash.find(this.state.workTypes, {
                     id: id
@@ -254,7 +255,7 @@ export class AppointmentModal extends React.Component {
     render() {
         const appointment = this.props.appointment;
 
-        const modalTitle = appointment ? 'Muuda aega' : 'Lisa aeg';
+        const modalTitle = appointment ? 'Muuda aega' : `Lisa aeg juuksurile`;
 
         const appointmentLabel = appointment ?
             <span>
@@ -285,7 +286,9 @@ export class AppointmentModal extends React.Component {
                     <AsyncTypeahead
                         labelKey="label"
                         minLength={2}
+                        value={this.state.client}
                         onSearch={this._handleSearch}
+                        onChange={this.clientChanged}
                         isLoading={this.state.isLoading}
                         placeholder="Sisesta nimi"
                         options={this.state.options}
