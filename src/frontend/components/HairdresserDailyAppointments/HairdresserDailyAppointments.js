@@ -119,6 +119,7 @@ export class HairdresserDailyAppointments extends React.Component {
                     timeSlot.format("HH:mm");
 
                 if (appointment && appointmentAlreadyInList) {
+                    console.log(appointment);
                     return;
                 }
 
