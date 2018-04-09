@@ -34,7 +34,7 @@ export class DataService  {
     }
 
     addAppointment(data) {
-        return this.postRequest(data, 'getAppointment', 'add');
+        return this.postRequest(data, 'appointment', 'add');
     }
 
     getClients(name) {
