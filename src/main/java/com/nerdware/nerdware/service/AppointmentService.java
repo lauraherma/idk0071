@@ -76,4 +76,7 @@ public class AppointmentService {
         return appointmentRepository.findAppointmentsByHairdresserId(id);
     }
 
+    public boolean appointmentDoesNotExist(Long id) {
+        return id == null;
+    }
 }
