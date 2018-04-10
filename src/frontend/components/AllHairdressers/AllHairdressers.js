@@ -2,6 +2,7 @@ import React from 'react';
 import {Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, Input, FormGroup, Label} from 'reactstrap';
 import {API_URL} from "../Constants";
 import axios from 'axios';
+import {updateHairdressers} from "../../data/hairdressers";
 
 export class AllHairdressers extends React.Component {
     state = {
@@ -26,11 +27,7 @@ export class AllHairdressers extends React.Component {
             dateOfBirth: this.state.dateOfBirth,
             phone: '34554'
         }).then(() => {
-            this.props.addHairdresser({
-                firstName: this.state.firstName,
-                lastName: this.state.lastName,
-                email: this.state.email
-            });
+            updateHairdressers();
 
             this.setState({
                 modal: false,

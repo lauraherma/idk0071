@@ -152,7 +152,7 @@ export class HairdresserDailyAppointments extends React.Component {
     render() {
         const header = this.getHairdresser() ?
             this.getHairdresser().person.firstName :
-            <HairdresserAddModal addHairdresser={this.props.addHairdresser}/>;
+            <HairdresserAddModal/>;
 
         return <div className="Hairdresser">
             <div className="name">
