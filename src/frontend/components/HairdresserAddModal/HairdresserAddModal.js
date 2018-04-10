@@ -1,6 +1,7 @@
 import React from 'react';
 import {Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, Input, FormGroup, Label} from 'reactstrap';
 import {DataService} from "../DataService";
+import {updateHairdressers} from "../../data/hairdressers";
 
 export class HairdresserAddModal extends React.Component {
     dataService = new DataService();
@@ -33,7 +34,7 @@ export class HairdresserAddModal extends React.Component {
         this.dataService.getRoleTypeByName('hairdresser').then(response => {
             hairdresserData.roleType = response.data;
             this.dataService.addRole(hairdresserData).then(() => {
-                this.props.addHairdresser(hairdresserData);
+                updateHairdressers();
 
                 this.setState({
                     modal: false,
