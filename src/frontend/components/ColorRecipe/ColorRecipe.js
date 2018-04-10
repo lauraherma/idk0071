@@ -23,7 +23,7 @@ export class ColorRecipe extends React.Component {
             {this.state.recipeParts.map((recipePart, index) => <ColorRecipePart key={index} colorRecipePart={recipePart}/>)}
 
             <Button onClick={() => this.addRecipePart()} color="primary" block>
-                Lisa värviretsepti osa
+                Lisa uus värviretsepti osa
             </Button>
         </div>;
     }
