@@ -2,7 +2,6 @@ import React from 'react';
 import {ColorRecipeColor} from "../ColorRecipeColorTypeColor/ColorRecipeColorTypeColor";
 import {ColorRecipeColorTypeHydrogen} from "../ColorRecipeColorTypeHydrogen/ColorRecipeColorTypeHydrogen";
 import {Row, Col, Button} from 'reactstrap'
-import lodash from 'lodash';
 import './ColorRecipe.css';
 import {ColorRecipePart} from "../ColorRecipePart/ColorRecipePart";
 

@@ -49,7 +49,6 @@ export const ClientAddModal = observer(class ClientAddModal extends React.Compon
             personForm: personForm,
         });
 
-        console.log(this.props);
     };
 
 
