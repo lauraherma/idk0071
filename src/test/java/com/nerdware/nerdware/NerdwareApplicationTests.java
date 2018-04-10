@@ -1,10 +1,10 @@
 package com.nerdware.nerdware;
 
+import com.nerdware.nerdware.controller.RoleController;
 import com.nerdware.nerdware.entity.Person;
 import com.nerdware.nerdware.entity.Role;
 import com.nerdware.nerdware.entity.RoleType;
 import com.nerdware.nerdware.service.RoleService;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,6 +14,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
+import java.util.List;
+import static org.junit.Assert.assertEquals;
+import static org.hamcrest.Matchers.contains;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration
@@ -26,6 +29,7 @@ public class NerdwareApplicationTests {
 	private Role role;
 	private Person person;
 	private RoleType roleType;
+
 
 	@Before
 	public void setup() {
@@ -43,68 +47,17 @@ public class NerdwareApplicationTests {
 		role.getPerson().setId(null);
 		Long id = role.getPerson().getId();
 
-		Assert.assertEquals(!roleService.personNotExists(id), null);
+		assertEquals(null, !roleService.personNotExists(id));
 	}
 
 	@Test
-	public void contextLoads() {
+	public void testFindClient() {
+		RoleController roleController = new RoleController(roleService);
+		person.setFirstName("Test");
+		List<Role> actual = roleController.findAllClients();
+		assertEquals(actual, contains(role));
 	}
 
-	@Test
-	public void testFindClientByName() {
 
-	}
-
-	@Test
-	public void editHairdresserData() {
-	}
-
-	@Test
-	public void addHairdresserToCalendarView() {
-	}
-
-	@Test
-	public void deleteHairdresserFromDatabase() {
-	}
-
-	@Test
-	public void addClientToDatabase() {
-	}
-
-	@Test
-	public void editClientData() {
-	}
-
-	@Test
-	public void addClientToCalendarView() {
-	}
-
-	@Test
-	public void deleteClientFromDatabase() {
-	}
-
-	@Test
-	public void addAppointmentToDatabase() {
-	}
-
-	@Test
-	public void editAppointmentData() {
-	}
-
-	@Test
-	public void addAppointmentToCalendarView() {
-	}
-
-	@Test
-	public void deleteAppointmentFromDatabase() {
-	}
-
-	@Test
-	public void addNotificationToClientViaEmail() {
-	}
-
-	@Test
-	public void viewCalendarView() {
-	}
 
 }
