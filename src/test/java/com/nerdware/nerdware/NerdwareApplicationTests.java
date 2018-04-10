@@ -62,14 +62,6 @@ public class NerdwareApplicationTests {
 	}
 
 	@Test
-	public void testFindClient() {
-		RoleController roleController = new RoleController(roleService);
-		List<Role> actual = roleController.findAllClients();
-		assertThat(actual, contains(role));
-	}
-
-
-	@Test
 	public void testAddAppointment() {
 		appointment.getWork().setId(null);
 		Long id  = appointment.getWork().getId();
