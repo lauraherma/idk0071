@@ -3,8 +3,10 @@ import {Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, Input, FormGro
 import moment from "moment";
 import {RoleForm} from "../HairdresserAddModal/HairdresserAddModal";
 import {DataService} from "../DataService";
+import {observer} from 'mobx-react';
+import {updateClients} from "../../data/clients";
 
-export class ClientAddModal extends React.Component {
+export const ClientAddModal = observer(class ClientAddModal extends React.Component {
     dataService = new DataService();
     state = {
         modal: false,
@@ -20,21 +22,19 @@ export class ClientAddModal extends React.Component {
     addClient = () => {
 
         const clientData = new RoleForm();
-        this.state.personForm.dateOfBirth=moment();
+        this.state.personForm.dateOfBirth = moment();
         clientData.person = this.state.personForm;
         this.dataService.getRoleTypeByName('client').then(response => {
             clientData.roleType = response.data;
             this.dataService.addRole(clientData).then(() => {
-
+                updateClients();
                 this.setState({
                     modal: false,
-                    personForm : new PersonForm(),
+
 
                 });
             });
         });
-
-        this.props.onClientAdded();
 
     };
 
@@ -113,7 +113,7 @@ export class ClientAddModal extends React.Component {
             </div>
         );
     }
-}
+});
 
 export class PersonForm {
     firstName = '';

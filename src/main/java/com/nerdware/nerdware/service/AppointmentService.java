@@ -47,7 +47,7 @@ public class AppointmentService {
         List<WorkType> workTypes = work.getWorkTypes();
         List<WorkType> newWorkTypes = new ArrayList<>();
         for (WorkType workType: workTypes) {
-            if (workType.getId() == null) {
+            if (appointmentNotExists(workType.getId())) {
                 newWorkTypes.add(workTypeRepository.save(workType));
             } else {
                 newWorkTypes.add(workType);
@@ -70,6 +70,10 @@ public class AppointmentService {
 
     public List<Appointment> getAllAppointments() {
         return appointmentRepository.findAll();
+    }
+
+    public boolean appointmentNotExists(Long id) {
+        return id == null;
     }
 
     public List<Appointment> getAppointmentsByHairdresserId(long id) {
