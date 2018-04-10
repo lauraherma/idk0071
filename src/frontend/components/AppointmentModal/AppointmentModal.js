@@ -6,87 +6,116 @@ import {AddWorkTypeButton} from "../AddWorkTypeButton/AddWorkTypeButton";
 import {DataService} from "../DataService";
 import {AsyncTypeahead} from "react-bootstrap-typeahead";
 import {ColorRecipe} from "../ColorRecipe/ColorRecipe";
+import {observer} from 'mobx-react';
+import {updateHairdressers} from "../../data/hairdressers";
+import {updateWorkTypes} from "../../data/workTypes";
 
-export class AppointmentModal extends React.Component {
+const initialState = {
+    isLoading: false,
+    modal: false,
+    firstName: '',
+    lastName: '',
+    startTime: '',
+    endTime: '',
+    description: '',
+    price: '',
+    hairdresser: '',
+    client: '',
+    work: '',
+    allClients: [],
+    allWorks: [],
+    checkedWorkTypeIds: [],
+    options: [],
+    optionKey: '',
+    colorRecipe: {
+        id: 1,
+        parts: [
+            {
+                id: 1,
+                colorRecipeType: {
+                    id: 1,
+                    name: 'Sebastian'
+                },
+                colors: [
+                    {
+                        id: 1,
+                        code: 'Red',
+                        amount: 0,
+                    },
+                ],
+                hydrogens: [
+                    {
+                        id: 1,
+                        name: '6%',
+                        amount: 2,
+                    },
+                ]
+            },
+        ],
+    },
+};
 
+export const AppointmentModal = observer(class extends React.Component {
     dataService = new DataService();
 
-    state = {
-        isLoading: false,
-        modal: false,
-        firstName: '',
-        lastName: '',
-        startTime: '',
-        endTime: '',
-        description: '',
-        price: '',
-        hairdresser: '',
-        client: '',
-        work: '',
-        allClients: [],
-        allWorks: [],
-        workTypes: [],
-        checkedWorkTypes: [],
-        options:[],
-        optionKey:'',
-        colorRecipe: {
-            id: 1,
-            parts: [
-                {
-                    id: 1,
-                    colorRecipeType: {
-                        id: 1,
-                        name: 'Sebastian'
-                    },
-                    colors: [
-                        {
-                            id: 1,
-                            code: 'Red',
-                            amount: 0,
-                        },
-                    ],
-                    hydrogens: [
-                        {
-                            id: 1,
-                            name: '6%',
-                            amount: 2,
-                        },
-                    ]
-                },
-            ],
-        },
-    };
+    state = {...initialState};
 
     componentDidMount() {
-        const appointment = this.props.getAppointment;
-
-        const appointmentInfo = {
-            firstName: appointment ? appointment.client.firstName : "",
-            checkedWorkTypes: appointment ?
-                appointment.work.workTypes.map(workType => workType.id) :
-                [],
-            description: appointment ? appointment.description : "",
-            startTime: appointment ?
-                appointment.startTime.format() :
-                this.props.timeSlot.format(),
-            endTime: appointment ?
-                appointment.endTime.clone().add(1, 'second').format() :
-                this.props.timeSlot.clone().add(90, 'minutes').format(),
-        };
-
-        this.loadWorkTypes();
-
         this.setState({
-            ...appointmentInfo,
             modal: this.props.isOpened,
         });
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setState({
-            modal: nextProps.isOpened,
-        });
+        this.setState({modal: nextProps.isOpened});
+
+        if (nextProps.isOpened) {
+            this.setState({
+                ...initialState,
+                modal: nextProps.isOpened,
+            });
+
+            if (this.props.appointment) {
+                this.setStateFromAppointment();
+            } else {
+                this.setStateFromEmptyAppointment();
+            }
+        }
     }
+
+    setStateFromAppointment = () => {
+        const appointment = this.props.appointment;
+        const workTypes = this.getWorkTypes();
+
+        const appointmentInfo = {
+            firstName: appointment.client.firstName,
+            checkedWorkTypeIds: workTypes.map(workType => workType.id),
+            description: appointment.description,
+            price: appointment.price || "",
+            startTime: this.getAppointmentStartEndTime(appointment).startTime.format(),
+            endTime: this.getAppointmentStartEndTime(appointment).endTime.add(1, 'second').format(),
+        };
+
+        this.setState({...appointmentInfo});
+    };
+
+    setStateFromEmptyAppointment = () => {
+        this.setState({
+            startTime: this.props.timeSlot.format(),
+            endTime: this.props.timeSlot.clone().add(90, 'minutes').format(),
+        });
+    };
+
+    getWorkTypes = () => {
+        return this.props.appointment && this.props.appointment.work.workTypes.peek();
+    };
+
+    getAppointmentStartEndTime = (appointment) => {
+        return {
+            startTime: moment.utc(appointment.startTime).local(),
+            endTime: moment.utc(appointment.endTime).local(),
+        };
+    };
 
     toggle = () => {
         this.setState({
@@ -118,27 +147,19 @@ export class AppointmentModal extends React.Component {
     };
 
     workTypeChanged = (event) => {
-        const id = Number(event.target.value)
+        const id = Number(event.target.value);
+
         if (event.target.checked) {
             this.setState({
-                checkedWorkTypes: [...this.state.checkedWorkTypes, id]
+                checkedWorkTypeIds: [...this.state.checkedWorkTypeIds, id]
             })
         }
         else {
             this.setState({
-                checkedWorkTypes: lodash.without(this.state.checkedWorkTypes, id)
+                checkedWorkTypeIds: lodash.without(this.state.checkedWorkTypeIds, id)
             })
         }
     };
-
-    loadWorkTypes() {
-
-        this.dataService.getAllWorkTypes().then(response => {
-            this.setState({
-                workTypes: response.data,
-            });
-        });
-    }
 
     formChanged = (event) => {
         const target = event.target;
@@ -150,49 +171,36 @@ export class AppointmentModal extends React.Component {
         });
     };
 
-    addTime = () => {
-        this.componentDidMount();
+    removeAppointment = () => {
+        alert('TODO');
     };
 
     addAppointment = () => {
-
         const newAppointment = {
             startTime: moment(this.state.startTime),
             endTime: moment(this.state.endTime).subtract(1, 'second'),
+            price: this.state.price,
             description: this.state.description,
             hairdresser: this.props.hairdresser,
             client: this.state.client,
             work: {
-                workTypes: this.state.checkedWorkTypes.map(id => lodash.find(this.state.workTypes, {
-                    id: id
-                })), colorCard: {description: "", colorRecipe: {colors: [], hydrogens: []}}
+                workTypes: this.state.checkedWorkTypeIds.map(
+                    id => this.props.workTypes.find(workType => workType.id === id)
+                ),
+                colorCard: {
+                    description: "",
+                    colorRecipe: {
+                        colors: [],
+                        hydrogens: []
+                    }
+                }
             },
-
         };
 
-        console.log(newAppointment);
-
-        this.props.changeAppointment(newAppointment);
-
-        this.dataService.addAppointment(newAppointment)
-            .then(() => {
-                this.props.addAppointment(newAppointment);
-                this.props.changeAppointment(newAppointment);
-                this.setState({
-                    modal: false,
-                    firstName: '',
-                    lastName: '',
-                    startTime: '',
-                    endTime: '',
-                    description: '',
-                    hairdresser: '',
-                    client: '',
-                    work: '',
-                    allClients: [],
-                });
-            });
-
-        this.addTime();
+        this.dataService.addAppointment(newAppointment).then(() => {
+            updateHairdressers();
+            this.setState({...initialState});
+        });
     };
 
     getTimeOptions(checkedTime) {
@@ -216,22 +224,20 @@ export class AppointmentModal extends React.Component {
         });
     }
 
-    getWorkTypes() {
-
-        return this.state.workTypes.map(workType => {
-            const isChecked = this.state.checkedWorkTypes.includes(workType.id);
+    getWorkTypesCheckboxes() {
+        return this.props.workTypes.map(workType => {
+            const isChecked = this.state.checkedWorkTypeIds.includes(workType.id);
             return <FormGroup key={workType.id} check inline>
                 <Label check>
                     <Input checked={isChecked} type="checkbox" value={workType.id} onChange={this.workTypeChanged}/>
                     {workType.name}
                 </Label>
             </FormGroup>
-
-        })
+        });
     }
 
     addWorkType = () => {
-        this.loadWorkTypes();
+        updateWorkTypes();
     };
 
     _handleSearch = (name) => {
@@ -261,19 +267,19 @@ export class AppointmentModal extends React.Component {
             <span>
                 {this.props.appointment.client.person.firstName}
                 <br/>
-                {this.props.appointment.work.workTypes.map(workType => workType.name).join(", ")}
+                {this.getWorkTypes().map(workType => workType.name).join(", ")}
             </span> :
             <i onClick={this.toggle} className="fas fa-plus-circle"/>;
 
         const buttonGroup = appointment ?
             <div>
-                <Button color="danger" onClick={this.props.removeAppointment}>Kustuta</Button>
+                <Button color="danger" onClick={this.removeAppointment}>Kustuta</Button>
                 <Button color="primary" onClick={this.addAppointment}>Muuda</Button>
             </div> :
             <Button color="primary" onClick={this.addAppointment}>Lisa</Button>;
 
 
-        const colorCard =this.state.checkedWorkTypes.includes(3) ?
+        const colorCard = this.state.checkedWorkTypeIds.includes(3) ?
             <div>
                 <ColorRecipe colorRecipe={this.state.colorRecipe}/>
                 <hr/>
@@ -299,14 +305,18 @@ export class AppointmentModal extends React.Component {
         return (
             <div>
                 <span>{appointmentLabel}</span>
-                <Modal size="lg" isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
+                <Modal size="lg"
+                       onClosed={() => this.props.onModalClosed()}
+                       isOpen={this.state.modal}
+                       toggle={this.toggle}
+                       className={this.props.className}>
                     <ModalHeader toggle={this.toggle}>{modalTitle}</ModalHeader>
                     <ModalBody>
                         <Form>
                             {nameInput}
                             <FormGroup>
                                 <div>Teenused</div>
-                                {this.getWorkTypes()}
+                                {this.getWorkTypesCheckboxes()}
                                 <AddWorkTypeButton addWorkType={this.addWorkType}/>
                             </FormGroup>
                             <FormGroup>
@@ -364,5 +374,4 @@ export class AppointmentModal extends React.Component {
             </div>
         );
     }
-}
-
+});

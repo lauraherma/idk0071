@@ -3,31 +3,14 @@ import "./HairdresserDailyAppointments.css";
 import moment from "moment";
 import {HairdresserAddModal} from "../HairdresserAddModal/HairdresserAddModal";
 import lodash from "lodash";
-import axios from "axios/index";
-import {API_URL} from "../Constants";
-import {DataService} from "../DataService";
 import {AppointmentModal} from "../AppointmentModal/AppointmentModal";
+import {workTypes} from "../../data/workTypes";
 
 export class HairdresserDailyAppointments extends React.Component {
-    dataService= new DataService();
     state = {
         timeSlotOpened: '',
         timeSlots: [],
         allWorks: []
-    };
-
-    addTime = (form) => {
-        this.getHairdresser().appointments.push(form);
-        this.createTimeSlots();
-    };
-
-    addAppointment = (addedAppointment) => {
-        this.getHairdresser().appointments.setState({
-            appointments: [
-                ...this.state.appointments,
-                addedAppointment,
-            ]
-        });
     };
 
     createTimeSlots = () => {
@@ -42,27 +25,17 @@ export class HairdresserDailyAppointments extends React.Component {
             const appointment = this.getAppointmentOnTimeSlot(timeSlot);
 
             if (appointment) {
-                const { startTime, endTime } = this.getAppointmentStartEndTime(appointment);
+                const {startTime, endTime} = this.getAppointmentStartEndTime(appointment);
                 const isStartTime = appointment && startTime.format() === timeSlot.format();
                 const isEndTime = appointment && endTime.format() === timeSlot.format();
-
-                console.log({
-                    appointment: appointment,
-                    appointmentOnTimeSlot: !!appointment,
-                    isStartTime,
-                    isEndTime,
-                });
 
                 if (isStartTime || isEndTime) {
                     timeSlots.push(timeSlot);
                 }
-            } else  {
+            } else {
                 timeSlots.push(timeSlot);
             }
         }
-
-        console.log(this.props.hairdresser, timeSlots);
-
         this.setState({
             timeSlots: timeSlots,
         });
@@ -77,21 +50,23 @@ export class HairdresserDailyAppointments extends React.Component {
         return this.props.hairdresser;
     };
 
-    getAppointmentOnTimeSlot = (timeSlot) => {
-        return this.getHairdresser()
-            .appointments
-            .filter(appointment => {
-                const { startTime, endTime } = this.getAppointmentStartEndTime(appointment);
+    getAppointments = () => {
+        return this.getHairdresser() ? this.getHairdresser().appointments.peek() : [];
+    };
 
-                return moment()
-                    .range(startTime, endTime)
-                    .contains(timeSlot);
-            })[0];
+    getAppointmentOnTimeSlot = (timeSlot) => {
+        return this.getAppointments().filter(appointment => {
+            const {startTime, endTime} = this.getAppointmentStartEndTime(appointment);
+
+            return moment()
+                .range(startTime, endTime)
+                .contains(timeSlot);
+        })[0];
     };
 
     getTimeSlotTimeFormatLabel = (appointment, timeSlot) => {
         if (appointment) {
-            const { startTime, endTime } = this.getAppointmentStartEndTime(appointment);
+            const {startTime, endTime} = this.getAppointmentStartEndTime(appointment);
             return startTime.format("HH:mm") + "-" + endTime.add(1, 'second').format("HH:mm");
         } else {
             return timeSlot.format("HH:mm");
@@ -120,12 +95,11 @@ export class HairdresserDailyAppointments extends React.Component {
                         className={appointmentClasses.join(' ')}>
                 {timeFormat}
                 <AppointmentModal appointment={appointment}
+                                  workTypes={workTypes}
                                   hairdresser={this.getHairdresser()}
                                   timeSlot={timeSlot}
                                   isOpened={timeSlot === this.state.timeSlotOpened}
-                                  removeAppointment={this.removeAppointment}
-                                  addTime={this.addTime}
-                                  addAppointment={this.addAppointment}
+                                  onModalClosed={() => this.setState({ timeSlotOpened: '' })}
                                   changeAppointment={(changedAppointment) => this.changeAppointment(changedAppointment, changedAppointment)}/>
             </div>
         });
@@ -140,7 +114,7 @@ export class HairdresserDailyAppointments extends React.Component {
         if (appointment) {
             classes.push('active');
 
-            const { startTime, endTime } = this.getAppointmentStartEndTime(appointment);
+            const {startTime, endTime} = this.getAppointmentStartEndTime(appointment);
             const appointmentDurationInMinutes = Math.round((startTime - endTime) / 1000 / 60);
             classes.push('minutes-' + Math.abs(appointmentDurationInMinutes));
         }
@@ -148,15 +122,13 @@ export class HairdresserDailyAppointments extends React.Component {
     };
 
     getAppointment = (timeSlot) => {
-        return this.getHairdresser()
-            .appointments
-            .filter(appointment => {
-                const { startTime, endTime } = this.getAppointmentStartEndTime(appointment);
+        return this.getAppointments().filter(appointment => {
+            const {startTime, endTime} = this.getAppointmentStartEndTime(appointment);
 
-                return moment()
-                    .range(startTime, endTime)
-                    .contains(timeSlot);
-            })[0];
+            return moment()
+                .range(startTime, endTime)
+                .contains(timeSlot);
+        })[0];
     };
 
     getAppointmentStartEndTime = (appointment) => {
@@ -177,13 +149,8 @@ export class HairdresserDailyAppointments extends React.Component {
         this.createTimeSlots();
     };
 
-    removeAppointment = (appointment) => {
-        lodash.remove(this.getHairdresser().appointments, appointment);
-        this.createTimeSlots();
-    };
-
     render() {
-        const header = this.getHairdresser().id ?
+        const header = this.getHairdresser() ?
             this.getHairdresser().person.firstName :
             <HairdresserAddModal addHairdresser={this.props.addHairdresser}/>;
 
