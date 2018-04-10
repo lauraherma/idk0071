@@ -60,21 +60,21 @@ export class HairdresserAddModal extends React.Component {
                             <FormGroup>
                                 <Label>Eesnimi</Label>
                                 <Input name="firstName"
-                                       placeholder="Sisesta nimi"
+                                       placeholder="Sisesta eesnimi"
                                        value={hairdresserForm.firstName}
                                        onChange={this.formChanged}/>
                             </FormGroup>
                             <FormGroup>
                                 <Label>Perenimi</Label>
                                 <Input name="lastName"
-                                       placeholder="Sisesta nimi"
+                                       placeholder="Sisesta perenimi"
                                        value={hairdresserForm.lastName}
                                        onChange={this.formChanged}/>
                             </FormGroup>
                             <FormGroup>
                                 <Label>Email</Label>
                                 <Input name="email"
-                                       placeholder="Sisesta nimi"
+                                       placeholder="Sisesta email"
                                        value={hairdresserForm.email}
                                        onChange={this.formChanged}/>
                             </FormGroup>
