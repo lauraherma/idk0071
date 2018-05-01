@@ -83,9 +83,19 @@ public class UserResourceIntTest {
         person.setFirstName("FirstName");
         person.setLastName("LastName");
         person.setEmail("email@gmail.com");
+        /*
+        restUserMockMvc.perform(post("/person")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(managedUserVM)))
+            .andExpect(status().isCreated());*/
 
+        // Validate the User in the database
         List<Person> userList = personRepository.findAll();
-        assertThat(userList).hasSize(databaseSizeBeforeCreate);
+        assertThat(userList).hasSize(databaseSizeBeforeCreate + 1);
+        Person testUser = userList.get(userList.size() - 1);
+        assertThat(testUser.getFirstName()).isEqualTo(DEFAULT_FIRSTNAME);
+        assertThat(testUser.getLastName()).isEqualTo(DEFAULT_LASTNAME);
+        assertThat(testUser.getEmail()).isEqualTo(DEFAULT_EMAIL);
     }
 
     @Test
@@ -97,9 +107,43 @@ public class UserResourceIntTest {
         person.setFirstName("FirstName");
         person.setLastName("LastName");
         person.setEmail("email@gmail.com");
+        /*
+        restUserMockMvc.perform(post("/api/users")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(managedUserVM)))
+            .andExpect(status().isBadRequest());*/
 
         List<Person> userList = personRepository.findAll();
         assertThat(userList).hasSize(databaseSizeBeforeCreate);
+    }
+
+    @Test
+    @Transactional
+    public void getAllUsers() throws Exception {
+        // Initialize the database
+        personRepository.save(person);
+        // Get all the users
+        restUserMockMvc.perform(get("/api/person?sort=id,desc")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .andExpect(jsonPath("$.[*].firstName").value(hasItem(DEFAULT_FIRSTNAME)))
+                .andExpect(jsonPath("$.[*].lastName").value(hasItem(DEFAULT_LASTNAME)))
+                .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL)));
+    }
+
+    @Test
+    @Transactional
+    public void getUser() throws Exception {
+        // Initialize the database
+        personRepository.save(person);
+        // Get the user
+        restUserMockMvc.perform(get("/person/{id}", person.getId()))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .andExpect(jsonPath("$.firstName").value(DEFAULT_FIRSTNAME))
+                .andExpect(jsonPath("$.lastName").value(DEFAULT_LASTNAME))
+                .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL));
     }
 
     @Test
