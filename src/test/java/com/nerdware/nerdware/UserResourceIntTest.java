@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -25,9 +26,12 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+/**
+ * Test class for the UserResource REST controller.
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = NerdwareApplication.class)
-public class PersonTests {
+public class UserResourceIntTest {
 
     private static final String DEFAULT_EMAIL = "";
     private static final String UPDATED_EMAIL = "email@gmail.com";
@@ -63,7 +67,6 @@ public class PersonTests {
                 .build();
     }
 
-    @Test
     public static Person createEntity(EntityManager em) {
         Person person = new Person();
         person.setFirstName(DEFAULT_FIRSTNAME);
@@ -77,9 +80,9 @@ public class PersonTests {
     public void createUser() {
         int databaseSizeBeforeCreate = personRepository.findAll().size();
         Person person = new Person();
-        person.setFirstName(UPDATED_FIRSTNAME);
-        person.setLastName(UPDATED_LASTNAME);
-        person.setEmail(UPDATED_EMAIL);
+        person.setFirstName("FirstName");
+        person.setLastName("LastName");
+        person.setEmail("email@gmail.com");
         /*
         restUserMockMvc.perform(post("/person")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
