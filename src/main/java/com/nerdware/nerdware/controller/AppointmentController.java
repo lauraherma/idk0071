@@ -24,6 +24,11 @@ public class AppointmentController {
         return appointmentService.addAppointment(appointment);
     }
 
+    @GetMapping(value = "/appointment/remove/{id}")
+    public Integer removeAppointment(@PathVariable("id") Long id) {
+        return appointmentService.removeAppointment(id);
+    }
+
     @GetMapping(value = "/appointments/{id}")
     public List<Appointment> getAppointment(@PathVariable("id") long userId) {
         return appointmentService.getAppointmentsByHairdresserId(userId);
