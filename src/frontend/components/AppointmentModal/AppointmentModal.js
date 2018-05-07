@@ -172,10 +172,15 @@ export const AppointmentModal = observer(class extends React.Component {
     };
 
     removeAppointment = () => {
-        alert('TODO');
+
+        this.dataService.removeAppointment(this.props.appointment.id).then(() => {
+            updateHairdressers();
+            this.setState({...initialState});
+        });
     };
 
     addAppointment = () => {
+
         const newAppointment = {
             startTime: moment(this.state.startTime),
             endTime: moment(this.state.endTime).subtract(1, 'second'),
@@ -196,6 +201,13 @@ export const AppointmentModal = observer(class extends React.Component {
                 }
             },
         };
+
+        if (this.props.appointment) {
+            newAppointment.id = this.props.appointment.id;
+            if (newAppointment.client === '') {
+                newAppointment.client = this.props.appointment.client;
+            }
+        }
 
         this.dataService.addAppointment(newAppointment).then(() => {
             updateHairdressers();

@@ -39,4 +39,9 @@ public class RoleController {
         return roleService.addRole(role);
     }
 
+    @PostMapping(value = "/role/remove", consumes = "application/json")
+    public Role removeRole(@RequestBody Role role) {
+        return roleService.removeRole(role);
+    }
+
 }

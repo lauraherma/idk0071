@@ -37,6 +37,10 @@ export class DataService  {
         return this.postRequest(data, 'appointment', 'add');
     }
 
+    removeAppointment(id) {
+        return this.getRequest('appointment', 'remove', id);
+    }
+
     getClients(name) {
         return this.getRequest('roles', 'clients', name);
     }

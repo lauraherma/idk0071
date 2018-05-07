@@ -1,6 +1,8 @@
 import React from 'react';
 import {observer} from 'mobx-react';
 import {Button, Table} from 'reactstrap'
+import {workTypes} from "../../data/workTypes";
+import {ClientAddModal} from "../ClientAddModal/ClientAddModal";
 
 
 export const ClientList = observer(class ClientList extends React.Component {
@@ -14,6 +16,7 @@ export const ClientList = observer(class ClientList extends React.Component {
                     <td>{client.person.phone}</td>
                     <td>{client.person.email}</td>
                     <td>{client.person.dateOfBirth}</td>
+                    <ClientAddModal client={client}/>
                 </tr>
             );
 
