@@ -15,18 +15,18 @@ public class ColorRecipeController {
         this.colorRecipeService = colorRecipeService;
     }
 
-    @PostMapping(value = "/colorrecipe/add", consumes = "application/json")
+    @PostMapping(value = "/color-recipe/add", consumes = "application/json")
     public ColorRecipe addColorCard(@RequestBody ColorRecipe colorRecipe) {
         return colorRecipeService.addColorRecipe(colorRecipe);
     }
 
-    @GetMapping(value = "/colorrecipe/{id}")
+    @GetMapping(value = "/color-recipe/{id}")
     public ColorRecipe getColorCardById(@PathVariable("id") long colorRecipeId) {
         return colorRecipeService.getColorRecipeById(colorRecipeId);
     }
 
-    @GetMapping(value = "/colorrecipe")
-    public List<ColorRecipe> findAllColorCards() {
+    @GetMapping(value = "/color-recipes")
+    public List<ColorRecipe> findAllColorRecipes() {
         return colorRecipeService.getAllColorRecipes();
     }
 

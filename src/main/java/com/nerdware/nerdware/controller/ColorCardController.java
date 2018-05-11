@@ -15,17 +15,17 @@ public class ColorCardController {
         this.colorCardService = colorCardService;
     }
 
-    @PostMapping(value = "/colorcard/add", consumes = "application/json")
+    @PostMapping(value = "/color-card/add", consumes = "application/json")
     public ColorCard addColorCard(@RequestBody ColorCard colorCard) {
         return colorCardService.addColorCard(colorCard);
     }
 
-    @GetMapping(value = "/colorcard/{id}")
+    @GetMapping(value = "/color-card/{id}")
     public ColorCard getColorCardById(@PathVariable("id") long colorCardId) {
         return colorCardService.getColorCardById(colorCardId);
     }
 
-    @GetMapping(value = "/colorcard")
+    @GetMapping(value = "/color-cards")
     public List<ColorCard> findAllColorCards() {
         return colorCardService.getAllColorCards();
     }
