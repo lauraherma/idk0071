@@ -31,7 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = NerdwareApplication.class)
-public class UserResourceIntTest {
+public class MockTests {
 
     private static final String DEFAULT_EMAIL = "";
     private static final String UPDATED_EMAIL = "email@gmail.com";

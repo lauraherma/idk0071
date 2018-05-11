@@ -5,6 +5,7 @@ import moment from "moment";
 import {NavBar} from "../NavBar/NavBar";
 import {updateWorkTypes} from "../../data/workTypes";
 import {hairdressers, updateHairdressers} from "../../data/hairdressers";
+import {updateColorCards} from "../../data/colorCards";
 import {DailyHairdressers} from "../DailyHairdressers/DailyHairdressers";
 
 export class Home extends React.Component {
@@ -15,6 +16,7 @@ export class Home extends React.Component {
     componentDidMount() {
         updateWorkTypes();
         updateHairdressers();
+        updateColorCards();
     }
 
 

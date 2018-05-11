@@ -5,10 +5,11 @@ import lodash from 'lodash';
 import {AddWorkTypeButton} from "../AddWorkTypeButton/AddWorkTypeButton";
 import {DataService} from "../DataService";
 import {AsyncTypeahead} from "react-bootstrap-typeahead";
-import {ColorRecipe} from "../ColorRecipe/ColorRecipe";
+import {ColorRecipe} from "../ColorCard/ColorRecipe";
 import {observer} from 'mobx-react';
 import {updateHairdressers} from "../../data/hairdressers";
 import {updateWorkTypes} from "../../data/workTypes";
+import {updateColorCards} from "../../data/colorCards";
 
 const initialState = {
     isLoading: false,
@@ -27,32 +28,28 @@ const initialState = {
     checkedWorkTypeIds: [],
     options: [],
     optionKey: '',
-    colorRecipe: {
-        id: 1,
-        parts: [
-            {
-                id: 1,
-                colorRecipeType: {
+    colorRecipe: [
+        {
+            id: 1,
+            date: '',
+            colors: [
+                {
                     id: 1,
-                    name: 'Sebastian'
+                    code: 'Red',
+                    amount: 0,
+                    companyName: 'Sebastian'
                 },
-                colors: [
-                    {
-                        id: 1,
-                        code: 'Red',
-                        amount: 0,
-                    },
-                ],
-                hydrogens: [
-                    {
-                        id: 1,
-                        name: '6%',
-                        amount: 2,
-                    },
-                ]
-            },
-        ],
-    },
+            ],
+            hydrogens: [
+                {
+                    id: 1,
+                    name: '6%',
+                    amount: 2,
+                    companyName: ''
+                },
+            ]
+        },
+    ],
 };
 
 export const AppointmentModal = observer(class extends React.Component {
@@ -86,6 +83,7 @@ export const AppointmentModal = observer(class extends React.Component {
     setStateFromAppointment = () => {
         const appointment = this.props.appointment;
         const workTypes = this.getWorkTypes();
+        const colorCards = this.getColorCards();
 
         const appointmentInfo = {
             firstName: appointment.client.firstName,
@@ -175,6 +173,7 @@ export const AppointmentModal = observer(class extends React.Component {
 
         this.dataService.removeAppointment(this.props.appointment.id).then(() => {
             updateHairdressers();
+            updateColorCards();
             this.setState({...initialState});
         });
     };
@@ -193,7 +192,7 @@ export const AppointmentModal = observer(class extends React.Component {
                     id => this.props.workTypes.find(workType => workType.id === id)
                 ),
                 colorCard: {
-                    description: "",
+                    date: "",
                     colorRecipe: {
                         colors: [],
                         hydrogens: []
@@ -211,6 +210,7 @@ export const AppointmentModal = observer(class extends React.Component {
 
         this.dataService.addAppointment(newAppointment).then(() => {
             updateHairdressers();
+            updateColorCards();
             this.setState({...initialState});
         });
     };
@@ -293,9 +293,11 @@ export const AppointmentModal = observer(class extends React.Component {
 
         const colorCard = this.state.checkedWorkTypeIds.includes(3) ?
             <div>
-                <ColorRecipe colorRecipe={this.state.colorRecipe}/>
+                <ColorRecipe colorRecipe={this.state.colorCard}/>
                 <hr/>
             </div> : "";
+
+        /*{this.getColorCards().map(colorCards => colorCards.name)}*/
 
         const nameInput = appointment ?
             <h3> {appointment.client.person.firstName + ' ' + appointment.client.person.lastName}</h3> :
