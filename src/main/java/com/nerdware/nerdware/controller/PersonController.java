@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 public class PersonController {
 
@@ -25,6 +27,11 @@ public class PersonController {
     @GetMapping(value = "/person/{id}")
     public Person getPersonById(@PathVariable("id") long userId) {
         return personService.getPersonById(userId);
+    }
+
+    @GetMapping(value = "/persons")
+    public List<Person> getAllPersons() {
+        return personService.getAllPersons();
     }
 
 }

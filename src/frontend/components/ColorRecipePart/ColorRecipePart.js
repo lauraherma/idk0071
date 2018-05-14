@@ -54,32 +54,25 @@ export class ColorRecipePart extends React.Component {
     }
 
 
-    getColorTypes () {
+    getColorTypes() {
         return <div>
             <Row>
                 <Col sm={2} className="d-flex align-items-center">
-                    <h5>Värvitüüp</h5>
-                </Col>
-
-                <Col sm={10}>
-
-                    <Label>Kuupäev</Label>
+                    <h5>Värvi firma</h5>
                     <select placeholder="Värvi"
                             onChange={this.startTimeChanged}
                             className="custom-select">
                         {this.getColorRecipes()}
                     </select>
-
-
                 </Col>
+
             </Row>
 
             <Row className="mt-3 mb-3">
                 <Col sm={{size: 10, offset: 2}}>
                     <Row>
-                        <Col sm={4}>Firma</Col>
-                        <Col sm={4}>Värvikood</Col>
-                        <Col sm={4}>Grammid</Col>
+                        <Col sm={5}>Värvikood</Col>
+                        <Col sm={5}>Grammid</Col>
                     </Row>
 
                     {this.state.colors.map((color, index) =>
@@ -91,12 +84,23 @@ export class ColorRecipePart extends React.Component {
                 </Col>
             </Row>
 
+            <Row>
+                <Col sm={2} className="d-flex align-items-center">
+                    <h5>Vesiniku firma</h5>
+                    <select placeholder="Vesinik"
+                            onChange={this.startTimeChanged}
+                            className="custom-select">
+                        {this.getColorRecipes()}
+                    </select>
+                </Col>
+
+            </Row>
+
             <Row className="mt-3 mb-3">
                 <Col sm={{size: 10, offset: 2}}>
                     <Row>
-                        <Col sm={4}>Firma</Col>
-                        <Col sm={4}>Vesinik</Col>
-                        <Col sm={4}>Grammid</Col>
+                        <Col sm={5}>Vesinik</Col>
+                        <Col sm={5}>Grammid</Col>
                     </Row>
 
                     {this.state.hydrogens.map((hydrogen, index) =>
@@ -113,7 +117,7 @@ export class ColorRecipePart extends React.Component {
 
     render() {
         return <div className="ColorRecipePart">
-            { this.getColorTypes() }
+            {this.getColorTypes()}
         </div>;
     }
 

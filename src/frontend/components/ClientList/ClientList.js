@@ -4,23 +4,33 @@ import {Button, Table} from 'reactstrap'
 import {workTypes} from "../../data/workTypes";
 import {ClientAddModal} from "../ClientAddModal/ClientAddModal";
 
+let clientOpened = false;
 
 export const ClientList = observer(class ClientList extends React.Component {
 
-
         getClients() {
             return this.props.clients.map(client =>
-                <tr key={client.person.id}>
+                <tr onClick={() => this.openClient(client)} key={client.person.id}>
                     <td>{client.person.firstName}</td>
                     <td>{client.person.lastName}</td>
                     <td>{client.person.phone}</td>
                     <td>{client.person.email}</td>
                     <td>{client.person.dateOfBirth}</td>
-                    <ClientAddModal client={client}/>
                 </tr>
             );
 
         };
+
+        openClient(client) {
+            console.log("here");
+            clientOpened = true;
+            return  <div>
+                    <ClientAddModal
+                        client={client}
+                        isOpened={clientOpened}
+                    />
+                     </div>
+        }
 
         render() {
             return <div>
