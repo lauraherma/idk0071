@@ -41,6 +41,7 @@ const initialState = {
                         id: 1,
                         code: 'Red',
                         amount: 0,
+
                     },
                 ],
                 hydrogens: [

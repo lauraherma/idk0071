@@ -3,6 +3,7 @@ package com.nerdware.nerdware.entity;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,11 +21,13 @@ public class ColorRecipe {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToMany(mappedBy = "colorRecipe")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Color> colors;
 
-    @OneToMany(mappedBy = "colorRecipe")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Hydrogen> hydrogens;
+
+
 
 }
 

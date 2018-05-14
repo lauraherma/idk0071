@@ -112,8 +112,8 @@ public class AppointmentService {
         return id == null;
     }
 
-    public List<Appointment> getAppointmentsByHairdresserId(long id) {
-        return appointmentRepository.findAppointmentsByHairdresserId(id);
+    public List<Appointment> getAppointmentsByClientId(long id) {
+        return appointmentRepository.findAppointmentsByClientId(id);
     }
 
     public boolean appointmentDoesNotExist(Long id) {

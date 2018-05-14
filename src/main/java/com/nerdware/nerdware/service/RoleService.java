@@ -50,9 +50,10 @@ public class RoleService {
     }
 
     @Transactional
-    public Role removeRole(Role role) {
-        return roleRepository.removeById(role.getId());
+    public Integer removeRole(Long id) {
+        return roleRepository.removeById(id);
     }
+
 
 
     public List<Role> getAllHairdressers() {

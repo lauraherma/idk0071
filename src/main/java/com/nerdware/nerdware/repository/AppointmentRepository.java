@@ -19,7 +19,7 @@ public interface AppointmentRepository extends CrudRepository<Appointment, Long>
     @Override
     List<Appointment> findAll();
 
-    @Query("select a from Appointment a where a.hairdresser = :hairdresserId")
-    List<Appointment> findAppointmentsByHairdresserId(@Param("hairdresserId") long hairdresserId);
+    @Query("select a from Appointment a where a.client.id = :clientId")
+    List<Appointment> findAppointmentsByClientId(@Param("clientId") Long clientId);
 
 }
