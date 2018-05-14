@@ -24,8 +24,10 @@ export class Home extends React.Component {
         return (
             <div className="Home">
                 <NavBar/>
-                <h2>{moment().format('MMMM Do YYYY')}</h2>
+                <div className="container">
+                <h4>{moment().format('MMMM Do YYYY')}</h4>
                 <DailyHairdressers hairdressers={hairdressers}/>
+                </div>
 
             </div>
         );
