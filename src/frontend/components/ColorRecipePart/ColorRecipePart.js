@@ -6,17 +6,13 @@ import lodash from 'lodash';
 
 export class ColorRecipePart extends React.Component {
     state = {
+        date: '',
         colors: [],
         hydrogens: [],
     };
 
     componentDidMount() {
-        const { colors, hydrogens } = this.props.colorRecipePart;
-
-        this.setState({
-            colors,
-            hydrogens,
-        });
+        this.setState(this.state);
     }
 
     addColorTypeColor = () => {
@@ -50,9 +46,6 @@ export class ColorRecipePart extends React.Component {
             {
                 id: 1,
             },
-            {
-                id: 2,
-            }
         ];
         /*return this.props.colorCard.colorRecipe.map(colorRecipe =>
         )*/

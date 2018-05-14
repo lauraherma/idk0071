@@ -39,9 +39,10 @@ public class RoleController {
         return roleService.addRole(role);
     }
 
-    @PostMapping(value = "/role/remove", consumes = "application/json")
-    public Role removeRole(@RequestBody Role role) {
-        return roleService.removeRole(role);
+    @GetMapping(value = "/role/remove/{id}")
+    public Integer removeRole(@PathVariable("id") Long id) {
+        return roleService.removeRole(id);
     }
+
 
 }
