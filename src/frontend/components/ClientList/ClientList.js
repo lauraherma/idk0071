@@ -55,7 +55,7 @@ export const ClientList = observer(class ClientList extends React.Component {
                     <th>Sünnikuupäev</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody className="client">
                 {this.getClients()}
                 </tbody>
             </Table>
