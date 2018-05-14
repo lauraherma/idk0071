@@ -30,6 +30,11 @@ public class AppointmentController {
         return appointmentService.removeAppointment(id);
     }
 
+    @GetMapping(value = "appointment/add/color-recipe/{id}")
+    public Appointment addEmptyColorRecipeToAppointment(@PathVariable("id") Long id) {
+        return appointmentService.addEmptyColorRecipeToAppointmentById(id);
+    }
+
     @GetMapping(value = "/appointments/{id}")
     public List<Appointment> getAppointmentByClientId(@PathVariable("id") long userId) {
         return appointmentService.getAppointmentsByClientId(userId);

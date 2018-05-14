@@ -103,6 +103,9 @@ public class AppointmentService {
 
     private ColorCard handleColorCards(Appointment appointment) {
         ColorCard colorCard = appointment.getColorCard();
+        if (colorCard == null) {
+            colorCard = new ColorCard();
+        }
         List<ColorRecipe> colorRecipes = colorCard.getColorRecipes();
         List<ColorRecipe> newColorRecipe = new ArrayList<>();
         for (ColorRecipe colorRecipe: newColorRecipe) {
@@ -133,5 +136,26 @@ public class AppointmentService {
 
     public boolean appointmentDoesNotExist(Long id) {
         return id == null;
+    }
+
+    public Appointment addEmptyColorRecipeToAppointmentById(Long id) {
+        Appointment appointment = appointmentRepository.findOne(id);
+
+        /*ColorCard colorCard = appointment.getColorCard();
+
+        if (colorCard == null) {
+            colorCard = new ColorCard();
+        }
+
+        List<ColorRecipe> newColorRecipes = new ArrayList<>();
+        newColorRecipes = colorCard.getColorRecipes();
+        newColorRecipes.add(new ColorRecipe());
+        colorCard.setColorRecipes(newColorRecipes);
+
+        colorCard = colorCardRepository.save(colorCard);
+        appointment.setColorCard(colorCard);*/
+
+        return appointmentRepository.save(appointment);
+
     }
 }

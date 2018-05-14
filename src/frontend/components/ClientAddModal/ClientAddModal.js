@@ -48,6 +48,8 @@ export const ClientAddModal = observer(class ClientAddModal extends React.Compon
             });
         });
 
+        this.state.personForm = new PersonForm();
+
     };
 
     removeClient = () => {

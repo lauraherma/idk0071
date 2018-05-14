@@ -74,21 +74,21 @@ export class DataService  {
         return this.getRequest('color-cards');
     }
 
-    addColorRecipeToAppointment(data) {
-        // TODO API
+    addEmptyColorRecipeToAppointment(appointmentId) {
         return {
             id: Math.random(),
             date: '',
             colors: [{}],
             hydrogens: [{}],
         };
+        //return this.getRequest('appointment', 'add', 'color-recipe', appointmentId);
     }
 
-    addColorToColorRecipe(data) {
+    addColorToColorRecipe(color, appointmentId, colorRecipeId) {
         // TODO API: Oleks vaja tagastada kõik recipe colorid
         // return this.postRequest(data, `appointment/${data.appointmentId}/color-recipe/${data.colorRecipe.id}/color`);
 
-        return [
+        /*return [
             // Vanad
             ...data.colorRecipe.colors.slice(0, data.colorRecipe.colors.length - 1),
             // Uus
@@ -97,7 +97,7 @@ export class DataService  {
                 amount: data.color.amount,
                 code: data.color.code,
             },
-        ];
+        ];*/
     }
 
     addHydrogenToColorRecipe(data) {

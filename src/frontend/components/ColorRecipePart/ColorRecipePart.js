@@ -16,11 +16,8 @@ export const ColorRecipePart = observer(class extends React.Component {
         this.setState({ isAddingNewColor: true });
 
         try {
-            const newColors = await this.dataService.addColorToColorRecipe({
-                appointmentId: openAppointment[0].id,
-                colorRecipe: this.props.colorRecipe,
-                color,
-            });
+            const newColors = await this.dataService.addColorToColorRecipe(color,
+                openAppointment[0].id, this.props.colorRecipe.id);
 
             setColors(this.props.colorRecipe, [...newColors, {}]);
         }
@@ -53,7 +50,7 @@ export const ColorRecipePart = observer(class extends React.Component {
 
     getColors () {
         const colors = this.props.colorRecipe.colors;
-
+        console.log(colors);
         return colors.map((color, index) => {
             const colorButton = color.id ?
                 <Button onClick={() => removeColor(this.props.colorRecipe, color)} color="danger">
