@@ -1,5 +1,4 @@
 import React from 'react';
-import {Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, Input, FormGroup, Label} from 'reactstrap';
 import {API_URL} from "../Constants";
 import axios from 'axios';
 import {updateHairdressers} from "../../data/hairdressers";
