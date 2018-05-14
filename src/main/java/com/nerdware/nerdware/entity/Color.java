@@ -21,11 +21,16 @@ public class Color {
     private Long id;
 
     @Column(unique = true)
+    private String companyName;
+
+    @Column(unique = true)
     private String code;
     private Double amount;
 
     @ManyToOne
     @JoinColumn(name="color_recipe_id")
     private ColorRecipe colorRecipe;
+
+
 }
 

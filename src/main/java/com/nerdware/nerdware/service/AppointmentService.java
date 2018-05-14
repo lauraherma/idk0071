@@ -1,10 +1,6 @@
 package com.nerdware.nerdware.service;
 
-import com.nerdware.nerdware.entity.Appointment;
-import com.nerdware.nerdware.entity.ColorCard;
-import com.nerdware.nerdware.entity.Role;
-import com.nerdware.nerdware.entity.Work;
-import com.nerdware.nerdware.entity.WorkType;
+import com.nerdware.nerdware.entity.*;
 import com.nerdware.nerdware.repository.AppointmentRepository;
 import com.nerdware.nerdware.repository.ColorCardRepository;
 import com.nerdware.nerdware.repository.ColorRecipeRepository;
@@ -98,9 +94,9 @@ public class AppointmentService {
             }
         }
         work.setWorkTypes(newWorkTypes);
-        ColorCard colorCard = work.getColorCard();
+        /*ColorCard colorCard = work.getColorCard();
         colorCard.setColorRecipe(colorRecipeRepository.save(colorCard.getColorRecipe()));
-        work.setColorCard(colorCardRepository.save(colorCard));
+        work.setColorCard(colorCardRepository.save(colorCard));*/
         return work;
     }
 

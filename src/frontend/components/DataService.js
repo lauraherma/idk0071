@@ -13,14 +13,6 @@ export class DataService  {
         return axios.post(API_URL + url, data)
     }
 
-    getHairdressers() {
-        return this.getRequest('roles','hairdressers');
-    }
-
-    getAllWorkTypes() {
-        return this.getRequest('work-types');
-    }
-
     addWorkType(data) {
         return this.postRequest(data, 'work-type', 'add')
     }
@@ -62,5 +54,16 @@ export class DataService  {
         return this.getRequest('appointments', id)
     }
 
+    getHairdressers() {
+        return this.getRequest('roles','hairdressers');
+    }
+
+    getAllWorkTypes() {
+        return this.getRequest('work-types');
+    }
+
+    getColorCards() {
+        return this.getRequest('color-cards');
+    }
 
 }

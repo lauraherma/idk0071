@@ -13,7 +13,7 @@ export class ColorRecipe extends React.Component {
 
     componentDidMount() {
         this.setState({
-            recipeParts: this.props.colorRecipe.parts,
+            recipeParts: this.props.colorRecipe,
         });
     }
 
@@ -21,7 +21,8 @@ export class ColorRecipe extends React.Component {
         return <div className="ColorRecipe">
             <h4>Värviretsept</h4>
 
-            {this.state.recipeParts.map((recipePart, index) => <ColorRecipePart key={index} colorRecipePart={recipePart}/>)}
+
+           <ColorRecipePart/>
 
             <Button onClick={() => this.addRecipePart()} color="primary" block>
                 Lisa uus värviretsepti osa
@@ -34,7 +35,6 @@ export class ColorRecipe extends React.Component {
             recipeParts: [
                 ...this.state.recipeParts,
                 {
-                    colorRecipeType: {},
                     colors: [],
                     hydrogens: [],
                 }
