@@ -6,8 +6,10 @@ import {DataService} from "../DataService";
 import {observer} from 'mobx-react';
 import {updateClients} from "../../data/clients";
 
+
 export const ClientAddModal = observer(class ClientAddModal extends React.Component {
     dataService = new DataService();
+
     state = {
         modal: false,
         personForm: new PersonForm(),
@@ -18,6 +20,11 @@ export const ClientAddModal = observer(class ClientAddModal extends React.Compon
             modal: !this.state.modal
         });
     };
+
+    componentDidMount() {
+        this.setStateFromAppointment();
+    }
+
 
     addClient = () => {
 
@@ -51,19 +58,53 @@ export const ClientAddModal = observer(class ClientAddModal extends React.Compon
 
     };
 
+    setStateFromAppointment = () => {
+        const client = this.props.client;
+
+        console.log(client);
+
+        /*const personForm = {
+            firstName : client.person.firstName,
+            lastName : client.person.lastName,
+            email : client.person.email,
+            phone : client.person.phone,
+            dateOfBirth : client.person.dateOfBirth,
+        };*/
+
+        //this.setState({...personForm});
+    };
+
 
     render() {
 
         const personForm = this.state.personForm;
 
+        const buttonGroup = this.props.client ?
+            <div>
+                <Button color="danger" onClick={this.removeAppointment}>Kustuta</Button>
+                <Button color="primary" onClick={this.toggle}>Muuda</Button>
+            </div> :
+            <Button onClick={this.toggle}>+ Lisa Klient</Button>;
+
+        const modalButtonGroup = this.props.client ?
+            <div>
+                <Button color="light" onClick={this.toggle}>Cancel</Button>
+                <Button color="primary" onClick={this.addClient}>Muuda</Button>
+            </div> :
+            <div>
+                <Button color="light" onClick={this.toggle}>Cancel</Button>
+                <Button color="primary" onClick={this.addClient}>Lisa Klient</Button>
+            </div>;
+
+        const modalTitle = this.props.client ? 'Muuda kliendi andmeid' : `Lisa klient`;
+
+
         return (
             <div>
-                <Button onClick={this.toggle}>
-                    + Lisa Klient
-                </Button>
+                {buttonGroup}
 
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-                    <ModalHeader toggle={this.toggle}>Lisa Klient</ModalHeader>
+                    <ModalHeader toggle={this.toggle}>{modalTitle}</ModalHeader>
                     <ModalBody>
                         <Form>
                             <FormGroup>
@@ -105,8 +146,7 @@ export const ClientAddModal = observer(class ClientAddModal extends React.Compon
 
                     </ModalBody>
                     <ModalFooter>
-                        <Button color="light" onClick={this.toggle}>Cancel</Button>
-                        <Button color="primary" onClick={this.addClient}>Lisa Klient</Button>
+                        {modalButtonGroup}
                     </ModalFooter>
                 </Modal>
             </div>

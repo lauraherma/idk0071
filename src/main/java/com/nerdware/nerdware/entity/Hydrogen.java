@@ -22,6 +22,9 @@ public class Hydrogen {
     private String name;
     private Double amount;
 
+    @Column(unique = true)
+    private String companyName;
+
     @ManyToOne
     @JoinColumn(name="color_recipe_id")
     private ColorRecipe colorRecipe;

@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -31,18 +32,18 @@ public class Appointment {
 
     @JsonIgnoreProperties({"appointments"})
     @JoinColumn(name = "hairdresser_id")
-    @ManyToOne(optional=false)
+    @ManyToOne
     private Role hairdresser;
 
     @JsonIgnoreProperties({"appointments"})
     @JoinColumn(name = "client_id")
-    @ManyToOne(optional=false)
+    @ManyToOne
     private Role client;
 
     @JoinColumn(name = "work_id")
-    @ManyToOne(optional=false)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     private Work work;
 
-    private Long price;
+    private Double price;
 }
 

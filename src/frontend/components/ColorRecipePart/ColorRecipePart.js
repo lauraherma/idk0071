@@ -6,16 +6,14 @@ import lodash from 'lodash';
 
 export class ColorRecipePart extends React.Component {
     state = {
-        name: '',
         colors: [],
         hydrogens: [],
     };
 
     componentDidMount() {
-        const { colorRecipeType, colors, hydrogens } = this.props.colorRecipePart;
+        const { colors, hydrogens } = this.props.colorRecipePart;
 
         this.setState({
-            name: colorRecipeType.name,
             colors,
             hydrogens,
         });
@@ -26,6 +24,7 @@ export class ColorRecipePart extends React.Component {
             colors: [
                 ...this.state.colors,
                 {
+                    companyName: '',
                     code: '',
                     amount: '',
                 },
@@ -38,6 +37,7 @@ export class ColorRecipePart extends React.Component {
             hydrogens: [
                 ...this.state.hydrogens,
                 {
+                    companyName: '',
                     name: '',
                     amount: '',
                 },
@@ -46,19 +46,20 @@ export class ColorRecipePart extends React.Component {
     };
 
     getColorRecipes() {
-        const colorRecipes = [
+        const colorCards = [
             {
                 id: 1,
-                name: 'Sebastian',
             },
             {
                 id: 2,
-                name: 'Pastellimine',
             }
         ];
+        /*return this.props.colorCard.colorRecipe.map(colorRecipe =>
+        )*/
 
-        return colorRecipes.map(colorRecipe => <option key={colorRecipe.id}>{colorRecipe.name}</option>);
+        return colorCards.map(colorRecipe => <option key={colorRecipe.id}></option>);
     }
+
 
     getColorTypes () {
         return <div>
@@ -68,9 +69,7 @@ export class ColorRecipePart extends React.Component {
                 </Col>
 
                 <Col sm={10}>
-                    <select name="name"
-                            placeholder="Värvi"
-                            value={this.state.name}
+                    <select placeholder="Värvi"
                             onChange={this.startTimeChanged}
                             className="custom-select">
                         {this.getColorRecipes()}

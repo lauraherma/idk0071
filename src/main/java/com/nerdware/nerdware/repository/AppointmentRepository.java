@@ -14,6 +14,8 @@ public interface AppointmentRepository extends CrudRepository<Appointment, Long>
 
     Appointment findOne(Long id);
 
+    Integer removeById(Long id);
+
     @Override
     List<Appointment> findAll();
 

@@ -2,6 +2,7 @@ package com.nerdware.nerdware.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -22,16 +23,14 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-
     @JoinColumn(name = "person_id")
-    @ManyToOne(optional=false)
+    @ManyToOne(optional=false, cascade= CascadeType.REFRESH)
     private Person person;
 
     @JoinColumn(name = "role_type_id")
-    @ManyToOne(optional=false, cascade= CascadeType.ALL)
+    @ManyToOne(optional=false, cascade= CascadeType.REFRESH)
     private RoleType roleType;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Appointment> appointments;
-
 }

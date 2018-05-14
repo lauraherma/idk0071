@@ -36,4 +36,13 @@ public class Work {
 
     private String description;
 
+    @Override
+    public String toString() {
+        return "Work{" +
+                "id=" + id +
+                ", workTypes=" + workTypes +
+                ", colorCard=" + colorCard +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }
