@@ -6,4 +6,25 @@ body,
     font-family: 'Open Sans', sans-serif;
     height: 100%;
 }
+.modal-body{
+    padding:40px;
+}
+.btn-secondary {
+    background-color:#43d6a7;
+    border-color:#43d6a7;
+}
+.btn-secondary:hover{
+    background-color:#309874;
+    border-color:#309874;
+}
+.btn-primary{
+    background-color:#4a9fec;
+    border-color:#4a9fec;
+}
+.btn-danger{
+    background-color:#fa5145;
+    border-color:#fa5145;
+    margin-right: 8px;
+}
+
 

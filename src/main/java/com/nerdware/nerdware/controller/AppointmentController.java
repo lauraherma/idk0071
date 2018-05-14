@@ -1,6 +1,7 @@
 package com.nerdware.nerdware.controller;
 
 import com.nerdware.nerdware.entity.Appointment;
+import com.nerdware.nerdware.entity.ColorRecipe;
 import com.nerdware.nerdware.service.AppointmentService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

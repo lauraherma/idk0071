@@ -14,24 +14,25 @@ export class NavBar extends React.Component {
     }
     render() {
         return (
-            <div>
-                <Navbar  className="NavBar" color="transparent" light expand="md">
+            <Navbar  className="NavBar" light expand="md">
+                <div className="container">
                     <NavbarBrand href="/">
-                        <img className="logo" src="/nerdwarelogo.png" alt="logo"/>
+                        <Collapse isOpen={this.state.isOpen} navbar>
+                            <img className="logo" src="/nerdwarelogo.png" alt="logo"/>
+                            <Nav className="ml-auto" navbar>
+                                <NavItem>
+                                    <NavLink href="/">Kalender</NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink href="/clients">Kliendid</NavLink>
+                                </NavItem>
+                            </Nav>
+                        </Collapse>
                     </NavbarBrand>
-                    <NavbarToggler onClick={this.toggle} />
-                    <Collapse isOpen={this.state.isOpen} navbar>
-                        <Nav className="ml-auto" navbar>
-                            <NavItem>
-                                <NavLink href="/">Kalender</NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink href="/clients">Kliendid</NavLink>
-                            </NavItem>
-                        </Nav>
-                    </Collapse>
-                </Navbar>
-            </div>
+                </div>
+
+                <NavbarToggler onClick={this.toggle} />
+            </Navbar>
         );
     }
 }

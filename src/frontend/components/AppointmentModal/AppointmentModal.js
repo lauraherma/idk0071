@@ -352,7 +352,9 @@ export const AppointmentModal = observer(class extends React.Component {
                             {nameInput}
                             <FormGroup>
                                 <div>Teenused</div>
-                                {this.getWorkTypesCheckboxes()}
+                                <FormGroup>
+                                    {this.getWorkTypesCheckboxes()}
+                                </FormGroup>
                                 <AddWorkTypeButton addWorkType={this.addWorkType}/>
                             </FormGroup>
                             <FormGroup>

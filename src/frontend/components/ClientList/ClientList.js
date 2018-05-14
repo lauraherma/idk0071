@@ -46,14 +46,15 @@ export const ClientList = observer(class ClientList extends React.Component {
 
     render() {
         return <div>
+            <div className="container">
             <Table striped bordered>
                 <thead>
                 <tr>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Phone</th>
+                    <th>Eesnimi</th>
+                    <th>Perekonnanimi</th>
+                    <th>Telefoninumber</th>
                     <th>Email</th>
-                    <th>Date of birth</th>
+                    <th>Sünnikuupäev</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -61,12 +62,14 @@ export const ClientList = observer(class ClientList extends React.Component {
                 </tbody>
             </Table>
 
+
             <Button onClick={() => this.setState({isAddClientOpen: true})}>
-                + Add client
+                + Lisa klient
                 <ClientAddModal
                     close={() => this.closeModals()}
                     isOpened={this.state.isAddClientOpen}/>
             </Button>
+            </div>
         </div>
     }
 });

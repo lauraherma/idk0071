@@ -1,15 +1,24 @@
 .navbar-light .navbar-nav .nav-link {
     color: #4a9fec;
-}
-.navbar-light .navbar-brand{
-    color: #4a9fec;
-}
-.NavBar{
-    padding: 0;
-    padding-top: 10px;
+    padding: 0 0 0 10px;
+    font-size: 12px;
+    text-transform: uppercase;
+
 
 }
-.logo{
-    width:40px;
+
+.navbar-light .navbar-brand {
+    color: #4a9fec;
+
+}
+
+.NavBar {
+    border-bottom: 1px solid #eee;
+    background-color: #fff;
+
+}
+
+.logo {
+    width: 26px;
 
 }

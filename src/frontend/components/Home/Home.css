@@ -1,9 +1,11 @@
 .Home {
-    padding: 0 32px 32px 32px;
+    background-color: #f9f9f9;
 }
 
-.Home h2 {
-    padding: 12px 0 12px 0;
+.Home h4 {
+    padding: 24px 0 2px 0;
+    text-align:center;
+    color:#333;
 
 }
 
