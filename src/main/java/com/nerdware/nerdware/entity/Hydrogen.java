@@ -21,8 +21,6 @@ public class Hydrogen {
     private Long id;
     private String name;
     private Double amount;
-
-    @Column(unique = true)
     private String companyName;
 
     @ManyToOne

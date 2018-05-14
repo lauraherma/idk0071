@@ -46,6 +46,7 @@ public class AppointmentService {
     public Appointment addAppointment(Appointment appointment) {
 
         Work work = handleWork(appointment);
+        ColorCard colorCard = handleColorCards(appointment);
         Role client = roleRepository.findOne(appointment.getClient().getId());
         Role hairdresser = roleRepository.findOne(appointment.getHairdresser().getId());
         Double price = appointment.getPrice();
@@ -62,6 +63,7 @@ public class AppointmentService {
         }
 
         appointment.setWork(workRepository.save(work));
+        appointment.setColorCard(colorCardRepository.save(colorCard));
         appointment.setClient(client);
 
         if (appointment.getId() == null) {
@@ -95,17 +97,26 @@ public class AppointmentService {
             }
         }
         work.setWorkTypes(newWorkTypes);
-        ColorCard colorCard = work.getColorCard();
-        List<ColorRecipe> colorRecipes = new ArrayList<>();
-        for (ColorRecipe colorRecipe: colorCard.getColorRecipes()) {
-            colorRepository.save(colorRecipe.getColors());
-            hydrogenRepository.save(colorRecipe.getHydrogens());
-            colorRecipeRepository.save(colorRecipe);
-            colorRecipes.add(colorRecipe);
+
+        return work;
+    }
+
+    private ColorCard handleColorCards(Appointment appointment) {
+        ColorCard colorCard = appointment.getColorCard();
+        List<ColorRecipe> colorRecipes = colorCard.getColorRecipes();
+        List<ColorRecipe> newColorRecipe = new ArrayList<>();
+        for (ColorRecipe colorRecipe: newColorRecipe) {
+            if (appointmentNotExists(colorRecipe.getId())) {
+                colorRepository.save(colorRecipe.getColors());
+                hydrogenRepository.save(colorRecipe.getHydrogens());
+                colorRecipeRepository.save(colorRecipe);
+                newColorRecipe.add(colorRecipeRepository.save(colorRecipe));
+            } else {
+                newColorRecipe.add(colorRecipe);
+            }
         }
         colorCard.setColorRecipes(colorRecipes);
-        work.setColorCard(colorCardRepository.save(colorCard));
-        return work;
+        return colorCard;
     }
 
     public List<Appointment> getAllAppointments() {

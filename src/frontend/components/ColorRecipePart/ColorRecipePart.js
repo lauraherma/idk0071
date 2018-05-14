@@ -35,6 +35,7 @@ export const ColorRecipePart = observer(class extends React.Component {
         this.setState({ isAddingNewHydrogen: true });
 
         try {
+            console.log(openAppointment[0].id);
             const newHydrogens = await this.dataService.addHydrogenToColorRecipe({
                 appointmentId: openAppointment[0].id,
                 colorRecipe: this.props.colorRecipe,

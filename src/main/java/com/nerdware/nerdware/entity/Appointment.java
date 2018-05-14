@@ -44,6 +44,10 @@ public class Appointment {
     @ManyToOne(cascade = CascadeType.REFRESH)
     private Work work;
 
+    @JoinColumn(name = "color_card_id")
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    private ColorCard colorCard;
+
     private Double price;
 }
 
