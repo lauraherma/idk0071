@@ -7,7 +7,7 @@ export class AddColorButton extends React.Component {
     dataService = new DataService();
     state = {
         isInputVisible: false,
-        color: {name: ""},
+        color: {code: "", amount: ""},
     };
 
     toggle = () => {
@@ -17,7 +17,7 @@ export class AddColorButton extends React.Component {
     };
     colorChanged = (event) => {
         this.setState({
-            color: {name: event.target.value},
+            color: {code: event.target.value},
         })
     };
 
@@ -26,7 +26,7 @@ export class AddColorButton extends React.Component {
             this.props.addColor(this.state.color);
 
             this.setState({
-                color: {name: ""},
+                color: {code: "", amount: ""},
                 isInputVisible: false,
             })
         });
@@ -41,16 +41,16 @@ export class AddColorButton extends React.Component {
                     <Label>Lisa värv</Label>
                     <Input name="color_recipe_colors"
                            placeholder="Lisa uus värv"
-                           value={this.state.color.name}
+                           value={this.state.color.code}
                            onChange={this.colorChanged}/>
                 </FormGroup>
                 </Col>
                 <Col sm={5}>
                 <FormGroup>
                     <Label>Lisa värv</Label>
-                    <Input name="color_recipe_hydrogens"
+                    <Input name="color_recipe_colors"
                            placeholder="Lisa uus värv"
-                           value={this.state.color.name}
+                           value={this.state.color.amount}
                            onChange={this.colorChanged}/>
                 </FormGroup>
                 </Col>
