@@ -103,7 +103,7 @@ export class DataService  {
     addHydrogenToColorRecipe(data) {
         // TODO API: Oleks vaja tagastada kõik recipe hydrogens
         // return this.postRequest(data, `appointment/${data.appointmentId}/color-recipe/${data.colorRecipe.id}/hydrogen`);
-
+        console.log(data);
         return [
             // Vanad
             ...data.colorRecipe.hydrogens.slice(0, data.colorRecipe.hydrogens.length - 1),

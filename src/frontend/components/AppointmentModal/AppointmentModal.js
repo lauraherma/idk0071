@@ -199,9 +199,14 @@ export const AppointmentModal = observer(class extends React.Component {
                 ),
             },
             colorCard: {
-                colorRecipe: this.state.colorRecipe.map(
+                /*colorRecipe: this.state.colorRecipe.map(
                     id => this.props.colorRecipe.find(colorRecipe => colorRecipe.id === id)
-                ),
+                ),*/
+                colorRecipe: {
+                    date: '',
+                    colors: [],
+                    hydrogens: []
+                }
 
             }
         };
@@ -262,7 +267,7 @@ export const AppointmentModal = observer(class extends React.Component {
         updateColors();
     };
 
-    addydrogen = () => {
+    addHydrogen = () => {
         updateHydrogens();
     };
 
