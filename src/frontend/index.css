@@ -26,5 +26,7 @@ body,
     border-color:#fa5145;
     margin-right: 8px;
 }
-
+.client{
+    cursor:pointer;
+}
 
