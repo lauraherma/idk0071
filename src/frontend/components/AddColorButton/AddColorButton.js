@@ -7,7 +7,7 @@ export class AddColorButton extends React.Component {
     dataService = new DataService();
     state = {
         isInputVisible: false,
-        color: {name: ""},
+        color: {companyName:"", code: "", amount: ""},
     };
 
     toggle = () => {
@@ -15,18 +15,25 @@ export class AddColorButton extends React.Component {
             isInputVisible: !this.state.isInputVisible,
         });
     };
-    colorChanged = (event) => {
+    codeChanged = (event) => {
         this.setState({
-            color: {name: event.target.value},
+            color: {code: event.target.value},
+        })
+    };
+
+    amountChanged = (event) => {
+        this.setState({
+            color: {amount: event.target.value},
         })
     };
 
     addColor = () => {
+        this.state.color.companyName = this.props.companyName;
         this.dataService.addColor(this.state.color).then(() => {
             this.props.addColor(this.state.color);
 
             this.setState({
-                color: {name: ""},
+                color: {code: "", amount: ""},
                 isInputVisible: false,
             })
         });
@@ -38,20 +45,20 @@ export class AddColorButton extends React.Component {
                 <Row>
                 <Col sm={5}>
                 <FormGroup>
-                    <Label>Lisa värv</Label>
+                    <Label>Lisa värvikood</Label>
                     <Input name="color_recipe_colors"
                            placeholder="Lisa uus värv"
-                           value={this.state.color.name}
-                           onChange={this.colorChanged}/>
+                           value={this.state.color.code}
+                           onChange={this.codeChanged}/>
                 </FormGroup>
                 </Col>
                 <Col sm={5}>
                 <FormGroup>
-                    <Label>Lisa värv</Label>
-                    <Input name="color_recipe_hydrogens"
-                           placeholder="Lisa uus värv"
-                           value={this.state.color.name}
-                           onChange={this.colorChanged}/>
+                    <Label>Lisa kogus</Label>
+                    <Input name="color_recipe_colors"
+                           placeholder="Lisa uus kogus"
+                           value={this.state.color.amount}
+                           onChange={this.amountChanged}/>
                 </FormGroup>
                 </Col>
                 </Row>

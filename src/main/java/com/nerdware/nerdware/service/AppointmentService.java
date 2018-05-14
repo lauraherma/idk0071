@@ -1,13 +1,7 @@
 package com.nerdware.nerdware.service;
 
 import com.nerdware.nerdware.entity.*;
-import com.nerdware.nerdware.repository.AppointmentRepository;
-import com.nerdware.nerdware.repository.ColorCardRepository;
-import com.nerdware.nerdware.repository.ColorRecipeRepository;
-import com.nerdware.nerdware.repository.ColorRepository;
-import com.nerdware.nerdware.repository.RoleRepository;
-import com.nerdware.nerdware.repository.WorkRepository;
-import com.nerdware.nerdware.repository.WorkTypeRepository;
+import com.nerdware.nerdware.repository.*;
 import com.sun.deploy.util.SessionState;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

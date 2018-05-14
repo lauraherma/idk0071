@@ -11,7 +11,8 @@ import {ColorRecipe} from "../ColorRecipe/ColorRecipe";
 import {observer} from 'mobx-react';
 import {updateHairdressers} from "../../data/hairdressers";
 import {updateWorkTypes} from "../../data/workTypes";
-import {updateColorCards} from "../../data/colorCards";
+import {updateColors} from "../../data/colors";
+import {updateHydrogens} from "../../data/hydrogens";
 
 const initialState = {
     isLoading: false,
@@ -174,7 +175,8 @@ export const AppointmentModal = observer(class extends React.Component {
 
         this.dataService.removeAppointment(this.props.appointment.id).then(() => {
             updateHairdressers();
-            updateColorCards();
+            updateColors();
+            updateHydrogens();
             this.setState({...initialState});
         });
     };
@@ -193,9 +195,10 @@ export const AppointmentModal = observer(class extends React.Component {
                     id => this.props.workTypes.find(workType => workType.id === id)
                 ),
             },
-            colorRecipe: {
-                colors: [],
-                hydrogens: []
+            colorCard: {
+                colorRecipe: this.state.colorRecipe.map(
+                    id => this.props.colorRecipe.find(colorRecipe => colorRecipe.id === id)
+                ),
 
             }
         };
@@ -209,7 +212,8 @@ export const AppointmentModal = observer(class extends React.Component {
 
         this.dataService.addAppointment(newAppointment).then(() => {
             updateHairdressers();
-            updateColorCards();
+            updateColors();
+            updateHydrogens();
             this.setState({...initialState});
         });
     };
@@ -249,6 +253,14 @@ export const AppointmentModal = observer(class extends React.Component {
 
     addWorkType = () => {
         updateWorkTypes();
+    };
+
+    addColor = () => {
+        updateColors();
+    };
+
+    addydrogen = () => {
+        updateHydrogens();
     };
 
     _handleSearch = (name) => {
@@ -293,8 +305,10 @@ export const AppointmentModal = observer(class extends React.Component {
         const colorRecipe = this.state.checkedWorkTypeIds.includes(3) ?
             <div>
                 <ColorRecipe colorRecipe={this.state.colorRecipe}/>
+                <AddColorButton addColor={this.addColor()}/>
                 <hr/>
             </div> : "";
+
 
         /*{this.getColorCards().map(colorCards => colorCards.name)}*/
 
@@ -375,7 +389,9 @@ export const AppointmentModal = observer(class extends React.Component {
                                     </FormGroup>
                                 </Col>
                             </Row>
-                            {colorRecipe}
+                            <FormGroup>
+                                {colorRecipe}
+                            </FormGroup>
                         </Form>
                     </ModalBody>
                     <ModalFooter>

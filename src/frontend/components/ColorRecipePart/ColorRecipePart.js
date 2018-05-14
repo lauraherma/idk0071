@@ -8,6 +8,7 @@ import lodash from 'lodash';
 export class ColorRecipePart extends React.Component {
     state = {
         date: '',
+        companyName: '',
         colors: [],
         hydrogens: [],
     };
@@ -62,7 +63,8 @@ export class ColorRecipePart extends React.Component {
                     <h5>Värvi firma</h5>
                     <select placeholder="Värvi"
                             onChange={this.startTimeChanged}
-                            className="custom-select">
+                            className="custom-select"
+                            value={this.state.companyName}>
                         {this.getColorRecipes()}
                     </select>
                 </Col>
@@ -82,7 +84,9 @@ export class ColorRecipePart extends React.Component {
                                           color={color}/>
                     )}
 
-                    <AddColorButton addColor={this.addColorTypeColor}/>
+                    <AddColorButton addColor={this.addColorTypeColor}
+                                    companyName={this.state.companyName}
+                    />
                 </Col>
             </Row>
 
