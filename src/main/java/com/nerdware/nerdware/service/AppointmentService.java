@@ -94,7 +94,7 @@ public class AppointmentService {
             }
         }
         work.setWorkTypes(newWorkTypes);
-        /*ColorCard colorCard = work.getColorCard();
+        /*ColorRecipe colorCard = work.getColorCard();
         colorCard.setColorRecipe(colorRecipeRepository.save(colorCard.getColorRecipe()));
         work.setColorCard(colorCardRepository.save(colorCard));*/
         return work;

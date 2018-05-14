@@ -3,9 +3,11 @@ import {Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, Input, FormGro
 import moment from "moment";
 import lodash from 'lodash';
 import {AddWorkTypeButton} from "../AddWorkTypeButton/AddWorkTypeButton";
+import {AddHydrogenButton} from "../AddHydrogenButton/AddHydrogenButton";
+import {AddColorButton} from "../AddColorButton/AddColorButton"
 import {DataService} from "../DataService";
 import {AsyncTypeahead} from "react-bootstrap-typeahead";
-import {ColorRecipe} from "../ColorCard/ColorRecipe";
+import {ColorRecipe} from "../ColorRecipe/ColorRecipe";
 import {observer} from 'mobx-react';
 import {updateHairdressers} from "../../data/hairdressers";
 import {updateWorkTypes} from "../../data/workTypes";
@@ -191,12 +193,10 @@ export const AppointmentModal = observer(class extends React.Component {
                     id => this.props.workTypes.find(workType => workType.id === id)
                 ),
             },
-            colorCard: {
-                date: '',
-                colorRecipe: {
-                    colors: [],
-                    hydrogens: []
-                }
+            colorRecipe: {
+                colors: [],
+                hydrogens: []
+
             }
         };
 
@@ -290,9 +290,9 @@ export const AppointmentModal = observer(class extends React.Component {
             <Button color="primary" onClick={this.addAppointment}>Lisa</Button>;
 
 
-        const colorCard = this.state.checkedWorkTypeIds.includes(3) ?
+        const colorRecipe = this.state.checkedWorkTypeIds.includes(3) ?
             <div>
-                <ColorRecipe colorRecipe={this.state.colorCard}/>
+                <ColorRecipe colorRecipe={this.state.colorRecipe}/>
                 <hr/>
             </div> : "";
 
@@ -375,8 +375,7 @@ export const AppointmentModal = observer(class extends React.Component {
                                     </FormGroup>
                                 </Col>
                             </Row>
-
-                            {colorCard}
+                            {colorRecipe}
                         </Form>
                     </ModalBody>
                     <ModalFooter>
