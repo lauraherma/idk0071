@@ -22,16 +22,15 @@ export class ColorRecipeColorTypeHydrogen extends React.Component {
     render() {
         return <div className="ColorRecipeColorTypeHydrogen">
             <Row>
-
                 <Col sm={5}>
                     <FormGroup>
-                        <Input name="name" value={this.state.name} onChange={this.updateName}/>
+                        <Input placeholder="Sisesta vesiniku nimi" name="name" value={this.state.name} onChange={this.updateName}/>
                     </FormGroup>
                 </Col>
 
                 <Col sm={5}>
                     <FormGroup>
-                        <Input name="amount" value={this.state.amount} onChange={this.updateAmount}/>
+                        <Input placeholder="Sisesta vesiniku grammid" name="amount" value={this.state.amount} onChange={this.updateAmount}/>
                     </FormGroup>
                 </Col>
 

@@ -71,7 +71,6 @@ export class AddColorButton extends React.Component {
     render() {
         return (
             <div>
-                <Button color="secondary" onClick={this.toggle}>Lisa uus värv</Button>
                 {this.getFormGroup()}
             </div>
         )

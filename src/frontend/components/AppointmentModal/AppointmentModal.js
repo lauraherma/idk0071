@@ -13,6 +13,7 @@ import {updateHairdressers} from "../../data/hairdressers";
 import {updateWorkTypes} from "../../data/workTypes";
 import {updateColors} from "../../data/colors";
 import {updateHydrogens} from "../../data/hydrogens";
+import {openAppointment, setOpenAppointment} from "../../data/openAppointment";
 
 const initialState = {
     isLoading: false,
@@ -76,8 +77,10 @@ export const AppointmentModal = observer(class extends React.Component {
             });
 
             if (this.props.appointment) {
+                setOpenAppointment(this.props.appointment);
                 this.setStateFromAppointment();
             } else {
+                setOpenAppointment({});
                 this.setStateFromEmptyAppointment();
             }
         }
@@ -304,7 +307,8 @@ export const AppointmentModal = observer(class extends React.Component {
 
         const colorRecipe = this.state.checkedWorkTypeIds.includes(3) ?
             <div>
-                <ColorRecipe colorRecipe={this.state.colorRecipe}/>
+                <ColorRecipe colorRecipe={this.state.colorRecipe}
+                             appointment={openAppointment}/>
                 <AddColorButton addColor={this.addColor()}/>
                 <hr/>
             </div> : "";

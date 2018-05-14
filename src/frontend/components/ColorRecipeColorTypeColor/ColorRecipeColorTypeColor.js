@@ -16,27 +16,29 @@ export class ColorRecipeColor extends React.Component {
         });
     }
 
-    updateCode = event => this.setState({code: event.target.value });
-    updateAmount = event => this.setState({amount: event.target.value });
+    updateCode = event => this.setState({code: event.target.value});
+    updateAmount = event => this.setState({amount: event.target.value});
 
     render() {
         return <div className="ColorRecipeColorTypeColor">
             <Row>
                 <Col sm={5}>
                     <FormGroup>
-                        <Input value={this.state.code} onChange={this.updateCode}/>
+                        <Input placeholder="Sisesta värvikood" value={this.state.code} onChange={this.updateCode}/>
                     </FormGroup>
                 </Col>
 
                 <Col sm={5}>
                     <FormGroup>
-                        <Input value={this.state.amount} onChange={this.updateAmount}/>
+                        <Input placeholder="Sisesta värvi grammid" value={this.state.amount}
+                               onChange={this.updateAmount}/>
                     </FormGroup>
                 </Col>
 
                 <Col sm={2}>
                     <FormGroup>
-                        <Button onClick={() => this.props.delete()} color="danger" block>Delete</Button>
+                        <Button onClick={() => this.props.delete()} color="danger"
+                                block>Delete</Button>
                     </FormGroup>
                 </Col>
             </Row>
