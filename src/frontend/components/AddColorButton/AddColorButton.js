@@ -7,7 +7,7 @@ export class AddColorButton extends React.Component {
     dataService = new DataService();
     state = {
         isInputVisible: false,
-        color: {code: "", amount: ""},
+        color: {companyName:"", code: "", amount: ""},
     };
 
     toggle = () => {
@@ -15,13 +15,20 @@ export class AddColorButton extends React.Component {
             isInputVisible: !this.state.isInputVisible,
         });
     };
-    colorChanged = (event) => {
+    codeChanged = (event) => {
         this.setState({
             color: {code: event.target.value},
         })
     };
 
+    amountChanged = (event) => {
+        this.setState({
+            color: {amount: event.target.value},
+        })
+    };
+
     addColor = () => {
+        this.state.color.companyName = this.props.companyName;
         this.dataService.addColor(this.state.color).then(() => {
             this.props.addColor(this.state.color);
 
@@ -38,20 +45,20 @@ export class AddColorButton extends React.Component {
                 <Row>
                 <Col sm={5}>
                 <FormGroup>
-                    <Label>Lisa värv</Label>
+                    <Label>Lisa värvikood</Label>
                     <Input name="color_recipe_colors"
                            placeholder="Lisa uus värv"
                            value={this.state.color.code}
-                           onChange={this.colorChanged}/>
+                           onChange={this.codeChanged}/>
                 </FormGroup>
                 </Col>
                 <Col sm={5}>
                 <FormGroup>
-                    <Label>Lisa värv</Label>
+                    <Label>Lisa kogus</Label>
                     <Input name="color_recipe_colors"
-                           placeholder="Lisa uus värv"
+                           placeholder="Lisa uus kogus"
                            value={this.state.color.amount}
-                           onChange={this.colorChanged}/>
+                           onChange={this.amountChanged}/>
                 </FormGroup>
                 </Col>
                 </Row>
