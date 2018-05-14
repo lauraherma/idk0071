@@ -18,7 +18,7 @@ export const ClientAddModal = observer(class ClientAddModal extends React.Compon
 
     toggle = () => {
         if (!this.state.modal) {
-            this.setStateFromAppointment();
+            this.setStateFromClient();
         }
 
         this.setState({
@@ -27,6 +27,11 @@ export const ClientAddModal = observer(class ClientAddModal extends React.Compon
     };
 
     componentDidMount() {
+        console.log("žžž");
+        console.log(this.props.isOpened);
+        this.setState({
+            modal: this.props.isOpened,
+        });
     }
 
     addClient = () => {
@@ -84,7 +89,7 @@ export const ClientAddModal = observer(class ClientAddModal extends React.Compon
 
     };
 
-    setStateFromAppointment = () => {
+    setStateFromClient = () => {
         const client = this.props.client;
 
         const personForm = {
