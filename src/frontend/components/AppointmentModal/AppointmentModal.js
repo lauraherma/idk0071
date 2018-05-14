@@ -83,13 +83,11 @@ export const AppointmentModal = observer(class extends React.Component {
     setStateFromAppointment = () => {
         const appointment = this.props.appointment;
         const workTypes = this.getWorkTypes();
-        const colorCards = this.getColorCards();
 
         const appointmentInfo = {
             firstName: appointment.client.firstName,
             checkedWorkTypeIds: workTypes.map(workType => workType.id),
             description: appointment.description,
-            colorCards: appointment.colorCards,
             price: appointment.price || "",
             startTime: this.getAppointmentStartEndTime(appointment).startTime.format(),
             endTime: this.getAppointmentStartEndTime(appointment).endTime.add(1, 'second').format(),
