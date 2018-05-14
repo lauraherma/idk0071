@@ -36,10 +36,12 @@ export class AddWorkTypeButton extends React.Component {
         if (this.state.isInputVisible) {
             return <FormGroup>
                 <Label>Lisa teenus</Label>
-                <Input name="work_type"
-                       placeholder="Lisa uus teenus"
-                       value={this.state.workType.name}
-                       onChange={this.workTypeChanged}/>
+                <FormGroup>
+                    <Input name="work_type"
+                           placeholder="Lisa uus teenus"
+                           value={this.state.workType.name}
+                           onChange={this.workTypeChanged}/>
+                </FormGroup>
                 <Button color="secondary" onClick={this.addWorkType}>Lisa</Button>
             </FormGroup>
         }
@@ -49,8 +51,10 @@ export class AddWorkTypeButton extends React.Component {
     render() {
         return (
             <div>
-                <Button color="secondary" onClick={this.toggle}>Lisa uus teenus</Button>
-                {this.getFormGroup()}
+                <FormGroup>
+                    <Button className="addButton mb-3" color="secondary" onClick={this.toggle}>Lisa uus teenus</Button>
+                    {this.getFormGroup()}
+                </FormGroup>
             </div>
         )
     }
