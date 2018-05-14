@@ -1,4 +1,5 @@
 import React from 'react';
+import {AddColorButton} from "../AddColorButton/AddColorButton"
 import {ColorRecipeColor} from "../ColorRecipeColorTypeColor/ColorRecipeColorTypeColor";
 import {ColorRecipeColorTypeHydrogen} from "../ColorRecipeColorTypeHydrogen/ColorRecipeColorTypeHydrogen";
 import {Row, Col, Button, Input, Label} from 'reactstrap'
@@ -80,7 +81,8 @@ export class ColorRecipePart extends React.Component {
                                           delete={() => this.deleteColorRecipeColor(color)}
                                           color={color}/>
                     )}
-                    <Button color="secondary" onClick={this.addColorTypeColor}>Lisa</Button>
+
+                    <AddColorButton addColor={this.addColorTypeColor}/>
                 </Col>
             </Row>
 

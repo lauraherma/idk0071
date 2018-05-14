@@ -29,6 +29,14 @@ export class DataService  {
         return this.postRequest(data, 'appointment', 'add');
     }
 
+    addColor(data) {
+        return this.postRequest(data, 'color', 'add');
+    }
+
+    addHydrogen(data) {
+        return this.postRequest(data, 'hydrogen', 'add');
+    }
+
     removeAppointment(id) {
         return this.getRequest('appointment', 'remove', id);
     }
