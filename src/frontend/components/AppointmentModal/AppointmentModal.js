@@ -32,6 +32,12 @@ const initialState = {
     checkedWorkTypeIds: [],
     options: [],
     optionKey: '',
+    colorCode: '',
+    colorAmount: '',
+    colorCompanyName: '',
+    hydrogenName: '',
+    hydrogenAmount: '',
+    hydrogenCompanyName: '',
     colorRecipe: [
         {
             id: 1,
@@ -61,9 +67,17 @@ export const AppointmentModal = observer(class extends React.Component {
 
     state = {...initialState};
 
+    colorCode = '';
+    colorAmount = '';
+    colorCompanyName = '';
+    hydrogenName = '';
+    hydrogenAmount = '';
+    hydrogenCompanyName = '';
+
     componentDidMount() {
         this.setState({
             modal: this.props.isOpened,
+
         });
     }
 
@@ -90,6 +104,13 @@ export const AppointmentModal = observer(class extends React.Component {
         const appointment = this.props.appointment;
         const workTypes = this.getWorkTypes();
 
+        this.state.colorCode = this.colorCode;
+        this.state.colorAmount = this.colorAmount;
+        this.state.colorCompanyName = this.colorCompanyName;
+        this.state.hydrogenName = this.hydrogenName;
+        this.state.hydrogenAmount = this.hydrogenAmount;
+        this.state.hydrogenCompanyName = this.hydrogenCompanyName;
+
         const appointmentInfo = {
             firstName: appointment.client.firstName,
             checkedWorkTypeIds: workTypes.map(workType => workType.id),
@@ -97,7 +118,31 @@ export const AppointmentModal = observer(class extends React.Component {
             price: appointment.price || "",
             startTime: this.getAppointmentStartEndTime(appointment).startTime.format(),
             endTime: this.getAppointmentStartEndTime(appointment).endTime.add(1, 'second').format(),
+            colorRecipe: [
+                {
+                    id: 1,
+                    date: '',
+                    colors: [
+                        {
+                            id: 1,
+                            code: this.state.colorCode,
+                            amount: this.state.colorAmount,
+                            companyName: this.state.colorCompanyName
+                        },
+                    ],
+                    hydrogens: [
+                        {
+                            id: 1,
+                            name: this.state.hydrogenName,
+                            amount: this.state.hydrogenAmount,
+                            companyName: this.state.hydrogenCompanyName
+                        },
+                    ]
+                },
+            ],
+
         };
+        console.log(this.state);
 
         this.setState({...appointmentInfo});
     };
@@ -129,6 +174,42 @@ export const AppointmentModal = observer(class extends React.Component {
     firstNameChanged = (event) => {
         this.setState({
             firstName: event.target.value,
+        })
+    };
+
+    colorCodeChanged = (event) => {
+        this.setState({
+            colorCode: event.target.value,
+        })
+    };
+
+    colorAmountChanged = (event) => {
+        this.setState({
+            colorAmount: event.target.value,
+        })
+    };
+
+    colorCompanyChanged = (event) => {
+        this.setState({
+            colorCompanyName: event.target.value,
+        })
+    };
+
+    hydrogenNameChanged = (event) => {
+        this.setState({
+            hydrogenName: event.target.value,
+        })
+    };
+
+    hydrogenAmountChanged = (event) => {
+        this.setState({
+            hydrogenAmount: event.target.value,
+        })
+    };
+
+    hydrogenCompanyChanged = (event) => {
+        this.setState({
+            hydrogenCompanyName: event.target.value,
         })
     };
 
@@ -168,7 +249,6 @@ export const AppointmentModal = observer(class extends React.Component {
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
-
         this.setState({
             [name]: value
         });
@@ -198,17 +278,24 @@ export const AppointmentModal = observer(class extends React.Component {
                     id => this.props.workTypes.find(workType => workType.id === id)
                 ),
             },
-            colorCard: {
-                /*colorRecipe: this.state.colorRecipe.map(
-                    id => this.props.colorRecipe.find(colorRecipe => colorRecipe.id === id)
-                ),*/
-                colorRecipe: {
-                    date: '',
-                    colors: [],
-                    hydrogens: []
-                }
-
-            }
+            colorRecipe: [
+                {
+                    colors: [
+                        {
+                            code: this.state.colorCode,
+                            amount: this.state.colorAmount,
+                            companyName: this.state.colorCompanyName
+                        },
+                    ],
+                    hydrogens: [
+                        {
+                            name: this.state.hydrogenName,
+                            amount: this.state.hydrogenAmount,
+                            companyName: this.state.hydrogenCompanyName
+                        },
+                    ]
+                },
+            ],
         };
 
         if (this.props.appointment) {
@@ -218,11 +305,18 @@ export const AppointmentModal = observer(class extends React.Component {
             }
         }
 
+        this.colorCode = this.state.colorCode;
+        this.colorAmount = this.state.colorAmount;
+        this.colorCompanyName = this.state.colorCompanyName;
+        this.hydrogenName = this.state.hydrogenName;
+        this.hydrogenAmount = this.state.hydrogenAmount;
+        this.hydrogenCompanyName = this.state.hydrogenCompanyName;
+
         this.dataService.addAppointment(newAppointment).then(() => {
             updateHairdressers();
             updateColors();
             updateHydrogens();
-            this.setState({...initialState});
+            console.log(this.state);
         });
     };
 
@@ -311,12 +405,89 @@ export const AppointmentModal = observer(class extends React.Component {
 
 
         const colorRecipe = this.state.checkedWorkTypeIds.includes(3) ?
-            <div>
-                <ColorRecipe colorRecipe={this.state.colorRecipe}
-                             appointment={openAppointment}/>
-                <AddColorButton addColor={this.addColor()}/>
-                <hr/>
-            </div> : "";
+            <FormGroup>
+                <div className="ColorRecipe">
+                    <h4>Värvikaart</h4>
+
+                    <Row>
+                        <Col sm={12}>
+                            <FormGroup>
+                                <Label>Värvi firma</Label>
+                                <Input type="text" placeholder="Sisesta värvi firma"
+                                       onChange={this.colorCompanyChanged}
+                                       value={this.state.colorCompanyName}/>
+                            </FormGroup>
+                        </Col>
+                    </Row>
+
+                    <Row>
+                        <Col sm={4}>
+                            <FormGroup>
+                                <Input type="text"
+                                       placeholder="Sisesta värvikood"
+                                       onChange={this.colorCodeChanged}
+                                       value={this.state.colorCode}/>
+                            </FormGroup>
+                        </Col>
+
+                        <Col sm={4}>
+                            <FormGroup>
+                                <Input type="text"
+                                       placeholder="Sisesta värvi grammid"
+                                       onChange={this.colorAmountChanged}
+                                       value={this.state.colorAmount}/>
+                            </FormGroup>
+                        </Col>
+
+                        <Col sm={4}>
+                            <FormGroup>
+
+                            </FormGroup>
+                        </Col>
+                    </Row>
+
+                    <Row>
+                        <Col sm={12}>
+                            <FormGroup>
+                                <Label>Vesiniku firma</Label>
+                                <Input type="text" placeholder="Sisesta vesiniku firma"
+                                       onChange={this.hydrogenCompanyChanged}
+                                       value={this.state.hydrogenCompanyName}/>
+                            </FormGroup>
+                        </Col>
+                    </Row>
+
+                    <Row>
+                        <Col sm={4}>
+                            <FormGroup>
+                                <Input type="text"
+                                       placeholder="Sisesta nimi"
+                                       onChange={this.hydrogenNameChanged}
+                                       value={this.state.hydrogenName}/>
+                            </FormGroup>
+                        </Col>
+
+                        <Col sm={4}>
+                            <FormGroup>
+                                <Input type="text"
+                                       placeholder="Sisesta kogus grammides"
+                                       onChange={this.hydrogenAmountChanged}
+                                       value={this.state.hydrogenAmount}/>
+                            </FormGroup>
+                        </Col>
+
+                        <Col sm={4}>
+                            <FormGroup>
+                            </FormGroup>
+                        </Col>
+                    </Row>
+
+                    <Button onClick={() => this.addColorRecipe()} color="primary" block>
+                        Lisa uus värviretsept
+                    </Button>
+                </div>
+            </FormGroup>
+             : "";
 
 
         /*{this.getColorCards().map(colorCards => colorCards.name)}*/
@@ -398,9 +569,7 @@ export const AppointmentModal = observer(class extends React.Component {
                                     </FormGroup>
                                 </Col>
                             </Row>
-                            <FormGroup>
-                                {colorRecipe}
-                            </FormGroup>
+                            {colorRecipe}
                         </Form>
                     </ModalBody>
                     <ModalFooter>

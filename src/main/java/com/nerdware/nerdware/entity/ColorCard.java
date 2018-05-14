@@ -18,6 +18,5 @@ public class ColorCard {
     @JoinColumn(name = "color_recipe_id")
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ColorRecipe> colorRecipes;
-
 }
 

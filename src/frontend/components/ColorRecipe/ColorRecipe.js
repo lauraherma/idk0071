@@ -6,17 +6,16 @@ import './ColorRecipe.css';
 import {ColorRecipePart} from "../ColorRecipePart/ColorRecipePart";
 import lodash from 'lodash';
 import {observer} from 'mobx-react';
-import {addColorRecipe} from "../../data/openAppointment";
+import {addColorRecipe, openAppointment} from "../../data/openAppointment";
 import {DataService} from "../DataService";
 
 export const ColorRecipe = observer(class extends React.Component {
     dataService = new DataService();
 
     async addColorRecipe () {
+
         try {
-            const colorRecipe = await this.dataService.addColorRecipeToAppointment({
-                appointmentId: this.appointment.id,
-            });
+            const colorRecipe = await this.dataService.addEmptyColorRecipeToAppointment(this.appointment.id);
 
             addColorRecipe(colorRecipe);
         }
@@ -35,7 +34,9 @@ export const ColorRecipe = observer(class extends React.Component {
 
     getColorRecipes () {
         return this.colorCard.colorRecipes.map(colorRecipe =>
-            <ColorRecipePart colorRecipe={colorRecipe} key={colorRecipe.id}/>
+            <ColorRecipePart colorRecipe={colorRecipe}
+                             key={colorRecipe.id}
+                             appointment={this.appointment}/>
         );
     }
 

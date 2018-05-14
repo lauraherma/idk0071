@@ -25,6 +25,17 @@ public class ColorRecipe {
 
     @ManyToOne
     private ColorCard colorCard;
+
+    @Override
+    public String toString() {
+        return "ColorRecipe{" +
+                "id=" + id +
+                ", date=" + date +
+                ", colors=" + colors +
+                ", hydrogens=" + hydrogens +
+                ", colorCard=" + colorCard +
+                '}';
+    }
 }
 
 
