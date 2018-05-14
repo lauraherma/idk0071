@@ -27,6 +27,7 @@
     align-items: center;
     justify-content: space-between;
     color:#444;
+    cursor:pointer;
 
 }
 
@@ -62,14 +63,16 @@
     color:#4a9fec;
     opacity:0;
     transition:opacity 300ms;
+    cursor:pointer;
 }
 .Hairdresser .time:not(.active):hover i {
     opacity: 1;
 }
 
 .Hairdresser .time.active {
-    background-color: #05176D;
+    background-color: #43d6a7;
     color: white;
-    border-color: #007bff;
+    border-color: #43d6a7;
+    cursor:pointer;
 }
 
