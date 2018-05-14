@@ -16,18 +16,19 @@ export const ClientAddModal = observer(class ClientAddModal extends React.Compon
     };
 
     toggle = () => {
+        if (!this.state.modal) {
+            this.setStateFromAppointment();
+        }
+
         this.setState({
             modal: !this.state.modal
         });
     };
 
     componentDidMount() {
-        this.setStateFromAppointment();
     }
 
-
     addClient = () => {
-
         const clientData = new RoleForm();
         this.state.personForm.dateOfBirth = moment();
         clientData.person = this.state.personForm;
@@ -61,22 +62,19 @@ export const ClientAddModal = observer(class ClientAddModal extends React.Compon
     setStateFromAppointment = () => {
         const client = this.props.client;
 
-        console.log(client);
-
-        /*const personForm = {
+        const personForm = {
             firstName : client.person.firstName,
             lastName : client.person.lastName,
             email : client.person.email,
             phone : client.person.phone,
             dateOfBirth : client.person.dateOfBirth,
-        };*/
+        };
 
-        //this.setState({...personForm});
+        this.setState({ personForm });
     };
 
 
     render() {
-
         const personForm = this.state.personForm;
 
         const buttonGroup = this.props.client ?
