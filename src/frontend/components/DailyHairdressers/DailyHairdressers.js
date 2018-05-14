@@ -13,7 +13,7 @@ export const DailyHairdressers = observer(class extends React.Component {
                 <div key={hairdresser.id} className="Hairdresser-wrapper">
                     <HairdresserDailyAppointments hairdresser={hairdresser}/>
                 </div> :
-                <div key={Math.random()} className="Hairdresser-empty">
+                <div style={{ cursor: 'pointer' }} key={Math.random()} className="Hairdresser-empty">
                     <HairdresserDailyAppointments onHairdresserAdded={this.addHairDresser}/>
                 </div>;
         });

@@ -14,7 +14,9 @@ export const ClientList = observer(class ClientList extends React.Component {
 
     getClients() {
         return this.props.clients.filter(client => client).map(client =>
-            <tr onClick={() => this.openClient(client)} key={client.person.id}>
+            <tr style={{
+                cursor: 'pointer'
+            }} onClick={() => this.openClient(client)} key={client.person.id}>
                 <td>
                     <ClientAddModal
                         client={client}
