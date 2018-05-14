@@ -13,7 +13,9 @@ export const Client = observer(class Client extends React.Component {
     render() {
         return <div className="Client">
             <NavBar/>
+            <br/>
             <ClientAddModal/>
+            <br/>
             <ClientList clients={clients}/>
 
         </div>

@@ -83,6 +83,14 @@ export class HairdresserDailyAppointments extends React.Component {
 
             const timeFormat = this.getTimeSlotTimeFormatLabel(appointment, timeSlot);
 
+            const initiatedAppointment = <AppointmentModal appointment={appointment}
+                                                       workTypes={workTypes}
+                                                       hairdresser={this.getHairdresser()}
+                                                       timeSlot={timeSlot}
+                                                       isOpened={timeSlot === this.state.timeSlotOpened}
+                                                       onModalClosed={() => this.setState({ timeSlotOpened: '' })}
+                                                       changeAppointment={(changedAppointment) => this.changeAppointment(changedAppointment, changedAppointment)}/>
+
             if (appointment) {
                 if (alreadyAppearedAppointments.includes(appointment.id)) {
                     return;
@@ -90,18 +98,16 @@ export class HairdresserDailyAppointments extends React.Component {
                 alreadyAppearedAppointments.push(appointment.id)
             }
 
-            return <div onClick={() => this.openTimeSlot(timeSlot)}
+            return this.props.hairdresser ? <div onClick={() => this.openTimeSlot(timeSlot)}
                         key={timeSlot}
                         className={appointmentClasses.join(' ')}>
                 {timeFormat}
-                <AppointmentModal appointment={appointment}
-                                  workTypes={workTypes}
-                                  hairdresser={this.getHairdresser()}
-                                  timeSlot={timeSlot}
-                                  isOpened={timeSlot === this.state.timeSlotOpened}
-                                  onModalClosed={() => this.setState({ timeSlotOpened: '' })}
-                                  changeAppointment={(changedAppointment) => this.changeAppointment(changedAppointment, changedAppointment)}/>
-            </div>
+                {initiatedAppointment}
+            </div> : <div key={timeSlot}
+                          className={appointmentClasses.join(' ')}>
+                {timeFormat}
+                {initiatedAppointment}
+                </div>
         });
 
         return <div className="times">

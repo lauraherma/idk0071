@@ -27,8 +27,10 @@ export const ClientAddModal = observer(class ClientAddModal extends React.Compon
 
     addClient = () => {
         const clientData = new RoleForm();
-        this.state.personForm.dateOfBirth = moment();
+        let date = moment(this.state.personForm.dateOfBirth);
         clientData.person = this.state.personForm;
+        clientData.person.dateOfBirth = date;
+
 
         if (this.props.client) {
             if (clientData.id === undefined) {
@@ -51,9 +53,7 @@ export const ClientAddModal = observer(class ClientAddModal extends React.Compon
     removeClient = () => {
 
         this.dataService.getAppointmentsByClientId(this.props.client.id).then(response => {
-            var futureDate = moment().diff(moment(response.data.startTime));
-            console.log(futureDate);
-            if (response.data.length > 0 && futureDate < 0) {
+            if (response.data.length > 0) {
                 console.log(response.data);
                 alert("You cannot remove a client with associated appointments!");
             } else {
@@ -108,6 +108,7 @@ export const ClientAddModal = observer(class ClientAddModal extends React.Compon
         const modalButtonGroup = this.props.client ?
             <div>
                 <Button color="light" onClick={this.toggle}>Cancel</Button>
+                <Button color="danger" onClick={this.removeClient}>Kustuta</Button>
                 <Button color="primary" onClick={this.addClient}>Muuda</Button>
             </div> :
             <div>
