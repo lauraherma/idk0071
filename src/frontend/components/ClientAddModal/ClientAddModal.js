@@ -5,6 +5,7 @@ import {RoleForm} from "../HairdresserAddModal/HairdresserAddModal";
 import {DataService} from "../DataService";
 import {observer} from 'mobx-react';
 import {updateClients} from "../../data/clients";
+import {updateHairdressers} from "../../data/hairdressers";
 
 
 export const ClientAddModal = observer(class ClientAddModal extends React.Component {
@@ -31,18 +32,42 @@ export const ClientAddModal = observer(class ClientAddModal extends React.Compon
         const clientData = new RoleForm();
         this.state.personForm.dateOfBirth = moment();
         clientData.person = this.state.personForm;
+
+        if (this.props.client) {
+            if (clientData.id === undefined) {
+                clientData.id = this.props.client.id;
+            }
+        }
+
         this.dataService.getRoleTypeByName('client').then(response => {
             clientData.roleType = response.data;
             this.dataService.addRole(clientData).then(() => {
                 updateClients();
                 this.setState({
                     modal: false,
-
-
                 });
             });
         });
 
+    };
+
+    removeClient = () => {
+
+        this.dataService.getAppointmentsByClientId(this.props.client.id).then(response => {
+            var futureDate = moment().diff(moment(response.data.startTime));
+            console.log(futureDate);
+            if (response.data.length > 0 && futureDate < 0) {
+                console.log(response.data);
+                alert("You cannot remove a client with associated appointments!");
+            } else {
+                this.dataService.removeRole(this.props.client.id).then(() => {
+                    updateClients();
+                    this.setState({
+                        modal: false,
+                    });
+                });
+            }
+        });
     };
 
     formChanged = (event) => {
@@ -59,19 +84,28 @@ export const ClientAddModal = observer(class ClientAddModal extends React.Compon
     };
 
     setStateFromAppointment = () => {
+
+        // Laura see koht!!
+
         const client = this.props.client;
 
         console.log(client);
 
-        /*const personForm = {
-            firstName : client.person.firstName,
-            lastName : client.person.lastName,
-            email : client.person.email,
-            phone : client.person.phone,
-            dateOfBirth : client.person.dateOfBirth,
-        };*/
+        const personForm = {
+            firstName : '',
+            lastName : '',
+            email : '',
+            phone : '',
+            dateOfBirth : '',
+        };
 
-        //this.setState({...personForm});
+        personForm.firstName = client.person.firstName;
+        personForm.lastName = client.person.lastName;
+        personForm.email = client.person.email;
+        personForm.dateOfBirth = client.person.dateOfBirth;
+        personForm.phone = client.person.phone;
+
+        this.setState({...personForm});
     };
 
 
@@ -81,7 +115,7 @@ export const ClientAddModal = observer(class ClientAddModal extends React.Compon
 
         const buttonGroup = this.props.client ?
             <div>
-                <Button color="danger" onClick={this.removeAppointment}>Kustuta</Button>
+                <Button color="danger" onClick={this.removeClient}>Kustuta</Button>
                 <Button color="primary" onClick={this.toggle}>Muuda</Button>
             </div> :
             <Button onClick={this.toggle}>+ Lisa Klient</Button>;

@@ -21,6 +21,6 @@ public interface RoleRepository extends CrudRepository<Role, Long> {
     @Query("select r from Role r where r.roleType = 2")
     List<Role> findAllClients();
 
-    Role removeById(Long id);
+    Integer removeById(Long id);
 
 }

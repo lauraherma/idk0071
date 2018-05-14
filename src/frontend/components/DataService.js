@@ -33,6 +33,11 @@ export class DataService  {
         return this.getRequest('appointment', 'remove', id);
     }
 
+    removeRole(id) {
+        return this.getRequest('role', 'remove', id);
+    }
+
+
     getClients(name) {
         return this.getRequest('roles', 'clients', name);
     }
@@ -45,7 +50,7 @@ export class DataService  {
         return this.getRequest('role-type', name)
     }
 
-    getAppointmentsByHairdresserId(id) {
+    getAppointmentsByClientId(id) {
         return this.getRequest('appointments', id)
     }
 
