@@ -1,8 +1,14 @@
 package com.nerdware.nerdware;
 
 import com.nerdware.nerdware.controller.PersonController;
+import com.nerdware.nerdware.entity.Appointment;
+import com.nerdware.nerdware.entity.ColorCard;
 import com.nerdware.nerdware.entity.Person;
+import com.nerdware.nerdware.entity.Role;
+import com.nerdware.nerdware.entity.Work;
+import com.nerdware.nerdware.repository.AppointmentRepository;
 import com.nerdware.nerdware.repository.PersonRepository;
+import com.nerdware.nerdware.service.AppointmentService;
 import com.nerdware.nerdware.service.PersonService;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,6 +25,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.time.LocalDateTime;
 import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -42,11 +49,26 @@ public class MockTests {
     private static final String DEFAULT_LASTNAME = "";
     private static final String UPDATED_LASTNAME = "LastName";
 
+    private static final LocalDateTime DEFAULT_STARTTIME = LocalDateTime.of(2018, 1, 1, 0, 0);
+    private static final LocalDateTime UPDATED_STARTTIME = LocalDateTime.now();
+
+    private static final String DEFAULT_DESCRIPTION = "";
+    private static final String UPDATED_DESCRIPTION = "Description";
+
+    private static final Double DEFAULT_PRICE = 0D;
+    private static final Double UPDATED_PRICE = 40D;
+
     @Autowired
     private PersonRepository personRepository;
 
     @Autowired
+    private AppointmentRepository appointmentRepository;
+
+    @Autowired
     private PersonService personService;
+
+    @Autowired
+    private AppointmentService appointmentService;
 
     @Autowired
     private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
@@ -58,10 +80,13 @@ public class MockTests {
 
     private Person person;
 
+    private Appointment appointment;
+
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
         PersonController userResource = new PersonController(personService);
+        person = createEntity(em);
         this.restUserMockMvc = MockMvcBuilders.standaloneSetup(userResource)
                 .setCustomArgumentResolvers(pageableArgumentResolver)
                 .build();
@@ -71,7 +96,7 @@ public class MockTests {
         Person person = new Person();
         person.setFirstName(DEFAULT_FIRSTNAME);
         person.setLastName(DEFAULT_LASTNAME);
-        person.setEmail(DEFAULT_EMAIL);
+        person.setEmail(UPDATED_EMAIL);
         return person;
     }
 
@@ -83,20 +108,18 @@ public class MockTests {
         person.setFirstName("FirstName");
         person.setLastName("LastName");
         person.setEmail("email@gmail.com");
-        /*
-        restUserMockMvc.perform(post("/person")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(managedUserVM)))
-            .andExpect(status().isCreated());*/
 
-        // Validate the User in the database
+        personService.addPerson(person);
+
         List<Person> userList = personRepository.findAll();
         assertThat(userList).hasSize(databaseSizeBeforeCreate + 1);
         Person testUser = userList.get(userList.size() - 1);
-        assertThat(testUser.getFirstName()).isEqualTo(DEFAULT_FIRSTNAME);
-        assertThat(testUser.getLastName()).isEqualTo(DEFAULT_LASTNAME);
-        assertThat(testUser.getEmail()).isEqualTo(DEFAULT_EMAIL);
+        assertThat(testUser.getFirstName()).isEqualTo(UPDATED_FIRSTNAME);
+        assertThat(testUser.getLastName()).isEqualTo(UPDATED_LASTNAME);
+        assertThat(testUser.getEmail()).isEqualTo(UPDATED_EMAIL);
     }
+
+
 
     @Test
     @Transactional
@@ -107,11 +130,6 @@ public class MockTests {
         person.setFirstName("FirstName");
         person.setLastName("LastName");
         person.setEmail("email@gmail.com");
-        /*
-        restUserMockMvc.perform(post("/api/users")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(managedUserVM)))
-            .andExpect(status().isBadRequest());*/
 
         List<Person> userList = personRepository.findAll();
         assertThat(userList).hasSize(databaseSizeBeforeCreate);
@@ -120,36 +138,50 @@ public class MockTests {
     @Test
     @Transactional
     public void getAllUsers() throws Exception {
-        // Initialize the database
         personRepository.save(person);
-        // Get all the users
-        restUserMockMvc.perform(get("/api/person?sort=id,desc")
+
+        restUserMockMvc.perform(get("/persons")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(jsonPath("$.[*].firstName").value(hasItem(DEFAULT_FIRSTNAME)))
                 .andExpect(jsonPath("$.[*].lastName").value(hasItem(DEFAULT_LASTNAME)))
-                .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL)));
+                .andExpect(jsonPath("$.[*].email").value(hasItem(UPDATED_EMAIL)));
+    }
+
+    @Test
+    @Transactional
+    public void getAllAppointments() throws Exception {
+
+        restUserMockMvc.perform(get("/appointments")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
     }
 
     @Test
     @Transactional
     public void getUser() throws Exception {
-        // Initialize the database
         personRepository.save(person);
-        // Get the user
+
         restUserMockMvc.perform(get("/person/{id}", person.getId()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(jsonPath("$.firstName").value(DEFAULT_FIRSTNAME))
                 .andExpect(jsonPath("$.lastName").value(DEFAULT_LASTNAME))
-                .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL));
+                .andExpect(jsonPath("$.email").value(UPDATED_EMAIL));
     }
 
     @Test
     @Transactional
     public void getNonExistingUser() throws Exception {
         restUserMockMvc.perform(get("/person"))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    @Transactional
+    public void getNonExistingAppointment() throws Exception {
+        restUserMockMvc.perform(get("/appointment"))
                 .andExpect(status().isNotFound());
     }
 
