@@ -4,6 +4,7 @@ import com.nerdware.nerdware.entity.*;
 import com.nerdware.nerdware.repository.AppointmentRepository;
 import com.nerdware.nerdware.repository.ColorCardRepository;
 import com.nerdware.nerdware.repository.ColorRecipeRepository;
+import com.nerdware.nerdware.repository.ColorRepository;
 import com.nerdware.nerdware.repository.RoleRepository;
 import com.nerdware.nerdware.repository.WorkRepository;
 import com.nerdware.nerdware.repository.WorkTypeRepository;
@@ -31,6 +32,12 @@ public class AppointmentService {
 
     @Autowired
     private ColorRecipeRepository colorRecipeRepository;
+
+    @Autowired
+    private ColorRepository colorRepository;
+
+    @Autowired
+    private HydrogenRepository hydrogenRepository;
 
     @Autowired
     private WorkRepository workRepository;
@@ -94,9 +101,16 @@ public class AppointmentService {
             }
         }
         work.setWorkTypes(newWorkTypes);
-        /*ColorRecipe colorCard = work.getColorCard();
-        colorCard.setColorRecipe(colorRecipeRepository.save(colorCard.getColorRecipe()));
-        work.setColorCard(colorCardRepository.save(colorCard));*/
+        ColorCard colorCard = work.getColorCard();
+        List<ColorRecipe> colorRecipes = new ArrayList<>();
+        for (ColorRecipe colorRecipe: colorCard.getColorRecipes()) {
+            colorRepository.save(colorRecipe.getColors());
+            hydrogenRepository.save(colorRecipe.getHydrogens());
+            colorRecipeRepository.save(colorRecipe);
+            colorRecipes.add(colorRecipe);
+        }
+        colorCard.setColorRecipes(colorRecipes);
+        work.setColorCard(colorCardRepository.save(colorCard));
         return work;
     }
 
