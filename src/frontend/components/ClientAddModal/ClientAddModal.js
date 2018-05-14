@@ -12,26 +12,17 @@ export const ClientAddModal = observer(class ClientAddModal extends React.Compon
     dataService = new DataService();
 
     state = {
-        modal: false,
         personForm: new PersonForm(),
     };
 
     toggle = () => {
-        if (!this.state.modal) {
-            this.setStateFromClient();
-        }
-
-        this.setState({
-            modal: !this.state.modal
-        });
+        this.props.close();
     };
 
     componentDidMount() {
-        console.log("žžž");
-        console.log(this.props.isOpened);
-        this.setState({
-            modal: this.props.isOpened,
-        });
+        if (this.props.client) {
+            this.setStateFromClient();
+        }
     }
 
     addClient = () => {
@@ -129,9 +120,7 @@ export const ClientAddModal = observer(class ClientAddModal extends React.Compon
 
         return (
             <div>
-                {buttonGroup}
-
-                <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
+                <Modal isOpen={this.props.isOpened} toggle={this.toggle} className={this.props.className}>
                     <ModalHeader toggle={this.toggle}>{modalTitle}</ModalHeader>
                     <ModalBody>
                         <Form>
