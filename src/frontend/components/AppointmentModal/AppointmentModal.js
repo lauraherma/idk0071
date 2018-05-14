@@ -89,6 +89,7 @@ export const AppointmentModal = observer(class extends React.Component {
             firstName: appointment.client.firstName,
             checkedWorkTypeIds: workTypes.map(workType => workType.id),
             description: appointment.description,
+            colorCards: appointment.colorCards,
             price: appointment.price || "",
             startTime: this.getAppointmentStartEndTime(appointment).startTime.format(),
             endTime: this.getAppointmentStartEndTime(appointment).endTime.add(1, 'second').format(),
@@ -191,14 +192,14 @@ export const AppointmentModal = observer(class extends React.Component {
                 workTypes: this.state.checkedWorkTypeIds.map(
                     id => this.props.workTypes.find(workType => workType.id === id)
                 ),
-                colorCard: {
-                    date: "",
-                    colorRecipe: {
-                        colors: [],
-                        hydrogens: []
-                    }
-                }
             },
+            colorCard: {
+                date: '',
+                colorRecipe: {
+                    colors: [],
+                    hydrogens: []
+                }
+            }
         };
 
         if (this.props.appointment) {
