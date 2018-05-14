@@ -74,4 +74,45 @@ export class DataService  {
         return this.getRequest('color-cards');
     }
 
+    addColorRecipeToAppointment(data) {
+        // TODO API
+        return {
+            id: Math.random(),
+            date: '',
+            colors: [{}],
+            hydrogens: [{}],
+        };
+    }
+
+    addColorToColorRecipe(data) {
+        // TODO API: Oleks vaja tagastada kõik recipe colorid
+        // return this.postRequest(data, `appointment/${data.appointmentId}/color-recipe/${data.colorRecipe.id}/color`);
+
+        return [
+            // Vanad
+            ...data.colorRecipe.colors.slice(0, data.colorRecipe.colors.length - 1),
+            // Uus
+            {
+                id: Math.random(),
+                amount: data.color.amount,
+                code: data.color.code,
+            },
+        ];
+    }
+
+    addHydrogenToColorRecipe(data) {
+        // TODO API: Oleks vaja tagastada kõik recipe hydrogens
+        // return this.postRequest(data, `appointment/${data.appointmentId}/color-recipe/${data.colorRecipe.id}/hydrogen`);
+
+        return [
+            // Vanad
+            ...data.colorRecipe.hydrogens.slice(0, data.colorRecipe.hydrogens.length - 1),
+            // Uus
+            {
+                id: Math.random(),
+                name: data.hydrogen.name,
+                amount: data.hydrogen.amount,
+            },
+        ];
+    }
 }

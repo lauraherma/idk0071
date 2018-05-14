@@ -4,40 +4,50 @@ import {ColorRecipeColorTypeHydrogen} from "../ColorRecipeColorTypeHydrogen/Colo
 import {Row, Col, Button} from 'reactstrap'
 import './ColorRecipe.css';
 import {ColorRecipePart} from "../ColorRecipePart/ColorRecipePart";
+import lodash from 'lodash';
+import {observer} from 'mobx-react';
+import {addColorRecipe} from "../../data/openAppointment";
+import {DataService} from "../DataService";
 
-export class ColorRecipe extends React.Component {
-    state = {
-        recipeParts: [],
-    };
+export const ColorRecipe = observer(class extends React.Component {
+    dataService = new DataService();
 
-    componentDidMount() {
-        this.setState({
-            recipeParts: this.props.colorRecipe,
-        });
+    async addColorRecipe () {
+        try {
+            const colorRecipe = await this.dataService.addColorRecipeToAppointment({
+                appointmentId: this.appointment.id,
+            });
+
+            addColorRecipe(colorRecipe);
+        }
+        catch (error) {
+            console.error(error);
+        }
+    }
+
+    get appointment () {
+        return this.props.appointment[0];
+    }
+
+    get colorCard () {
+        return this.appointment && this.appointment.work && this.appointment.work.colorCard;
+    }
+
+    getColorRecipes () {
+        return this.colorCard.colorRecipes.map(colorRecipe =>
+            <ColorRecipePart colorRecipe={colorRecipe} key={colorRecipe.id}/>
+        );
     }
 
     render() {
-        return <div className="ColorRecipe">
-            <h4>Värviretsept</h4>
+        return this.appointment && <div className="ColorRecipe">
+            <h4>Värvikaart</h4>
 
+            {this.colorCard && this.getColorRecipes()}
 
-           <ColorRecipePart/>
-
-            <Button onClick={() => this.addRecipePart()} color="primary" block>
-                Lisa uus värviretsepti osa
+            <Button onClick={() => this.addColorRecipe()} color="primary" block>
+                Lisa uus värviretsept
             </Button>
         </div>;
     }
-
-    addRecipePart() {
-        this.setState({
-            recipeParts: [
-                ...this.state.recipeParts,
-                {
-                    colors: [],
-                    hydrogens: [],
-                }
-            ]
-        });
-    }
-}
+});

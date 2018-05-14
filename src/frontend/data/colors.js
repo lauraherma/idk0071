@@ -6,8 +6,8 @@ export const colors = observable([]);
 
 export async function updateColors() {
     try {
-        const response = await dataService.getColors();
-        colors.replace(response.data);
+        // const response = await dataService.getColors();
+        // colors.replace(response.data);
     } catch (error) {
         console.error(error);
     }
