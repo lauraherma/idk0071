@@ -123,4 +123,18 @@ public class AppointmentService {
     public boolean appointmentDoesNotExist(Long id) {
         return id == null;
     }
+
+    public ColorRecipe addColorRecipeToAppointment(long appointmentId) {
+        Appointment appointment = this.appointmentRepository.findOne(appointmentId);
+        Work work = appointment.getWork();
+
+        if (appointment.getWork() == null) {
+            work = workRepository.save(work);
+            appointment.setWork(work);
+        }
+
+        ColorCard colorCard = work.getColorCard();
+
+        return null;
+    }
 }
